@@ -1,52 +1,76 @@
-<x-guest-layout>
-    <form method="POST" action="{{ route('register') }}">
-        @csrf
+@extends('users.layouts.app')
 
-        <!-- Name -->
-        <div>
-            <x-input-label for="name" :value="__('Name')" />
-            <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
-            <x-input-error :messages="$errors->get('name')" class="mt-2" />
-        </div>
+@section('title')
+    ثبت نام
+@endsection
 
-        <!-- Email Address -->
-        <div class="mt-4">
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
+@section('content')
+    <div class="container mt-3 p-4">
+        <div class="row d-flex justify-content-center">
+            <div class="col-12 col-md-6">
+                <div class="card shadow p-3 mb-5 bg-body">
+                    <div class="card-header bg-success text-center text-light mt-2">ثبت نام در سیستم</div>
+                    <div class="card-body">
+                        <form method="POST" action="{{ route('register') }}">
+                            @csrf
+                            <div class="mb-3">
+                                <label for="name" class="form-label">نام</label>
+                                <input name="name" type="name" class="form-control" id="name" value="{{ old('name') }}" autofocus>
+                                @error('name')
+                                    <span class="text-danger">
+                                        {{ $message }}
+                                    </span>
+                                @enderror
+                            </div>
 
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
+                            <div class="mb-3">
+                                <label for="mobile" class="form-label">شماره موبایل</label>
+                                <input name="mobile" type="number" class="form-control" id="mobile" value="{{ old('mobile') }}" autofocus>
+                                @error('mobile')
+                                    <span class="text-danger">
+                                        {{ $message }}
+                                    </span>
+                                @enderror
+                            </div>
 
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="new-password" />
+                            <div class="mb-3">
+                                <label for="email" class="form-label">ایمیل</label>
+                                <input name="email" type="email" class="form-control" id="email"  value="{{ old('email') }}" autocomplete="email">
+                                @error('email')
+                                    <span class="text-danger">
+                                        {{ $message }}
+                                    </span>
+                                @enderror
+                            </div>
 
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
+                            <div class="mb-3">
+                                <label for="password" class="form-label">رمز عبور</label>
+                                <input name="password" type="password" class="form-control" id="password">
+                                @error('password')
+                                    <span class="text-danger">
+                                        {{ $message }}
+                                    </span>
+                                @enderror
+                            </div>
 
-        <!-- Confirm Password -->
-        <div class="mt-4">
-            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
+                            <div class="mb-3">
+                                <label for="password" class="form-label">تکرار رمز عبور</label>
+                                <input name="password_confirmation" type="password" class="form-control" id="password">
+                                @error('password_confirmation')
+                                    <span class="text-danger">
+                                        {{ $message }}
+                                    </span>
+                                @enderror
+                            </div>
 
-            <x-text-input id="password_confirmation" class="block mt-1 w-full"
-                            type="password"
-                            name="password_confirmation" required autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('login') }}">
-                {{ __('Already registered?') }}
-            </a>
-
-            <x-primary-button class="ms-4">
-                {{ __('Register') }}
-            </x-primary-button>
-        </div>
-    </form>
-</x-guest-layout>
+                            <div class="d-flex justify-content-between">
+                                <a href="{{ route("login") }}" class="mt-2">قبلا در سیستم ثبت نام کرده ام.</a>
+                                <button class="btn btn-success text-light" type="submit">ثبت نام</button>
+                            </div>
+                        </form>
+                    </div> <!-- card body -->
+                </div> <!-- card -->
+            </div> <!-- col 12 -->
+        </div> <!-- row -->
+    </div> <!-- container -->
+@endsection
