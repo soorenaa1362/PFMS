@@ -17,11 +17,11 @@
                             <div class="mb-3">
                                 <label for="email" class="form-label">ایمیل یا موبایل</label>
                                 <input name="email" type="text" class="form-control" id="email" value="{{ old('email') }}" autofocus>
-                                {{-- @error('email')
+                                @error('email')
                                     <span class="text-danger">
                                         {{ $message }}
                                     </span>
-                                @enderror --}}
+                                @enderror
                             </div>
 
                             <div class="mb-3">

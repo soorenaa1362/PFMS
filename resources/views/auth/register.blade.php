@@ -33,7 +33,7 @@
                                 @enderror
                             </div>
 
-                            <div class="mb-3">
+                            {{-- <div class="mb-3">
                                 <label for="email" class="form-label">ایمیل</label>
                                 <input name="email" type="email" class="form-control" id="email"  value="{{ old('email') }}" autocomplete="email">
                                 @error('email')
@@ -41,7 +41,7 @@
                                         {{ $message }}
                                     </span>
                                 @enderror
-                            </div>
+                            </div> --}}
 
                             <div class="mb-3">
                                 <label for="password" class="form-label">رمز عبور</label>
