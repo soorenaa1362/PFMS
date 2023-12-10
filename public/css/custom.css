@@ -1,0 +1,33 @@
+@font-face{
+    font-family: "Vazir";
+    src: url(/fonts/Vazir.eot?d28c322f9e3b83d8048808d966fa01c1);
+    /* IE9 Compat Modes */
+    src: url(/fonts/Vazir.eot?d28c322f9e3b83d8048808d966fa01c1)
+    format("embedded-opentype"), url(/fonts/Vazir.woff2?f6b0854b99af25b683b1017431881340)
+    format("woff2"), url(/fonts/Vazir.woff?d0b45fe799885bab47a9fc07de9563e3)
+    format("woff"), url(/fonts/Vazir.ttf?e3e8c52a5a6a92c839fb985db61fa3ab)
+    format("truetype");
+    /* Safari, Android, iOS */
+}
+
+a{
+    text-decoration: none !important;
+}
+
+body{
+    direction: rtl;
+    text-align: right !important;
+    font-family: "Vazir" !important;
+}
+
+.card{
+    border-radius: 10px;
+}
+
+.datepicker-container{
+    direction: rtl !important;
+}
+
+
+
+
