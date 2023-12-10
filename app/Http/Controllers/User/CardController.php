@@ -14,7 +14,7 @@ class CardController extends Controller
         $userId = Auth::user()->id;
         $cards = Card::where('user_id', $userId)->get();
 
-        return view('users.cards.index', compact('cards'));
+        return view('users.cards.index', compact('cards', 'totalCash'));
     }
 
 
@@ -27,7 +27,7 @@ class CardController extends Controller
     public function store(Request $request)
     {
         $userId = Auth::user()->id;
-        
+
         $request->validate([
             'name' => 'required|string',
             'alias' => 'nullable|string',
@@ -46,6 +46,6 @@ class CardController extends Controller
         ]);
 
         return redirect()->route('users.cards.index')
-            ->withSuccess('کارت با موفقیت در سیستم ذخیره شد.');
+            ->withSuccess('اطلاعات کارت با موفقیت در سیستم ثبت شد.');
     }
 }

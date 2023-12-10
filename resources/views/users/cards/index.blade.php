@@ -24,7 +24,7 @@
                     </div>
                     @if(Session::has('success'))
                         <div class="alert alert-success text-center">
-                            {{Session::get('success')}}
+                            {{ Session::get('success') }}
                         </div>
                     @endif
                     <div class="card-body">
@@ -88,7 +88,7 @@
                                             </th>
                                             <th>
                                                 <a href="">
-                                                    {{ $card->created_at }}
+                                                    {{ $card->getDateJalali() }}
                                                 </a>
                                             </th>
                                         </tr>
