@@ -95,4 +95,14 @@ class CardController extends Controller
         return redirect()->route('users.cards.index')
             ->withSuccess('اطلاعات کارت مورد نظر با موفقیت بروزرسانی شد.');
     }
+
+
+    public function delete($card_id)
+    {
+        $card = Card::find($card_id);
+        $card->delete();
+
+        return redirect()->route('users.cards.index')
+            ->withSuccess('عملیات حذف کارت بانکی با موفقیت انجام شد.');
+    }
 }

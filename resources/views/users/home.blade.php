@@ -34,7 +34,7 @@
                                 خود را وارد کرده تا بتوانید ثبت تراکنش های
                                 مالی را انجام دهید .
                             </p>
-                            <a href="" class="btn btn-success"
+                            <a href="{{ route('users.cards.create') }}" class="btn btn-success"
                                 style="border-radius: 20px;">
                                 ثبت اطلاعات کارت بانکی
                             </a>

@@ -71,12 +71,12 @@
                                 <i class="fa fa-exchange"></i>
                                 ثبت تراکنش
                             </a>
-                            <button type="button" class="btn btn-danger"
-                                style="border-radius: 15px;"
-                                data-bs-toggle="modal" data-bs-target="#deleteModal">
-                                <i class="fas fa-edit"></i>
+                            <a href="{{ route('users.cards.delete', $card->id) }}" style="border-radius: 15px;"
+                                class="btn btn-danger mt-1"
+                                onclick="return confirm('آیا میخواهید این کارت بانکی را حذف کنید؟')">
+                                <i class="fas fa-trash-alt"></i>
                                 حذف
-                            </button>
+                            </a>
                         </div>
 
                         @include('users.sections.footer')

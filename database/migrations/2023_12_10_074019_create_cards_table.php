@@ -20,6 +20,7 @@ return new class extends Migration
             $table->bigInteger('number');
             $table->bigInteger('current_cash');
             $table->text('description')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }
