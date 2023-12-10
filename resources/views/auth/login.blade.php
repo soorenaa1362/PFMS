@@ -15,7 +15,7 @@
                         <form method="POST" action="{{ route('login') }}">
                             @csrf
                             <div class="mb-3">
-                                <label for="email" class="form-label">ایمیل یا موبایل</label>
+                                <label for="email" class="form-label">موبایل</label>
                                 <input name="email" type="text" class="form-control" id="email" value="{{ old('email') }}" autofocus>
                                 @error('email')
                                     <span class="text-danger">

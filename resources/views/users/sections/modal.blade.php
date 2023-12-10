@@ -10,7 +10,7 @@
                     @csrf
 
                     <div class="row">
-                        <div class="form-group col-md-6 mt-2">
+                        <div class="form-group col-md-12 mt-2">
                             <label for="name">نام</label>
                             <input class="form-control" name="name" type="text" value="{{ $user->name }}">
                             @error('name')
@@ -18,7 +18,7 @@
                             @enderror
                         </div>
 
-                        <div class="form-group col-md-6 mt-2">
+                        <div class="form-group col-md-12 mt-2">
                             <label for="family">نام خانوادگی</label>
                             <input class="form-control" name="family" type="text" value="{{ $user->family }}">
                             @error('family')
@@ -26,16 +26,8 @@
                             @enderror
                         </div>
 
-                        <div class="form-group col-md-6 mt-2">
-                            <label for="email">ایمیل</label>
-                            <input class="form-control" name="email" type="email" value="{{ $user->email }}">
-                            @error('email')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-
-                        <div class="form-group col-md-6 mt-2">
-                            <label for="mobile">تلفن همراه</label>
+                        <div class="form-group col-md-12 mt-2">
+                            <label for="mobile">موبایل</label>
                             <input class="form-control" name="mobile" type="number" value="{{ $user->mobile }}">
                             @error('mobile')
                                 <span class="text-danger">{{ $message }}</span>
