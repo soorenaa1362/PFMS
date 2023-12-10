@@ -48,7 +48,7 @@
                                         داشبورد
                                     </h5>
                                 </a>
-                                <a href="">
+                                <a href="{{ route('users.cards.index') }}">
                                     <i class="fa fa-credit-card text-secondary text-center fa-3x"></i>
                                     <h5 class="text-center mt-2 text-secondary" style="font-size: 18px;">
                                         کارت ها
