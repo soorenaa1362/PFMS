@@ -60,7 +60,8 @@
                         <hr>
 
                         <div class="d-grid gap-2 col-12 mx-auto">
-                            <a href="" class="btn btn-warning"
+                            <a href="{{ route('users.cards.edit', $card->id) }}"
+                                class="btn btn-warning"
                                 style="border-radius: 15px;">
                                 <i class="fas fa-edit"></i>
                                 ویرایش اطلاعات

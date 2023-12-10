@@ -61,4 +61,38 @@ class CardController extends Controller
 
         return view('users.cards.show', compact('card'));
     }
+
+
+    public function edit($card_id)
+    {
+        $card = Card::find($card_id);
+
+        return view('users.cards.edit', compact('card'));
+    }
+
+
+    public function update(Request $request, $card_id)
+    {
+        $userId = Auth::user()->id;
+        $card = Card::find($card_id);
+
+        $request->validate([
+            'name' => 'required|string',
+            'alias' => 'nullable|string',
+            'number' => 'required|numeric',
+            'current_cash' => 'required|string',
+            'description' => 'nullable|string',
+        ]);
+
+        $card->update([
+            'name' => $request->name,
+            'alias' => $request->alias,
+            'number' => $request->number,
+            'current_cash' => $request->current_cash,
+            'description' => $request->description,
+        ]);
+
+        return redirect()->route('users.cards.index')
+            ->withSuccess('اطلاعات کارت مورد نظر با موفقیت بروزرسانی شد.');
+    }
 }

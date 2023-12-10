@@ -17,6 +17,8 @@ Route::group(['prefix' => '/users' , 'namespace' => 'User'], function () {
     Route::get('/cards/create', [CardController::class, 'create'])->name('users.cards.create');
     Route::post('/cards/store', [CardController::class, 'store'])->name('users.cards.store');
     Route::get('/cards/{card_id}/show', [CardController::class, 'show'])->name('users.cards.show');
+    Route::get('/cards/{card_id}/edit', [CardController::class, 'edit'])->name('users.cards.edit');
+    Route::put('/cards/{card_id}/update', [CardController::class, 'update'])->name('users.cards.update');
 
 })->middleware(['auth']);
 
