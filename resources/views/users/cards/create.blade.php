@@ -75,7 +75,7 @@
 
                         </form>
 
-                        {{-- @include('users.sections.footer') --}}
+                        @include('users.sections.footer')
 
                     </div> <!-- card body -->
                 </div> <!-- card -->

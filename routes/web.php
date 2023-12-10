@@ -11,11 +11,12 @@ Route::get('/', [WelcomeController::class, 'welcome'])->name('welcome');
 
 Route::group(['prefix' => '/users' , 'namespace' => 'User'], function () {
 
-    Route::get('/home', [HomeController::class, 'home'])->name('home');
+    Route::get('/home', [HomeController::class, 'home'])->name('users.home');
 
     Route::get('/cards', [CardController::class, 'index'])->name('users.cards.index');
     Route::get('/cards/create', [CardController::class, 'create'])->name('users.cards.create');
     Route::post('/cards/store', [CardController::class, 'store'])->name('users.cards.store');
+    Route::get('/cards/{card_id}/show', [CardController::class, 'show'])->name('users.cards.show');
 
 })->middleware(['auth']);
 

@@ -39,14 +39,14 @@
                                 </a>
                             </div>
                         @else
-                            {{-- <h6 class="text-center text-light p-3 bg-secondary"
+                            <h6 class="text-center text-light p-3 bg-secondary"
                                 style="border-radius: 10px;">
                                 @if ($totalCash > 0)
                                     موجودی کل : {{ number_format($totalCash) }} تومان
                                 @else
                                     موجودی ندارید!
                                 @endif
-                            </h6> --}}
+                            </h6>
                             <div class="d-grid gap-2 m-2">
                                 <a class="btn btn-success" href="{{ route('users.cards.create') }}"
                                     style="border-radius: 15px;">
@@ -68,7 +68,7 @@
                                     @foreach ($cards as $card)
                                         <tr>
                                             <th>
-                                                <a href="">
+                                                <a href="{{ route('users.cards.show', $card->id) }}">
                                                     {{ $card->name }}
                                                 </a>
                                             </th>
@@ -76,18 +76,18 @@
                                                 @if ($card->alias == null)
                                                     ---------
                                                 @else
-                                                    <a href="">
+                                                    <a href="{{ route('users.cards.show', $card->id) }}">
                                                         {{ $card->alias }}
                                                     </a>
                                                 @endif
                                             </th>
                                             <th>
-                                                <a href="">
+                                                <a href="{{ route('users.cards.show', $card->id) }}">
                                                     {{ number_format($card->current_cash) }} تومان
                                                 </a>
                                             </th>
                                             <th>
-                                                <a href="">
+                                                <a href="{{ route('users.cards.show', $card->id) }}">
                                                     {{ $card->getDateJalali() }}
                                                 </a>
                                             </th>
@@ -102,7 +102,7 @@
 
                         @endif
 
-                        {{-- @include('users.sections.footer') --}}
+                        @include('users.sections.footer')
 
                     </div> <!-- card body -->
 

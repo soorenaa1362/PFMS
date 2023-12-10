@@ -14,6 +14,11 @@ class CardController extends Controller
         $userId = Auth::user()->id;
         $cards = Card::where('user_id', $userId)->get();
 
+        $totalCash = 0;
+        foreach($cards as $card){
+            $totalCash += $card->current_cash;
+        }
+
         return view('users.cards.index', compact('cards', 'totalCash'));
     }
 
@@ -47,5 +52,13 @@ class CardController extends Controller
 
         return redirect()->route('users.cards.index')
             ->withSuccess('اطلاعات کارت با موفقیت در سیستم ثبت شد.');
+    }
+
+
+    public function show($card_id)
+    {
+        $card = Card::find($card_id);
+
+        return view('users.cards.show', compact('card'));
     }
 }
