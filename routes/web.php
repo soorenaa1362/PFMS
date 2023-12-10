@@ -5,6 +5,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\User\CardController;
 use App\Http\Controllers\User\HomeController;
 use App\Http\Controllers\User\WelcomeController;
+use App\Http\Controllers\User\IncomeCategoryController;
 
 
 Route::get('/', [WelcomeController::class, 'welcome'])->name('welcome');
@@ -21,6 +22,15 @@ Route::group(['prefix' => '/users' , 'namespace' => 'User'], function () {
     Route::get('/cards/{card_id}/edit', [CardController::class, 'edit'])->name('users.cards.edit');
     Route::put('/cards/{card_id}/update', [CardController::class, 'update'])->name('users.cards.update');
     Route::get('/cards/{card_id}/delete', [CardController::class, 'delete'])->name('users.cards.delete');
+
+
+// Income Category Routes =>
+    Route::get('/income-categories', [IncomeCategoryController::class, 'index'])
+        ->name('users.income-categories.index');
+    Route::get('/income-categories/create', [IncomeCategoryController::class, 'create'])
+        ->name('users.income-categories.create');
+    Route::post('/income-categories/store', [IncomeCategoryController::class, 'store'])
+        ->name('users.income-categories.store');
 
 })->middleware(['auth']);
 
