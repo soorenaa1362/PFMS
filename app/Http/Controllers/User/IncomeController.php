@@ -58,4 +58,14 @@ class IncomeController extends Controller
         return redirect()->route('users.incomes.index')
             ->withSuccess('عملیات ثبت درآمد با موفقیت انجام شد.');
     }
+
+
+    public function show($income_id)
+    {
+        $userId = Auth::user()->id;
+        $income = Income::where('user_id', $userId)->where('id', $income_id)->first();
+        // dd($income);
+
+        return view('users.incomes.show', compact('income'));
+    }
 }

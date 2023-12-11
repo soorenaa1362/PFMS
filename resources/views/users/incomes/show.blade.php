@@ -1,7 +1,7 @@
 @extends('users.layouts.app')
 
 @section('title')
-    نمایش اطلاعات کارت
+    نمایش جزییات درآمد
 @endsection
 
 @section('content')
@@ -16,7 +16,7 @@
                             @include('users.sections.profile_icon')
 
                             <h6 class="mt-2">
-                                نمایش اطلاعات کارت
+                                نمایش جزییات درآمد
                             </h6>
 
                             @include('users.sections.logout_icon')
@@ -27,53 +27,44 @@
 
                         <div class="row">
                             <div class="col-md-6 mb-2">
-                                نام کارت : {{ $card->name }}
+                                عنوان : {{ $income->title }}
                             </div>
                             <div class="col-md-6 mb-2">
-                                @if ($card->alias === null)
-                                    نام مستعار : - - - - - - - -
-                                @else
-                                    نام مستعار : {{ $card->alias }}
-                                @endif
+                                تاریخ : {{ $income->getDateJalali() }}
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-6 mb-2">
-                                شماره کارت : {{ $card->number }}
+                                کارت : {{ $income->card->name}}
                             </div>
                             <div class="col-md-6 mb-2">
-                                موجودی : {{ number_format($card->current_cash) }} تومان
+                                مبلغ : {{ number_format($income->amount) }} تومان
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-6 mb-2">
-                                تاریخ ثبت کارت : {{ $card->getDateJalali() }}
+                                دسته بندی : {{ $income->category->title }} ({{ $income->category->parent->title }})
                             </div>
-                            @if ($card->description === null)
+                            @if ($income->description === null)
 
                             @else
                             <div class="col-md-6 mb-8">
-                                    توضیحات : <br> {{ $card->description }}
+                                    توضیحات : <br> {{ $income->description }}
                                 </div>
                             @endif
                         </div>
                         <hr>
 
                         <div class="d-grid gap-2 col-12 mx-auto">
-                            <a href="{{ route('users.cards.edit', $card->id) }}"
+                            <a href=""
                                 class="btn btn-warning"
                                 style="border-radius: 15px;">
                                 <i class="fas fa-edit"></i>
                                 ویرایش اطلاعات
                             </a>
-                            <a href="" class="btn btn-info"
-                                style="border-radius: 15px;">
-                                <i class="fa fa-exchange"></i>
-                                ثبت تراکنش
-                            </a>
-                            <a href="{{ route('users.cards.delete', $card->id) }}" style="border-radius: 15px;"
+                            <a href="" style="border-radius: 15px;"
                                 class="btn btn-danger mt-1"
-                                onclick="return confirm('آیا میخواهید این کارت بانکی را حذف کنید؟')">
+                                onclick="return confirm('آیا میخواهید این درآمد را حذف کنید؟')">
                                 <i class="fas fa-trash-alt"></i>
                                 حذف
                             </a>

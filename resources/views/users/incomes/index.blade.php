@@ -48,7 +48,7 @@
                                 @endif
                             </h6> --}}
                             <div class="d-grid gap-2 m-2">
-                                <a class="btn btn-success" href="{{ route('users.cards.create') }}"
+                                <a class="btn btn-success" href="{{ route('users.incomes.create') }}"
                                     style="border-radius: 15px;">
                                     <i class="fa fa-plus"></i>
                                     درآمد جدید
@@ -68,22 +68,22 @@
                                     @foreach ($incomes as $income)
                                         <tr>
                                             <th>
-                                                <a href="">
+                                                <a href="{{ route('users.incomes.show', $income->id) }}">
                                                     {{ $income->getDateJalali() }}
                                                 </a>
                                             </th>
                                             <th>
-                                                <a href="">
+                                                <a href="{{ route('users.incomes.show', $income->id) }}">
                                                     {{ $income->title }}
                                                 </a>
                                             </th>
                                             <th>
-                                                <a href="">
+                                                <a href="{{ route('users.incomes.show', $income->id) }}">
                                                     {{ number_format($income->amount) }} تومان
                                                 </a>
                                             </th>
                                             <th>
-                                                <a href="">
+                                                <a href="{{ route('users.incomes.show', $income->id) }}">
                                                     {{ $income->card->name }}
                                                 </a>
                                             </th>
