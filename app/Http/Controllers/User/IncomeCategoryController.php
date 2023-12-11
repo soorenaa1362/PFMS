@@ -25,7 +25,8 @@ class IncomeCategoryController extends Controller
 
     public function create()
     {
-        $categories = IncomeCategory::where('parent_id', null)->get();
+        $userId = Auth::user()->id;
+        $categories = IncomeCategory::where('user_id', $userId)->where('parent_id', null)->get();
 
         return view('users.categories.incomes.create', compact('categories'));
     }
@@ -55,8 +56,9 @@ class IncomeCategoryController extends Controller
 
     public function edit($category_id)
     {
+        $userId = Auth::user()->id;
         $category = IncomeCategory::find($category_id);
-        $parents = IncomeCategory::where('parent_id', null)->get();
+        $parents = IncomeCategory::where('user_id', $userId)->where('parent_id', null)->get();
 
         return view('users.categories.incomes.edit', compact('category', 'parents'));
     }
@@ -79,5 +81,21 @@ class IncomeCategoryController extends Controller
 
         return redirect()->route('users.categories.incomes.index')
             ->withSuccess('عملیات بروزرسانی دسته بندی با موفقیت انجام شد.');
+    }
+
+
+    public function delete($category_id)
+    {
+        $userId = Auth::user()->id;
+        $category = IncomeCategory::find($category_id);
+        $category->delete();
+
+        $categories = IncomeCategory::where('user_id', $userId)->where('parent_id', $category_id)->get();
+        foreach($categories as $category){
+            $category->delete();
+        }
+
+        return redirect()->route('users.categories.incomes.index')
+            ->withSuccess('دسته بندی مورد نظر با موفقیت حذف شد.');
     }
 }

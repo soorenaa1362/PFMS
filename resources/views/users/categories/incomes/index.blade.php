@@ -53,6 +53,7 @@
                                     <tr>
                                         <th>عنوان</th>
                                         <th>دسته ی والد</th>
+                                        <th>حذف</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -71,6 +72,14 @@
                                                         {{ $category->parent->title }}
                                                     </a>
                                                 @endif
+                                            </th>
+                                            <th>
+                                                <a href="{{ route('users.categories.incomes.delete', $category->id) }}"
+                                                    {{-- style="border-radius: 15px;"
+                                                    class="btn btn-danger mt-1" --}}
+                                                    onclick="return confirm('آیا میخواهید این دسته بندی را حذف کنید؟')">
+                                                    <i class="fas fa-trash-alt"></i>
+                                                </a>
                                             </th>
                                         </tr>
                                     @endforeach

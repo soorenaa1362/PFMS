@@ -39,6 +39,8 @@ Route::group(['prefix' => '/users' , 'namespace' => 'User'], function () {
         ->name('users.categories.incomes.edit');
     Route::put('/categories/incomes/{category_id}/update', [IncomeCategoryController::class, 'update'])
         ->name('users.categories.incomes.update');
+    Route::get('/categories/incomes/{category_id}/delete', [IncomeCategoryController::class, 'delete'])
+        ->name('users.categories.incomes.delete');
 
 })->middleware(['auth']);
 
