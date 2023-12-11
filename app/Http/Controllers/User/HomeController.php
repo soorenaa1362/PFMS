@@ -11,7 +11,12 @@ class HomeController extends Controller
 {
     public function home()
     {
-        $userId = Auth::user()->id;
+        if( Auth::guest() ){
+            return redirect()->route('login');
+        }else{
+            $userId = Auth::user()->id;
+        }
+
         $cards = Card::where('user_id', $userId)->get();
 
         return view('users.home', compact('cards'));

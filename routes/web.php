@@ -35,6 +35,10 @@ Route::group(['prefix' => '/users' , 'namespace' => 'User'], function () {
         ->name('users.categories.incomes.create');
     Route::post('/categories/incomes/store', [IncomeCategoryController::class, 'store'])
         ->name('users.categories.incomes.store');
+    Route::get('/categories/incomes/{category_id}/edit', [IncomeCategoryController::class, 'edit'])
+        ->name('users.categories.incomes.edit');
+    Route::put('/categories/incomes/{category_id}/update', [IncomeCategoryController::class, 'update'])
+        ->name('users.categories.incomes.update');
 
 })->middleware(['auth']);
 

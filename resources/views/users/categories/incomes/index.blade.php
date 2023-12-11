@@ -59,7 +59,7 @@
                                     @foreach ($categories as $category)
                                         <tr>
                                             <th>
-                                                <a href="">
+                                                <a href="{{ route('users.categories.incomes.edit', $category->id) }}">
                                                     {{ $category->title }}
                                                 </a>
                                             </th>
@@ -67,7 +67,7 @@
                                                 @if ($category->parent_id == null)
                                                     ----------
                                                 @else
-                                                    <a href="">
+                                                    <a href="{{ route('users.categories.incomes.edit', $category->id) }}">
                                                         {{ $category->parent->title }}
                                                     </a>
                                                 @endif

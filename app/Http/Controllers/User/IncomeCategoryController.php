@@ -27,7 +27,7 @@ class IncomeCategoryController extends Controller
     {
         $categories = IncomeCategory::where('parent_id', null)->get();
 
-        return view('users.categories.incomes.index', compact('categories'));
+        return view('users.categories.incomes.create', compact('categories'));
     }
 
 
@@ -50,5 +50,34 @@ class IncomeCategoryController extends Controller
 
         return redirect()->route('users.categories.incomes.index')
             ->withSuccess('دسته بندی با موفقیت در سیستم ثبت شد.');
+    }
+
+
+    public function edit($category_id)
+    {
+        $category = IncomeCategory::find($category_id);
+        $parents = IncomeCategory::where('parent_id', null)->get();
+
+        return view('users.categories.incomes.edit', compact('category', 'parents'));
+    }
+
+
+    public function update(Request $request, $category_id)
+    {
+        $category = IncomeCategory::find($category_id);
+
+        $request->validate([
+            'title' => 'required|string',
+            'description' => 'nullable|string',
+        ]);
+
+        $category->update([
+            'title' => $request->title,
+            'parent_id' => $request->parent_id,
+            'description' => $request->description,
+        ]);
+
+        return redirect()->route('users.categories.incomes.index')
+            ->withSuccess('عملیات بروزرسانی دسته بندی با موفقیت انجام شد.');
     }
 }
