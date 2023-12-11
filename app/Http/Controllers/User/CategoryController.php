@@ -7,8 +7,8 @@ use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-    public function index()
+    public function select()
     {
-        return view('users.categories.index');
+        return view('users.categories.select');
     }
 }

@@ -72,7 +72,7 @@
                             </div> <!-- row -->
 
                             <div class="d-flex justify-content-between px-4 mt-3">
-                                <a href="{{ route('users.categories.index') }}">
+                                <a href="{{ route('users.categories.select') }}">
                                     <i class="fas fa-sitemap text-info text-center fa-3x"></i>
                                     <h5 class="text-center mt-2 text-info" style="font-size: 18px;">
                                         دسته ها

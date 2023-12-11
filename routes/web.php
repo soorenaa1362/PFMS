@@ -25,7 +25,7 @@ Route::group(['prefix' => '/users' , 'namespace' => 'User'], function () {
     Route::get('/cards/{card_id}/delete', [CardController::class, 'delete'])->name('users.cards.delete');
 
 // Category Route :
-    Route::get('/categories', [CategoryController::Class, 'index'])->name('users.categories.index');
+    Route::get('/categories', [CategoryController::Class, 'select'])->name('users.categories.select');
 
 
 // Income Category Routes =>
