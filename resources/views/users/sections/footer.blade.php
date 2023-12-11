@@ -7,7 +7,7 @@
         </a>
     </div>
     <div>
-        <a href="" class="text-center text-success d-grid gap-2">
+        <a href="{{ route('users.incomes.index') }}" class="text-center text-success d-grid gap-2">
             <i class="fas fa-donate text-success fa-3x"></i>
             <span style="font-size: 15px;">درآمد ها</span>
         </a>

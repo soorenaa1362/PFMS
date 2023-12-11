@@ -57,7 +57,7 @@
                             </div> <!-- row -->
 
                             <div class="d-flex justify-content-between px-4 mt-3">
-                                <a href="">
+                                <a href="{{ route('users.incomes.index') }}">
                                     <i class="fas fa-donate text-success text-center fa-3x"></i>
                                     <h5 class="text-center mt-2 text-success" style="font-size: 18px;">
                                         درآمدها

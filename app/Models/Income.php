@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Morilog\Jalali\Jalalian;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Income extends Model
 {
@@ -35,5 +36,21 @@ class Income extends Model
     public function category()
     {
         return $this->belongsTo(IncomeCategory::class, 'category_id');
+    }
+
+
+    public function getDateJalali()
+    {
+        if (!is_null($this->date))
+            return Jalalian::fromDateTime($this->date)->format('Y/m/d');
+        return null;
+    }
+
+
+    public function getDateTimestamp()
+    {
+        if (!is_null($this->date))
+            return Jalalian::fromDateTime($this->date)->getTimestamp();
+        return null;
     }
 }

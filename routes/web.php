@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\User\CardController;
 use App\Http\Controllers\User\HomeController;
+use App\Http\Controllers\User\IncomeController;
 use App\Http\Controllers\User\WelcomeController;
 use App\Http\Controllers\User\CategoryController;
 use App\Http\Controllers\User\IncomeCategoryController;
@@ -24,6 +25,7 @@ Route::group(['prefix' => '/users' , 'namespace' => 'User'], function () {
     Route::put('/cards/{card_id}/update', [CardController::class, 'update'])->name('users.cards.update');
     Route::get('/cards/{card_id}/delete', [CardController::class, 'delete'])->name('users.cards.delete');
 
+
 // Category Route :
     Route::get('/categories', [CategoryController::Class, 'select'])->name('users.categories.select');
 
@@ -41,6 +43,34 @@ Route::group(['prefix' => '/users' , 'namespace' => 'User'], function () {
         ->name('users.categories.incomes.update');
     Route::get('/categories/incomes/{category_id}/delete', [IncomeCategoryController::class, 'delete'])
         ->name('users.categories.incomes.delete');
+
+
+// Income Routes =>
+    Route::get('/incomes', [IncomeController::class, 'index'])->name('users.incomes.index');
+    Route::get('/incomes/create', [IncomeController::class, 'create'])->name('users.incomes.create');
+    Route::post('/incomes/store', [IncomeController::class, 'store'])->name('users.incomes.store');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 })->middleware(['auth']);
 
