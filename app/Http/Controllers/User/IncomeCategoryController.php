@@ -11,10 +11,15 @@ class IncomeCategoryController extends Controller
 {
     public function index()
     {
-        $userId = Auth::user()->id;
+        if( Auth::guest() ){
+            return redirect()->route('login');
+        }else{
+            $userId = Auth::user()->id;
+        }
+
         $categories = IncomeCategory::where('user_id', $userId)->get();
 
-        return view('users.income-categories.index', compact('categories'));
+        return view('users.categories.incomes.index', compact('categories'));
     }
 
 
@@ -22,7 +27,7 @@ class IncomeCategoryController extends Controller
     {
         $categories = IncomeCategory::where('parent_id', null)->get();
 
-        return view('users.income-categories.create', compact('categories'));
+        return view('users.categories.incomes.index', compact('categories'));
     }
 
 
@@ -43,7 +48,7 @@ class IncomeCategoryController extends Controller
             'description' => $request->description
         ]);
 
-        return redirect()->route('users.income-categories.index')
+        return redirect()->route('users.categories.incomes.index')
             ->withSuccess('دسته بندی با موفقیت در سیستم ثبت شد.');
     }
 }

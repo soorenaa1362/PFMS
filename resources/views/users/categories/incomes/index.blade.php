@@ -33,7 +33,7 @@
                                 <h6 class="text-center">
                                     هنوز هیچ دسته بندی در سیستم ثبت نکرده اید.
                                 </h6>
-                                <a href="{{ route('users.income-categories.create') }}"
+                                <a href="{{ route('users.categories.incomes.create') }}"
                                     class="btn btn-success"
                                     style="border-radius: 15px;">
                                     ثبت اطلاعات دسته بندی درآمد
@@ -41,7 +41,7 @@
                             </div>
                         @else
                             <div class="d-grid gap-2 m-2">
-                                <a class="btn btn-success" href="{{ route('users.income-categories.create') }}"
+                                <a class="btn btn-success" href="{{ route('users.categories.incomes.create') }}"
                                     style="border-radius: 15px;">
                                     <i class="fa fa-plus"></i>
                                     دسته بندی جدید
