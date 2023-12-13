@@ -15,7 +15,11 @@ class IncomeController extends Controller
 {
     public function index()
     {
-        $userId = Auth::user()->id;
+        if(Auth::guest()){
+            return redirect()->route('login');
+        }else{
+            $userId = Auth::user()->id;
+        }
         $incomes = Income::where('user_id', $userId)->get();
 
         return view('users.incomes.index', compact('incomes'));
@@ -24,7 +28,11 @@ class IncomeController extends Controller
 
     public function create()
     {
-        $userId = Auth::user()->id;
+        if(Auth::guest()){
+            return redirect()->route('login');
+        }else{
+            $userId = Auth::user()->id;
+        }
         $cards = Card::where('user_id', $userId)->get();
         $categories = IncomeCategory::where('user_id', $userId)->where('parent_id', '!=', null)->get();
 
@@ -34,7 +42,11 @@ class IncomeController extends Controller
 
     public function store(Request $request)
     {
-        $userId = Auth::user()->id;
+        if(Auth::guest()){
+            return redirect()->route('login');
+        }else{
+            $userId = Auth::user()->id;
+        }
         $myDate = Carbon::createFromTimestamp($request->date)->format('Y/m/d');
         $myDateJalali = Jalalian::fromDateTime($myDate)->format('Y/m/d');
 
@@ -44,6 +56,7 @@ class IncomeController extends Controller
             'card_id' => 'required',
             'category_id' => 'required',
             'date' => 'required',
+            'description' => 'nullable|string',
         ]);
 
         Income::create([
@@ -53,6 +66,7 @@ class IncomeController extends Controller
             'card_id' => $request->card_id,
             'category_id' => $request->category_id,
             'date' => $myDate,
+            'description' => $request->description,
         ]);
 
         return redirect()->route('users.incomes.index')
@@ -62,10 +76,64 @@ class IncomeController extends Controller
 
     public function show($income_id)
     {
-        $userId = Auth::user()->id;
+        if(Auth::guest()){
+            return redirect()->route('login');
+        }else{
+            $userId = Auth::user()->id;
+        }
         $income = Income::where('user_id', $userId)->where('id', $income_id)->first();
-        // dd($income);
 
         return view('users.incomes.show', compact('income'));
+    }
+
+
+    public function edit($income_id)
+    {
+        if(Auth::guest()){
+            return redirect()->route('login');
+        }else{
+            $userId = Auth::user()->id;
+        }
+
+        $income = Income::find($income_id);
+        $cards = Card::where('user_id', $userId)->get();
+        $categories = IncomeCategory::where('user_id', $userId)->where('parent_id', '!=', null)->get();
+
+        return view('users.incomes.edit', compact('income', 'cards', 'categories'));
+    }
+
+
+    public function update(Request $request, $income_id)
+    {
+        if(Auth::guest()){
+            return redirect()->route('login');
+        }else{
+            $userId = Auth::user()->id;
+        }
+
+        $income = Income::find($income_id);
+        $myDate = Carbon::createFromTimestamp($request->date)->format('Y/m/d');
+        $myDateJalali = Jalalian::fromDateTime($myDate)->format('Y/m/d');
+
+        $request->validate([
+            'title' => 'required|string',
+            'amount' => 'required|string',
+            'card_id' => 'required',
+            'category_id' => 'required',
+            'date' => 'required',
+            'description' => 'nullable|string',
+        ]);
+
+        $income->update([
+            'title' => $request->title,
+            'amount' => $request->amount,
+            'card_id' => $request->card_id,
+            'category_id' => $request->category_id,
+            'date' => $myDate,
+            'description' => $request->description,
+        ]);
+
+        return redirect()->route('users.incomes.index')
+            ->withSuccess('عملیات بروزرسانی اطلاعات درآمد با موفقیت انجام شد.');
     }
 }

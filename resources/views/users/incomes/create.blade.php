@@ -39,7 +39,7 @@
                                 </div>
 
                                 <div class="form-group col-md-3 mt-2">
-                                    <label for="amount">مبلغ</label>
+                                    <label for="amount">مبلغ (تومان)</label>
                                     <input class="form-control" name="amount" value="{{ old('amount') }}">
                                     @error('amount')
                                         <span class="text-danger">{{ $message }}</span>

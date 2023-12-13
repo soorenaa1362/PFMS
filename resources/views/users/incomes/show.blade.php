@@ -56,7 +56,7 @@
                         <hr>
 
                         <div class="d-grid gap-2 col-12 mx-auto">
-                            <a href=""
+                            <a href="{{ route('users.incomes.edit', $income->id) }}"
                                 class="btn btn-warning"
                                 style="border-radius: 15px;">
                                 <i class="fas fa-edit"></i>

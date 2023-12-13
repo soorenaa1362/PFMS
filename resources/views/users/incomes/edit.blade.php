@@ -1,7 +1,11 @@
 @extends('users.layouts.app')
 
 @section('title')
-    ویرایش کارت
+    ویرایش درآمد
+@endsection
+
+@section('style')
+    <link rel="stylesheet" href="{{ asset('css/persianDatePicker/persian-datepicker.css') }}">
 @endsection
 
 @section('content')
@@ -15,58 +19,83 @@
 
                             @include('users.sections.profile_icon')
 
-                            @if ($card->alias === null)
-                                <h6 class="mt-2">ویرایش اطلاعات کارت : {{ $card->name }}</h6>
-                            @else
-                                <h6 class="mt-2">ویرایش اطلاعات کارت : {{ $card->name }} ({{ $card->alias }})</h6>
-                            @endif
+                            <h6 class="mt-2">ویرایش درآمد</h6>
 
                             @include('users.sections.logout_icon')
 
                         </div>
                     </div>
                     <div class="card-body">
-                        <form action="{{ route('users.cards.update', $card->id) }}" method="POST">
+                        <form action="{{ route('users.incomes.update', $income->id) }}" method="POST">
                             @csrf
                             @method('put')
 
                             <div class="row">
-                                <div class="form-group col-md-6 mt-2">
-                                    <label for="name">نام</label>
-                                    <input class="form-control" name="name" value="{{ $card->name }}">
-                                    @error('name')
+                                <div class="form-group col-md-5 mt-2">
+                                    <label for="title">عنوان</label>
+                                    <input class="form-control" name="title" value="{{ $income->title }}">
+                                    @error('title')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
 
-                                <div class="form-group col-md-6 mt-2">
-                                    <label for="alias">نام مستعار</label>
-                                    <input class="form-control" name="alias" value="{{ $card->alias }}">
-                                    @error('alias')
+                                <div class="form-group col-md-3 mt-2">
+                                    <label for="amount">مبلغ (تومان)</label>
+                                    <input class="form-control" name="amount"
+                                    value="{{ number_format($income->amount) }}">
+                                    @error('amount')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
 
-                                <div class="form-group col-md-6 mt-2">
-                                    <label for="number">شماره کارت</label>
-                                    <input class="form-control" name="number" value="{{ $card->number }}">
-                                    @error('number')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
+                                <div class="form-group col-md-4 mt-2">
+                                    <label for="card_id">کارت بانکی</label>
+                                    <select class="form-select" name="card_id" id="card_id">
+                                        {{-- <option value=""></option> --}}
+                                        @foreach ($cards as $card)
+                                            <option value="{{ $card->id }}"
+                                                {{ $card->id === $income->card->id ? 'selected' : ''}}
+                                                >
+                                                @if ( $card->alias === null )
+                                                    {{ $card->name }}
+                                                @else
+                                                    {{ $card->name }} ({{ $card->alias }})
+                                                @endif
+                                            </option>
+                                        @endforeach
+                                    </select>
                                 </div>
 
                                 <div class="form-group col-md-6 mt-2">
-                                    <label for="current_cash">موجودی</label>
-                                    <input class="form-control" name="current_cash" value="{{ $card->current_cash }}">
-                                    @error('current_cash')
-                                        <span class="text-danger">{{ $message }}</span>
+                                    <label for="category_id">دسته بندی</label>
+                                    <select class="form-select" name="category_id" id="category_id">
+                                        {{-- <option value=""></option> --}}
+                                        @foreach ($categories as $category)
+                                            <option value="{{ $category->id }}"
+                                                {{ $category->id === $income->category->id ? 'selected' : '' }}
+                                                >
+                                                {{ $category->title }} ({{ $category->parent->title }})
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <div class="form-group col-md-6 mt-2">
+                                    <label for="date">تاریخ</label>
+                                    <input type="text" class="form-control round addpo"
+                                        id="dateFake" name="dateFake" readonly required
+                                        value="{{ $income->getDateJalali() }}">
+                                    <input id="date" name="date"
+                                        type="hidden" value="">
+                                    @error('date')
+                                        <span class="text-danger" style="font-size: 14px;">{{ $message }}</span>
                                     @enderror
                                 </div>
 
                                 <div class="form-group col-md-12 mt-2">
-                                    <label for="cash">توضیحات</label>
+                                    <label for="description">توضیحات</label>
                                     <textarea name="description" class="form-control">
-                                        {{ $card->description }}
+                                        {{ old('description') }}
                                     </textarea>
                                 </div>
                             </div>
@@ -90,4 +119,22 @@
 
     {{-- @include('users.sections.modal') --}}
 
+@endsection
+
+@section('script')
+    <script src="{{ asset('js/jquery.js') }}"></script>
+    <script src="{{ asset('js/persianDatePicker/persian-date.min.js') }}"></script>
+    <script src="{{ asset('js/persianDatePicker/persian-datepicker.js') }}"></script>
+    <script>
+        $(document).ready(function () {
+            $("#dateFake").pDatepicker({
+                initialValueType: 'persian',
+                initialValue: false,
+                format: 'YYYY/MM/DD',
+                autoClose: true,
+                altField: '#date',
+                altFormat: 'X', //timestarmp
+            });
+        });
+    </script>
 @endsection
