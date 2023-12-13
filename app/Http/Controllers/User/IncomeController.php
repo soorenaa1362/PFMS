@@ -115,23 +115,24 @@ class IncomeController extends Controller
         $myDate = Carbon::createFromTimestamp($request->date)->format('Y/m/d');
         $myDateJalali = Jalalian::fromDateTime($myDate)->format('Y/m/d');
 
-        $request->validate([
-            'title' => 'required|string',
-            'amount' => 'required|string',
-            'card_id' => 'required',
-            'category_id' => 'required',
-            'date' => 'required',
-            'description' => 'nullable|string',
-        ]);
-
-        $income->update([
-            'title' => $request->title,
-            'amount' => $request->amount,
-            'card_id' => $request->card_id,
-            'category_id' => $request->category_id,
-            'date' => $myDate,
-            'description' => $request->description,
-        ]);
+        if($request->date == null){
+            $income->update([
+                'title' => $request->title,
+                'amount' => $request->amount,
+                'card_id' => $request->card_id,
+                'category_id' => $request->category_id,
+                'description' => $request->description,
+            ]);
+        }else{
+            $income->update([
+                'title' => $request->title,
+                'amount' => $request->amount,
+                'card_id' => $request->card_id,
+                'category_id' => $request->category_id,
+                'date' => $myDate,
+                'description' => $request->description,
+            ]);
+        }
 
         return redirect()->route('users.incomes.index')
             ->withSuccess('عملیات بروزرسانی اطلاعات درآمد با موفقیت انجام شد.');
