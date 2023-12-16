@@ -86,7 +86,8 @@ class CardController extends Controller
         }
         $card = Card::find($card_id);
 
-        $incomes = Income::where('user_id', $userId)->where('card_id', $card_id)->get();
+        $incomes = Income::where('user_id', $userId)
+            ->where('card_id', $card_id)->orderBy('date', 'DESC')->get();
 
         return view('users.cards.show', compact([
             'card',
@@ -150,7 +151,7 @@ class CardController extends Controller
         }else{
             $userId = Auth::user()->id;
         }
-        
+
         $card = Card::find($card_id);
         $incomes = Income::where('card_id', $card_id)->get();
 
@@ -165,7 +166,7 @@ class CardController extends Controller
         }else{
             $userId = Auth::user()->id;
         }
-        
+
         $card = Card::find($card_id);
 
         return view('users.cards.transactions.select', compact('card'));
@@ -189,7 +190,7 @@ class CardController extends Controller
             $categories = IncomeCategory::where('user_id', $userId)->where('parent_id', '!=', null)->get();
         }
 
-        return view('users.cards.transactions.incomes.create', compact('card', 'categories'));
+        return view('users.cards.incomes.create', compact('card', 'categories'));
     }
 
 
@@ -217,5 +218,25 @@ class CardController extends Controller
 
         return redirect()->route('users.cards.transactions', $card->id)
             ->withSuccess('اطلاعات درآمد با موفقیت در سیستم ثبت شد.');
+    }
+
+
+    public function incomes($card_id)
+    {
+        if(Auth::guest()){
+            return redirect()->route('login');
+        }else{
+            $userId = Auth::user()->id;
+        }
+
+        $card = Card::find($card_id);
+
+        $incomes = Income::where('user_id', $userId)->where('card_id', $card_id)->get();
+        $totalIncome = 0;
+        foreach($incomes as $income){
+            $totalIncome += $income->amount;
+        }
+
+        return view('users.cards.incomes.index', compact('card', 'incomes', 'totalIncome'));
     }
 }

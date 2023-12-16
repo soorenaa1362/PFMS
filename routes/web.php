@@ -24,14 +24,12 @@ Route::group(['prefix' => '/users' , 'namespace' => 'User'], function () {
     Route::get('/cards/{card_id}/edit', [CardController::class, 'edit'])->name('users.cards.edit');
     Route::put('/cards/{card_id}/update', [CardController::class, 'update'])->name('users.cards.update');
     Route::get('/cards/{card_id}/delete', [CardController::class, 'delete'])->name('users.cards.delete');
-    Route::get('/cards/{card_id}/transactions', [CardController::class, 'transactions'])
-        ->name('users.cards.transactions');
-    Route::get('/cards/{card_id}/transaction/select', [CardController::class, 'transactionSelect'])
-        ->name('users.cards.transaction.select');
-    Route::get('/cards/{card_id}/income/create', [CardController::class, 'incomeCreate'])
-        ->name('users.cards.income.create');
-    Route::post('/cards/{card_id}/income/store', [CardController::class, 'incomeStore'])
-        ->name('users.cards.income.store');
+
+    Route::get('/cards/{card_id}/transactions', [CardController::class, 'transactions'])->name('users.cards.transactions');
+    Route::get('/cards/{card_id}/transaction/select', [CardController::class, 'transactionSelect'])->name('users.cards.transaction.select');
+    Route::get('/cards/{card_id}/incomes/create', [CardController::class, 'incomeCreate'])->name('users.cards.incomes.create');
+    Route::post('/cards/{card_id}/incomes/store', [CardController::class, 'incomeStore'])->name('users.cards.incomes.store');
+    Route::get('/cards/{card_id}/incomes', [CardController::class, 'incomes'])->name('users.cards.incomes.index');
 
 
 // Category Route :
@@ -39,18 +37,12 @@ Route::group(['prefix' => '/users' , 'namespace' => 'User'], function () {
 
 
 // Income Category Routes =>
-    Route::get('/categories/incomes', [IncomeCategoryController::class, 'index'])
-        ->name('users.categories.incomes.index');
-    Route::get('/categories/incomes/create', [IncomeCategoryController::class, 'create'])
-        ->name('users.categories.incomes.create');
-    Route::post('/categories/incomes/store', [IncomeCategoryController::class, 'store'])
-        ->name('users.categories.incomes.store');
-    Route::get('/categories/incomes/{category_id}/edit', [IncomeCategoryController::class, 'edit'])
-        ->name('users.categories.incomes.edit');
-    Route::put('/categories/incomes/{category_id}/update', [IncomeCategoryController::class, 'update'])
-        ->name('users.categories.incomes.update');
-    Route::get('/categories/incomes/{category_id}/delete', [IncomeCategoryController::class, 'delete'])
-        ->name('users.categories.incomes.delete');
+    Route::get('/categories/incomes', [IncomeCategoryController::class, 'index'])->name('users.categories.incomes.index');
+    Route::get('/categories/incomes/create', [IncomeCategoryController::class, 'create'])->name('users.categories.incomes.create');
+    Route::post('/categories/incomes/store', [IncomeCategoryController::class, 'store'])->name('users.categories.incomes.store');
+    Route::get('/categories/incomes/{category_id}/edit', [IncomeCategoryController::class, 'edit'])->name('users.categories.incomes.edit');
+    Route::put('/categories/incomes/{category_id}/update', [IncomeCategoryController::class, 'update'])->name('users.categories.incomes.update');
+    Route::get('/categories/incomes/{category_id}/delete', [IncomeCategoryController::class, 'delete'])->name('users.categories.incomes.delete');
 
 
 // Income Routes =>

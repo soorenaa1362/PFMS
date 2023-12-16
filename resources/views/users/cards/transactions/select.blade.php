@@ -32,7 +32,7 @@
                         <div class="d-flex justify-content-around">
 
                             <div>
-                                <a href="{{ route('users.cards.income.create', $card->id) }}" class="text-center text-success d-grid gap-2">
+                                <a href="{{ route('users.cards.incomes.create', $card->id) }}" class="text-center text-success d-grid gap-2">
                                     <i class="fas fa-donate text-success fa-4x"></i>
                                     <span style="font-size: 15px;">ثبت درآمد</span>
                                 </a>

@@ -59,7 +59,7 @@
                         </div>
                         <hr>
 
-                        <div class="d-grid gap-2 col-12 mx-auto">
+                        <div class="d-grid gap-2 col-6 mx-auto">
                             @if ( count($incomes) == 0 )
                                 <a href="{{ route('users.cards.edit', $card->id) }}"
                                     class="btn btn-warning"
@@ -68,7 +68,7 @@
                                     ویرایش اطلاعات
                                 </a>
                             @else
-                                <button type="button" class="btn btn-warning mt-3"
+                                <button type="button" class="btn btn-warning"
                                     style="border-radius: 15px;"
                                     data-bs-toggle="modal" data-bs-target="#editModal">
                                     <i class="fas fa-edit"></i>
@@ -89,6 +89,56 @@
                                 حذف
                             </a>
                         </div>
+
+                        @if ( count($incomes) != 0 )
+                            <hr>
+                            <div class="d-grid gap-2 mt-2">
+                                <h6 class="text-center text-light p-2 bg-success"
+                                    style="border-radius: 10px;">
+                                    <i class="fas fa-donate"></i>
+                                    آخرین درآمدها
+                                </h6>
+                            </div>
+                            <table class="table table-bordered table-striped text-center">
+                                <thead>
+                                    <tr>
+                                        <th>تاریخ</th>
+                                        <th>عنوان</th>
+                                        <th>مبلغ (تومان)</th>
+                                        <th>دسته بندی</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($incomes as $income)
+                                        <tr>
+                                            <th>
+                                                <a href="{{ route('users.incomes.show', [$income->id]) }}">
+                                                    {{ $income->getDateJalali() }}
+                                                </a>
+                                            </th>
+                                            <th>
+                                                <a href="{{ route('users.incomes.show', [$income->id]) }}">
+                                                    {{ $income->title }}
+                                                </a>
+                                            </th>
+                                            <th>
+                                                <a href="{{ route('users.incomes.show', [$income->id]) }}">
+                                                    {{ number_format($income->amount) }}
+                                                </a>
+                                            </th>
+                                            <th>
+                                                <a href="{{ route('users.incomes.show', [$income->id]) }}">
+                                                    {{ $income->category->title }}
+                                                </a>
+                                            </th>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                            <a href="{{ route('users.cards.incomes.index', $card->id) }}" class="d-flex justify-content-end text-secondary">
+                                موارد بیشتر
+                            </a>
+                        @endif
 
                         @include('users.sections.footer')
 
