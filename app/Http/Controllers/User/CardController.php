@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Models\Card;
+use App\Models\Income;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -23,7 +24,17 @@ class CardController extends Controller
             $totalCash += $card->current_cash;
         }
 
-        return view('users.cards.index', compact('cards', 'totalCash'));
+        $incomes = Income::where('user_id', $userId)->get();
+        $totalIncome = 0;
+        foreach($incomes as $income){
+            $totalIncome += $income->amount;
+        }
+
+        return view('users.cards.index', compact([
+            'cards',
+            'totalCash',
+            'totalIncome',
+        ]));
     }
 
 

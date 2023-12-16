@@ -42,7 +42,7 @@
                             <h6 class="text-center text-light p-3 bg-secondary"
                                 style="border-radius: 10px;">
                                 @if ($totalCash > 0)
-                                    موجودی کل : {{ number_format($totalCash) }} تومان
+                                    موجودی کل : {{ number_format( $totalCash + $totalIncome ) }} تومان
                                 @else
                                     موجودی ندارید!
                                 @endif
