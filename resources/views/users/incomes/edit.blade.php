@@ -74,7 +74,11 @@
                                             <option value="{{ $category->id }}"
                                                 {{ $category->id === $income->category->id ? 'selected' : '' }}
                                                 >
-                                                {{ $category->title }} ({{ $category->parent->title }})
+                                                @if ( $category->parent == null )
+                                                    {{ $category->title }}
+                                                @else
+                                                    {{ $category->title }} ({{ $category->parent->title }})
+                                                @endif
                                             </option>
                                         @endforeach
                                     </select>

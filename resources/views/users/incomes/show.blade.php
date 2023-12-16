@@ -43,7 +43,11 @@
                         </div>
                         <div class="row">
                             <div class="col-md-6 mb-2">
-                                دسته بندی : {{ $income->category->title }} ({{ $income->category->parent->title }})
+                                @if ( $income->category->parent == null )
+                                    دسته بندی : {{ $income->category->title }}
+                                @else
+                                    دسته بندی : {{ $income->category->title }} ({{ $income->category->parent->title }})
+                                @endif
                             </div>
                             @if ($income->description === null)
 
@@ -62,7 +66,8 @@
                                 <i class="fas fa-edit"></i>
                                 ویرایش اطلاعات
                             </a>
-                            <a href="" style="border-radius: 15px;"
+                            <a href="{{ route('users.incomes.delete', $income->id) }}"
+                                style="border-radius: 15px;"
                                 class="btn btn-danger mt-1"
                                 onclick="return confirm('آیا میخواهید این درآمد را حذف کنید؟')">
                                 <i class="fas fa-trash-alt"></i>

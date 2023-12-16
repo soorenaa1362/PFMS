@@ -4,13 +4,16 @@ namespace App\Models;
 
 use Morilog\Jalali\Jalalian;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Income extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $table = 'incomes';
+
+    protected $dates = ['deleted_at'];
 
     protected $fillable = [
         'user_id',

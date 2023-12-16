@@ -52,6 +52,7 @@ Route::group(['prefix' => '/users' , 'namespace' => 'User'], function () {
     Route::get('/incomes/{income_id}/show', [IncomeController::class, 'show'])->name('users.incomes.show');
     Route::get('/incomes/{income_id}/edit', [IncomeController::class, 'edit'])->name('users.incomes.edit');
     Route::put('/incomes/{income_id}/update', [IncomeController::class, 'update'])->name('users.incomes.update');
+    Route::get('/incomes/{income_id}/delete', [IncomeController::class, 'delete'])->name('users.incomes.delete');
 
 
 

@@ -33,8 +33,16 @@ class IncomeController extends Controller
         }else{
             $userId = Auth::user()->id;
         }
+
         $cards = Card::where('user_id', $userId)->get();
+
         $categories = IncomeCategory::where('user_id', $userId)->where('parent_id', '!=', null)->get();
+
+        if( count($categories) === 0 ){
+            $categories = IncomeCategory::where('user_id', $userId)->where('parent_id', null)->get();
+        }else{
+            $categories = IncomeCategory::where('user_id', $userId)->where('parent_id', '!=', null)->get();
+        }
 
         return view('users.incomes.create', compact('cards', 'categories'));
     }
@@ -83,6 +91,8 @@ class IncomeController extends Controller
         }
         $income = Income::where('user_id', $userId)->where('id', $income_id)->first();
 
+        // dd($income->category->parent);
+
         return view('users.incomes.show', compact('income'));
     }
 
@@ -98,6 +108,12 @@ class IncomeController extends Controller
         $income = Income::find($income_id);
         $cards = Card::where('user_id', $userId)->get();
         $categories = IncomeCategory::where('user_id', $userId)->where('parent_id', '!=', null)->get();
+
+        if( count($categories) == 0 ){
+            $categories = IncomeCategory::where('user_id', $userId)->where('parent_id', null)->get();
+        }else{
+            $categories = IncomeCategory::where('user_id', $userId)->where('parent_id', '!=', null)->get();
+        }
 
         return view('users.incomes.edit', compact('income', 'cards', 'categories'));
     }
@@ -136,5 +152,15 @@ class IncomeController extends Controller
 
         return redirect()->route('users.incomes.index')
             ->withSuccess('عملیات بروزرسانی اطلاعات درآمد با موفقیت انجام شد.');
+    }
+
+
+    public function delete($income_id)
+    {
+        $income = Income::find($income_id);
+        $income->delete();
+
+        return redirect()->route('users.incomes.index')
+            ->withSuccess('درآمد مورد نظر با موفقیت حذف شد.');
     }
 }
