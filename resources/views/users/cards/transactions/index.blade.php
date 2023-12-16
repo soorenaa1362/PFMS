@@ -32,6 +32,11 @@
 
                         </div>
                     </div>
+                    @if(Session::has('success'))
+                        <div class="alert alert-success text-center">
+                            {{ Session::get('success') }}
+                        </div>
+                    @endif
                     <div class="card-body">
 
                         @if (blank($incomes))

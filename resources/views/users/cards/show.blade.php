@@ -75,7 +75,8 @@
                                     ویرایش اطلاعات
                                 </button>
                             @endif
-                            <a href="" class="btn btn-info"
+                            <a href="{{ route('users.cards.transaction.select', $card->id) }}"
+                                class="btn btn-info"
                                 style="border-radius: 15px;">
                                 <i class="fa fa-exchange"></i>
                                 ثبت تراکنش

@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers\User;
 
+use Carbon\Carbon;
 use App\Models\Card;
 use App\Models\Income;
 use Illuminate\Http\Request;
+use Morilog\Jalali\Jalalian;
+use App\Models\IncomeCategory;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
@@ -142,9 +145,77 @@ class CardController extends Controller
 
     public function transactions($card_id)
     {
+        if(Auth::guest()){
+            return redirect()->route('login');
+        }else{
+            $userId = Auth::user()->id;
+        }
+        
         $card = Card::find($card_id);
         $incomes = Income::where('card_id', $card_id)->get();
 
         return view('users.cards.transactions.index', compact('card', 'incomes'));
+    }
+
+
+    public function transactionSelect($card_id)
+    {
+        if(Auth::guest()){
+            return redirect()->route('login');
+        }else{
+            $userId = Auth::user()->id;
+        }
+        
+        $card = Card::find($card_id);
+
+        return view('users.cards.transactions.select', compact('card'));
+    }
+
+
+    public function incomeCreate($card_id)
+    {
+        if(Auth::guest()){
+            return redirect()->route('login');
+        }else{
+            $userId = Auth::user()->id;
+        }
+
+        $card = Card::find($card_id);
+        $categories = IncomeCategory::where('user_id', $userId)->where('parent_id', '!=', null)->get();
+
+        if( count($categories) === 0 ){
+            $categories = IncomeCategory::where('user_id', $userId)->where('parent_id', null)->get();
+        }else{
+            $categories = IncomeCategory::where('user_id', $userId)->where('parent_id', '!=', null)->get();
+        }
+
+        return view('users.cards.transactions.incomes.create', compact('card', 'categories'));
+    }
+
+
+    public function incomeStore(Request $request, $card_id)
+    {
+        if(Auth::guest()){
+            return redirect()->route('login');
+        }else{
+            $userId = Auth::user()->id;
+        }
+
+        $card = Card::find($card_id);
+
+        $myDate = Carbon::createFromTimestamp($request->date)->format('Y/m/d');
+        $myDateJalali = Jalalian::fromDateTime($myDate)->format('Y/m/d');
+
+        $income = Income::create([
+            'user_id' => $userId,
+            'card_id' => $card_id,
+            'category_id' => $request->category_id,
+            'title' => $request->title,
+            'amount' => $request->amount,
+            'date' => $myDate,
+        ]);
+
+        return redirect()->route('users.cards.transactions', $card->id)
+            ->withSuccess('اطلاعات درآمد با موفقیت در سیستم ثبت شد.');
     }
 }
