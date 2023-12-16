@@ -11,7 +11,11 @@ class CardController extends Controller
 {
     public function index()
     {
-        $userId = Auth::user()->id;
+        if(Auth::guest()){
+            return redirect()->route('login');
+        }else{
+            $userId = Auth::user()->id;
+        }
         $cards = Card::where('user_id', $userId)->get();
 
         $totalCash = 0;
@@ -31,7 +35,11 @@ class CardController extends Controller
 
     public function store(Request $request)
     {
-        $userId = Auth::user()->id;
+        if(Auth::guest()){
+            return redirect()->route('login');
+        }else{
+            $userId = Auth::user()->id;
+        }
 
         $request->validate([
             'name' => 'required|string',
@@ -73,7 +81,11 @@ class CardController extends Controller
 
     public function update(Request $request, $card_id)
     {
-        $userId = Auth::user()->id;
+        if(Auth::guest()){
+            return redirect()->route('login');
+        }else{
+            $userId = Auth::user()->id;
+        }
         $card = Card::find($card_id);
 
         $request->validate([

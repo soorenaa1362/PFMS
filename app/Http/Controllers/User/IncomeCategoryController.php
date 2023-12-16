@@ -59,6 +59,8 @@ class IncomeCategoryController extends Controller
         $userId = Auth::user()->id;
         $category = IncomeCategory::find($category_id);
         $parents = IncomeCategory::where('user_id', $userId)->where('parent_id', null)->get();
+        // $parents = IncomeCategory::where('user_id', $userId)
+        //     ->where('parent_id', null)->where('id', '!=', $category_id)->get();
 
         return view('users.categories.incomes.edit', compact('category', 'parents'));
     }

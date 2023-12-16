@@ -21,8 +21,18 @@ class IncomeController extends Controller
             $userId = Auth::user()->id;
         }
         $incomes = Income::where('user_id', $userId)->get();
+        $incomeCategories = IncomeCategory::where('user_id', $userId)->get();
 
-        return view('users.incomes.index', compact('incomes'));
+        $totalIncome = 0;
+        foreach($incomes as $income){
+            $totalIncome += $income->amount;
+        }
+
+        return view('users.incomes.index', compact([
+            'incomes',
+            'totalIncome',
+            'incomeCategories'
+        ]));
     }
 
 
