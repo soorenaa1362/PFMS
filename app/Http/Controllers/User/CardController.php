@@ -76,9 +76,19 @@ class CardController extends Controller
 
     public function show($card_id)
     {
+        if(Auth::guest()){
+            return redirect()->route('login');
+        }else{
+            $userId = Auth::user()->id;
+        }
         $card = Card::find($card_id);
 
-        return view('users.cards.show', compact('card'));
+        $incomes = Income::where('user_id', $userId)->where('card_id', $card_id)->get();
+
+        return view('users.cards.show', compact([
+            'card',
+            'incomes'
+        ]));
     }
 
 
@@ -127,5 +137,14 @@ class CardController extends Controller
 
         return redirect()->route('users.cards.index')
             ->withSuccess('عملیات حذف کارت بانکی با موفقیت انجام شد.');
+    }
+
+
+    public function transactions($card_id)
+    {
+        $card = Card::find($card_id);
+        $incomes = Income::where('card_id', $card_id)->get();
+
+        return view('users.cards.transactions.index', compact('card', 'incomes'));
     }
 }

@@ -68,7 +68,7 @@
                             </a>
                             <a href="{{ route('users.incomes.delete', $income->id) }}"
                                 style="border-radius: 15px;"
-                                class="btn btn-danger mt-1"
+                                class="btn btn-danger"
                                 onclick="return confirm('آیا میخواهید این درآمد را حذف کنید؟')">
                                 <i class="fas fa-trash-alt"></i>
                                 حذف

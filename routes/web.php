@@ -24,6 +24,7 @@ Route::group(['prefix' => '/users' , 'namespace' => 'User'], function () {
     Route::get('/cards/{card_id}/edit', [CardController::class, 'edit'])->name('users.cards.edit');
     Route::put('/cards/{card_id}/update', [CardController::class, 'update'])->name('users.cards.update');
     Route::get('/cards/{card_id}/delete', [CardController::class, 'delete'])->name('users.cards.delete');
+    Route::get('/cards/{catrd_id}/transactions', [CardController::class, 'transactions'])->name('users.cards.transactions');
 
 
 // Category Route :

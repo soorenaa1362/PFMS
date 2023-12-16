@@ -60,19 +60,29 @@
                         <hr>
 
                         <div class="d-grid gap-2 col-12 mx-auto">
-                            <a href="{{ route('users.cards.edit', $card->id) }}"
-                                class="btn btn-warning"
-                                style="border-radius: 15px;">
-                                <i class="fas fa-edit"></i>
-                                ویرایش اطلاعات
-                            </a>
+                            @if ( count($incomes) == 0 )
+                                <a href="{{ route('users.cards.edit', $card->id) }}"
+                                    class="btn btn-warning"
+                                    style="border-radius: 15px;">
+                                    <i class="fas fa-edit"></i>
+                                    ویرایش اطلاعات
+                                </a>
+                            @else
+                                <button type="button" class="btn btn-warning mt-3"
+                                    style="border-radius: 15px;"
+                                    data-bs-toggle="modal" data-bs-target="#editModal">
+                                    <i class="fas fa-edit"></i>
+                                    ویرایش اطلاعات
+                                </button>
+                            @endif
                             <a href="" class="btn btn-info"
                                 style="border-radius: 15px;">
                                 <i class="fa fa-exchange"></i>
                                 ثبت تراکنش
                             </a>
-                            <a href="{{ route('users.cards.delete', $card->id) }}" style="border-radius: 15px;"
-                                class="btn btn-danger mt-1"
+                            <a href="{{ route('users.cards.delete', $card->id) }}"
+                                style="border-radius: 15px;"
+                                class="btn btn-danger"
                                 onclick="return confirm('آیا میخواهید این کارت بانکی را حذف کنید؟')">
                                 <i class="fas fa-trash-alt"></i>
                                 حذف
@@ -86,6 +96,37 @@
             </div> <!-- col 12 -->
         </div> <!-- row -->
     </div> <!-- container -->
+
+
+    <!-- Edit Modal -->
+    <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editModalLabel">ویرایش کارت</h5>
+                </div>
+                <div class="modal-body">
+                    <p class="text-center">
+                        برای این کارت تراکنش ذخیره شده است .
+                        <a href="{{ route('users.cards.transactions', $card->id) }}" class="btn btn-sm btn-info">
+                            تراکنش ها را بررسی میکنم .
+                        </a>
+                        <a href="{{ route('users.cards.edit', $card->id) }}" class="btn btn-warning mt-3"
+                            style="border-radius: 15px;">
+                            <i class="fas fa-edit"></i>
+                            مهم نیست در هر صورت ویرایش میکنم .
+                        </a>
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        بستن پنجره
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     {{-- @include('users.sections.modal') --}}
 
