@@ -65,6 +65,7 @@ class IncomeController extends Controller
         }else{
             $userId = Auth::user()->id;
         }
+
         $myDate = Carbon::createFromTimestamp($request->date)->format('Y/m/d');
         $myDateJalali = Jalalian::fromDateTime($myDate)->format('Y/m/d');
 
@@ -77,7 +78,7 @@ class IncomeController extends Controller
             'description' => 'nullable|string',
         ]);
 
-        Income::create([
+        $income = Income::create([
             'user_id' => $userId,
             'title' => $request->title,
             'amount' => $request->amount,
@@ -85,6 +86,12 @@ class IncomeController extends Controller
             'category_id' => $request->category_id,
             'date' => $myDate,
             'description' => $request->description,
+        ]);
+
+        $card = Card::where('id', $income->card_id)->first();
+        $newCash = $card->current_cash + $income->amount;
+        $card->update([
+            'current_cash' => $newCash
         ]);
 
         return redirect()->route('users.incomes.index')
@@ -99,9 +106,8 @@ class IncomeController extends Controller
         }else{
             $userId = Auth::user()->id;
         }
-        $income = Income::where('user_id', $userId)->where('id', $income_id)->first();
 
-        // dd($income->category->parent);
+        $income = Income::where('user_id', $userId)->where('id', $income_id)->first();
 
         return view('users.incomes.show', compact('income'));
     }
@@ -138,25 +144,46 @@ class IncomeController extends Controller
         }
 
         $income = Income::find($income_id);
+        $oldIncomeAmount = $income->amount;
+        $card = Card::where('id', $income->card_id)->first();
+
         $myDate = Carbon::createFromTimestamp($request->date)->format('Y/m/d');
-        $myDateJalali = Jalalian::fromDateTime($myDate)->format('Y/m/d');
 
         if($request->date == null){
-            $income->update([
-                'title' => $request->title,
-                'amount' => $request->amount,
-                'card_id' => $request->card_id,
-                'category_id' => $request->category_id,
-                'description' => $request->description,
+            $income->user_id = $userId;
+            $income->card_id = $request->card_id;
+            $income->category_id = $request->category_id;
+            $income->title = $request->title;
+            $income->amount = $request->amount;
+            $income->description = $request->description;
+        }else{
+            $income->user_id = $userId;
+            $income->card_id = $request->card_id;
+            $income->category_id = $request->category_id;
+            $income->title = $request->title;
+            $income->amount = $request->amount;
+            $income->date = $myDate;
+            $income->description = $request->description;
+        }
+
+        $newCard = Card::find($income->card_id);
+
+        if( $card == $newCard ){
+            $income->update();
+            $newCash = ($card->current_cash - $oldIncomeAmount) + $income->amount;
+            $card->update([
+                'current_cash' => $newCash
             ]);
         }else{
-            $income->update([
-                'title' => $request->title,
-                'amount' => $request->amount,
-                'card_id' => $request->card_id,
-                'category_id' => $request->category_id,
-                'date' => $myDate,
-                'description' => $request->description,
+            $income->update();
+            $oldCash = ($card->current_cash - $oldIncomeAmount);
+            $card->update([
+                'current_cash' => $oldCash
+            ]);
+
+            $newCash = $newCard->current_cash + $income->amount;
+            $newCard->update([
+                'current_cash' => $newCash
             ]);
         }
 

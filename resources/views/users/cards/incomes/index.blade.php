@@ -27,7 +27,7 @@
                         </div>
                     </div>
                     @if(Session::has('success'))
-                        <div class="alert alert-success text-center">
+                    <div class="alert alert-success text-center" style="margin-bottom: 0 !important">
                             {{ Session::get('success') }}
                         </div>
                     @endif

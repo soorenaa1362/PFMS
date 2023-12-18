@@ -23,7 +23,7 @@
                         </div>
                     </div>
                     @if(Session::has('success'))
-                        <div class="alert alert-success text-center">
+                    <div class="alert alert-success text-center" style="margin-bottom: 0 !important">
                             {{ Session::get('success') }}
                         </div>
                     @endif
@@ -42,7 +42,7 @@
                             <h6 class="text-center text-light p-3 bg-secondary"
                                 style="border-radius: 10px;">
                                 @if ($totalCash > 0)
-                                    موجودی کل : {{ number_format( $totalCash + $totalIncome ) }} تومان
+                                    موجودی کل : {{ number_format( $totalCash) }} تومان
                                 @else
                                     موجودی ندارید!
                                 @endif

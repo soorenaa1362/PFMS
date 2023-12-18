@@ -20,6 +20,7 @@ class CardController extends Controller
         }else{
             $userId = Auth::user()->id;
         }
+        
         $cards = Card::where('user_id', $userId)->get();
 
         $totalCash = 0;
@@ -27,23 +28,20 @@ class CardController extends Controller
             $totalCash += $card->current_cash;
         }
 
-        $incomes = Income::where('user_id', $userId)->get();
-        $totalIncome = 0;
-        foreach($incomes as $income){
-            $totalIncome += $income->amount;
-        }
-
         return view('users.cards.index', compact([
             'cards',
             'totalCash',
-            'totalIncome',
         ]));
     }
 
 
     public function create()
     {
-        return view('users.cards.create');
+        if(Auth::guest()){
+            return redirect()->route('login');
+        }else{
+            return view('users.cards.create');
+        }
     }
 
 
@@ -84,6 +82,7 @@ class CardController extends Controller
         }else{
             $userId = Auth::user()->id;
         }
+
         $card = Card::find($card_id);
 
         $incomes = Income::where('user_id', $userId)
@@ -111,6 +110,7 @@ class CardController extends Controller
         }else{
             $userId = Auth::user()->id;
         }
+
         $card = Card::find($card_id);
 
         $request->validate([
