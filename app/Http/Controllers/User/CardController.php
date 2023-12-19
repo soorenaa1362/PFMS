@@ -20,7 +20,7 @@ class CardController extends Controller
         }else{
             $userId = Auth::user()->id;
         }
-        
+
         $cards = Card::where('user_id', $userId)->get();
 
         $totalCash = 0;
@@ -61,7 +61,7 @@ class CardController extends Controller
             'description' => 'nullable|string',
         ]);
 
-        Card::create([
+        $card = Card::create([
             'user_id' => $userId,
             'name' => $request->name,
             'alias' => $request->alias,
@@ -214,6 +214,12 @@ class CardController extends Controller
             'title' => $request->title,
             'amount' => $request->amount,
             'date' => $myDate,
+        ]);
+
+        $card = Card::where('id', $income->card_id)->first();
+        $newCash = $card->current_cash + $income->amount;
+        $card->update([
+            'current_cash' => $newCash
         ]);
 
         return redirect()->route('users.cards.transactions', $card->id)
