@@ -90,7 +90,7 @@
                             </a>
                         </div>
 
-                        @if ( count($incomes) != 0 )
+                        @if ( !blank($incomes) )
                             <hr>
                             <div class="d-grid gap-2 mt-2">
                                 <h6 class="text-center text-light p-2 bg-success"
@@ -135,8 +135,9 @@
                                     @endforeach
                                 </tbody>
                             </table>
-                            <a href="{{ route('users.cards.incomes.index', $card->id) }}" class="d-flex justify-content-end text-secondary">
-                                موارد بیشتر
+                            <a href="{{ route('users.cards.incomes.index', $card->id) }}"
+                                class="d-flex justify-content-end text-secondary">
+                                نمایش موارد بیشتر
                             </a>
                         @endif
 
@@ -159,7 +160,7 @@
                 <div class="modal-body">
                     <p class="text-center">
                         برای این کارت تراکنش ذخیره شده است .
-                        <a href="{{ route('users.cards.transactions', $card->id) }}" class="btn btn-sm btn-info">
+                        <a href="{{ route('users.cards.checkTransactions', $card->id) }}" class="btn btn-sm btn-info">
                             تراکنش ها را بررسی میکنم .
                         </a>
                         <a href="{{ route('users.cards.edit', $card->id) }}" class="btn btn-warning mt-3"

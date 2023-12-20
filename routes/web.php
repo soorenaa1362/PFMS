@@ -25,7 +25,7 @@ Route::group(['prefix' => '/users' , 'namespace' => 'User'], function () {
     Route::put('/cards/{card_id}/update', [CardController::class, 'update'])->name('users.cards.update');
     Route::get('/cards/{card_id}/delete', [CardController::class, 'delete'])->name('users.cards.delete');
 
-    Route::get('/cards/{card_id}/transactions', [CardController::class, 'transactions'])->name('users.cards.transactions');
+    Route::get('/cards/{card_id}/checkTransactions', [CardController::class, 'checkTransactions'])->name('users.cards.checkTransactions');
     Route::get('/cards/{card_id}/transaction/select', [CardController::class, 'transactionSelect'])->name('users.cards.transaction.select');
     Route::get('/cards/{card_id}/incomes/create', [CardController::class, 'incomeCreate'])->name('users.cards.incomes.create');
     Route::post('/cards/{card_id}/incomes/store', [CardController::class, 'incomeStore'])->name('users.cards.incomes.store');

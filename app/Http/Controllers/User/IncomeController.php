@@ -20,7 +20,7 @@ class IncomeController extends Controller
         }else{
             $userId = Auth::user()->id;
         }
-        $incomes = Income::where('user_id', $userId)->get();
+        $incomes = Income::where('user_id', $userId)->paginate(3);
         $incomeCategories = IncomeCategory::where('user_id', $userId)->get();
 
         $totalIncome = 0;

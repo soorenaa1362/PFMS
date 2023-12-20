@@ -100,9 +100,7 @@
                                     </tbody>
                                 </table>
 
-                                {{-- <div class="d-flex justify-content-end">
-                                    {!! $cards->links() !!}
-                                </div> --}}
+                                {{ $incomes->links() }}
 
                             @endif
                         @endif

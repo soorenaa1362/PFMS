@@ -17,7 +17,7 @@ class IncomeCategoryController extends Controller
             $userId = Auth::user()->id;
         }
 
-        $categories = IncomeCategory::where('user_id', $userId)->get();
+        $categories = IncomeCategory::where('user_id', $userId)->paginate(1);
 
         return view('users.categories.incomes.index', compact('categories'));
     }

@@ -86,9 +86,7 @@
                                 </tbody>
                             </table>
 
-                            {{-- <div class="d-flex justify-content-end">
-                                {!! $cards->links() !!}
-                            </div> --}}
+                            {{ $categories->links() }}
 
                         @endif
 

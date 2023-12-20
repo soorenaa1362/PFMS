@@ -80,7 +80,10 @@
                                     </tr>
                                 @endforeach
                             </tbody>
+
                         </table>
+
+                        {{ $incomes->links() }}
 
                         @include('users.sections.footer')
 

@@ -21,7 +21,7 @@ class CardController extends Controller
             $userId = Auth::user()->id;
         }
 
-        $cards = Card::where('user_id', $userId)->get();
+        $cards = Card::where('user_id', $userId)->paginate(3);
 
         $totalCash = 0;
         foreach($cards as $card){
@@ -85,8 +85,8 @@ class CardController extends Controller
 
         $card = Card::find($card_id);
 
-        $incomes = Income::where('user_id', $userId)
-            ->where('card_id', $card_id)->orderBy('date', 'DESC')->get();
+        $incomes = Income::where('user_id', $userId)->orderBy('id', 'DESC')
+            ->where('card_id', $card_id)->paginate(3);
 
         return view('users.cards.show', compact([
             'card',
@@ -144,7 +144,7 @@ class CardController extends Controller
     }
 
 
-    public function transactions($card_id)
+    public function checkTransactions($card_id)
     {
         if(Auth::guest()){
             return redirect()->route('login');
@@ -153,7 +153,7 @@ class CardController extends Controller
         }
 
         $card = Card::find($card_id);
-        $incomes = Income::where('card_id', $card_id)->get();
+        $incomes = Income::where('card_id', $card_id)->paginate(4);
 
         return view('users.cards.transactions.index', compact('card', 'incomes'));
     }
@@ -237,7 +237,7 @@ class CardController extends Controller
 
         $card = Card::find($card_id);
 
-        $incomes = Income::where('user_id', $userId)->where('card_id', $card_id)->get();
+        $incomes = Income::where('user_id', $userId)->where('card_id', $card_id)->paginate(3);
         $totalIncome = 0;
         foreach($incomes as $income){
             $totalIncome += $income->amount;
