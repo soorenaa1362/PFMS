@@ -31,21 +31,21 @@
                         <div class="d-flex justify-content-around">
 
                             <div>
-                                <a href=""
+                                <a href="{{ route('users.reports.incomes.day') }}"
                                     class="text-center text-success d-grid gap-2">
                                     <i class="far fa-file-alt text-success fa-4x"></i>
                                     <span style="font-size: 15px;">گزارش روزانه</span>
                                 </a>
                             </div>
                             <div>
-                                <a href=""
+                                <a href="{{ route('users.reports.incomes.week') }}"
                                     class="text-center text-info d-grid gap-2">
                                     <i class="far fa-file-alt text-info fa-4x"></i>
                                     <span style="font-size: 15px;">گزارش هفتگی</span>
                                 </a>
                             </div>
                             <div>
-                                <a href=""
+                                <a href="{{ route('users.reports.incomes.month') }}"
                                     class="text-center text-dark d-grid gap-2">
                                     <i class="far fa-file-alt text-dark fa-4x"></i>
                                     <span style="font-size: 15px;">گزارش ماهانه</span>

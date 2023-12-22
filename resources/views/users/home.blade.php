@@ -78,7 +78,7 @@
                                         دسته ها
                                     </h5>
                                 </a>
-                                <a href="{{ route('users.reports.index') }}">
+                                <a href="{{ route('users.reports.select') }}">
                                     <i class="fa fa-newspaper-o text-warning text-center fa-3x"></i>
                                     <h5 class="text-center mt-2 text-warning" style="font-size: 18px;">
                                         گزارشات
