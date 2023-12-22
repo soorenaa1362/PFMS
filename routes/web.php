@@ -5,6 +5,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\User\CardController;
 use App\Http\Controllers\User\HomeController;
 use App\Http\Controllers\User\IncomeController;
+use App\Http\Controllers\User\ReportController;
 use App\Http\Controllers\User\WelcomeController;
 use App\Http\Controllers\User\CategoryController;
 use App\Http\Controllers\User\IncomeCategoryController;
@@ -54,6 +55,12 @@ Route::group(['prefix' => '/users' , 'namespace' => 'User'], function () {
     Route::put('/incomes/{income_id}/update', [IncomeController::class, 'update'])->name('users.incomes.update');
     Route::get('/incomes/{income_id}/delete', [IncomeController::class, 'delete'])->name('users.incomes.delete');
 
+
+// Reports Routes =>
+    Route::get('/reports', [ReportController::class, 'select'])->name('users.reports.select');
+
+// Reports Routes : Incomes =>
+    Route::get('/reports/incomes', [ReportController::class, 'incomes'])->name('users.reports.incomes.select');
 
 
 
