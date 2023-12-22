@@ -44,7 +44,7 @@
                         <div class="d-flex justify-content-around">
 
                             <div>
-                                <a href="{{ route('users.reports.deleted.select') }}" class="text-center text-secondary d-grid gap-2">
+                                <a href="{{ route('users.deleted.select') }}" class="text-center text-secondary d-grid gap-2">
                                     <i class="far fa-trash-alt text-secondary fa-4x"></i>
                                     <span style="font-size: 15px;">تراکنش های حذف شده</span>
                                 </a>

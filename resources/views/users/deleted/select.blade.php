@@ -26,18 +26,24 @@
                         <div class="d-flex justify-content-around">
 
                             <div>
-                                <a href=""
-                                    class="text-center text-success d-grid gap-2">
-                                    <i class="fas fa-donate text-success fa-4x"></i>
-                                    <span style="font-size: 15px;">درآمدهای حذف شده</span>
-                                </a>
+                                @if ( blank($incomes) )
+                                    <h6 class="text-center m-2 p-2">
+                                        در حال حاضر هیچ تراکنش حذف شده ای ندارید.
+                                    </h6>
+                                @else
+                                    <a href="{{ route('users.deleted.incomes') }}"
+                                        class="text-center text-success d-grid gap-2">
+                                        <i class="fas fa-donate text-success fa-4x"></i>
+                                        <span style="font-size: 15px;">درآمدهای حذف شده</span>
+                                    </a>
+                                @endif
                             </div>
-                            <div>
+                            {{-- <div>
                                 <a href="" class="text-center text-danger d-grid gap-2">
                                     <i class="fas fa-hand-holding-usd text-danger fa-4x"></i>
                                     <span style="font-size: 15px;">خرجکردهای حذف شده</span>
                                 </a>
-                            </div>
+                            </div> --}}
 
                         </div>
 

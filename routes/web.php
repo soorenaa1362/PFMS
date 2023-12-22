@@ -69,7 +69,11 @@ Route::group(['prefix' => '/users' , 'namespace' => 'User'], function () {
 
 
 // Reports Routes : Deleted =>
-    Route::get('/reports/deleted', [DeletedController::class, 'select'])->name('users.reports.deleted.select');
+    Route::get('/deleted', [DeletedController::class, 'select'])->name('users.deleted.select');
+
+    Route::get('/deleted/incomes', [DeletedController::class, 'incomes'])->name('users.deleted.incomes');
+    Route::get('/deleted/incomes/{income_id}/restore', [DeletedController::class, 'restore'])->name('users.deleted.incomes.restore');
+    Route::get('/deleted/incomes/{income_id}/forceDelete', [DeletedController::class, 'forceDelete'])->name('users.deleted.incomes.forceDelete');
 
 
 
