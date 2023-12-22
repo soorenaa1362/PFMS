@@ -6,6 +6,7 @@ use App\Http\Controllers\User\CardController;
 use App\Http\Controllers\User\HomeController;
 use App\Http\Controllers\User\IncomeController;
 use App\Http\Controllers\User\ReportController;
+use App\Http\Controllers\User\DeletedController;
 use App\Http\Controllers\User\WelcomeController;
 use App\Http\Controllers\User\CategoryController;
 use App\Http\Controllers\User\IncomeCategoryController;
@@ -64,6 +65,12 @@ Route::group(['prefix' => '/users' , 'namespace' => 'User'], function () {
     Route::get('/reports/incomes/day', [ReportController::class, 'incomesDay'])->name('users.reports.incomes.day');
     Route::get('/reports/incomes/week', [ReportController::class, 'incomesWeek'])->name('users.reports.incomes.week');
     Route::get('/reports/incomes/month', [ReportController::class, 'incomesMonth'])->name('users.reports.incomes.month');
+
+
+
+// Reports Routes : Deleted =>
+    Route::get('/reports/deleted', [DeletedController::class, 'select'])->name('users.reports.deleted.select');
+
 
 
 
