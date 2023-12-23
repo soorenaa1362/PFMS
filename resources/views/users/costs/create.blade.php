@@ -26,6 +26,11 @@
                         </div>
                     </div>
                     <div class="card-body">
+                        @if(Session::has('success'))
+                            <div class="alert alert-danger text-center" style="margin-bottom: 0 !important">
+                                {{ Session::get('success') }}
+                            </div>
+                        @endif
                         <form action="{{ route('users.costs.store') }}" method="POST">
                             @csrf
 

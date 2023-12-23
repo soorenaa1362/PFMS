@@ -79,17 +79,24 @@ class CostController extends Controller
             'description' => 'nullable|string',
         ]);
 
-        $cost = Cost::create([
-            'user_id' => $userId,
-            'title' => $request->title,
-            'amount' => $request->amount,
-            'card_id' => $request->card_id,
-            'category_id' => $request->category_id,
-            'date' => $myDate,
-            'description' => $request->description,
-        ]);
+        $cost = new Cost;
+        $cost->user_id = $userId;
+        $cost->title = $request->title;
+        $cost->amount = $request->amount;
+        $cost->card_id = $request->card_id;
+        $cost->category_id = $request->category_id;
+        $cost->date = $myDate;
+        $cost->description = $request->description;
 
         $card = Card::where('id', $cost->card_id)->first();
+
+        if($request->amount > $card->current_cash){
+            return redirect()->route('users.costs.create')
+                ->withSuccess('مبلغ خرجکرد نباید بیشتر از موجودی کارت باشد.');
+        }else{
+            $cost->save();
+        }
+
         $newCash = $card->current_cash - $cost->amount;
         $card->update([
             'current_cash' => $newCash
