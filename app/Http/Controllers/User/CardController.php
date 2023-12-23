@@ -222,7 +222,7 @@ class CardController extends Controller
             'current_cash' => $newCash
         ]);
 
-        return redirect()->route('users.cards.transactions', $card->id)
+        return redirect()->route('users.cards.checkTransactions', $card->id)
             ->withSuccess('اطلاعات درآمد با موفقیت در سیستم ثبت شد.');
     }
 

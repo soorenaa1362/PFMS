@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\User;
 
+use App\Models\Card;
 use App\Models\Income;
 use Illuminate\Http\Request;
 use App\Models\IncomeCategory;
@@ -47,6 +48,12 @@ class DeletedController extends Controller
         $income = Income::withTrashed()->find($income_id);
         $income->restore();
 
+        $card = Card::where('id', $income->card_id)->first();
+        $cardNewCash = $card->current_cash + $income->amount;
+        $card->update([
+            'current_cash' => $cardNewCash
+        ]);
+
         return redirect()->route('users.deleted.incomes')
             ->withSuccess('درآمد مورد نظر با موفقیت بازیابی شد.');
     }
@@ -57,6 +64,6 @@ class DeletedController extends Controller
         $income = Income::onlyTrashed()->find($income_id)->forceDelete();
 
         return redirect()->route('users.deleted.incomes')
-            ->withSuccess('درآمد مورد نظر به طور کامل از دیتابیس حذف شد.');
+            ->withSuccess('درآمد مورد نظر به طور کامل از سیستم حذف شد.');
     }
 }
