@@ -3,12 +3,14 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\User\CardController;
+use App\Http\Controllers\User\CostController;
 use App\Http\Controllers\User\HomeController;
 use App\Http\Controllers\User\IncomeController;
 use App\Http\Controllers\User\ReportController;
 use App\Http\Controllers\User\DeletedController;
 use App\Http\Controllers\User\WelcomeController;
 use App\Http\Controllers\User\CategoryController;
+use App\Http\Controllers\User\CostCategoryController;
 use App\Http\Controllers\User\IncomeCategoryController;
 
 
@@ -55,6 +57,25 @@ Route::group(['prefix' => '/users' , 'namespace' => 'User'], function () {
     Route::get('/incomes/{income_id}/edit', [IncomeController::class, 'edit'])->name('users.incomes.edit');
     Route::put('/incomes/{income_id}/update', [IncomeController::class, 'update'])->name('users.incomes.update');
     Route::get('/incomes/{income_id}/delete', [IncomeController::class, 'delete'])->name('users.incomes.delete');
+
+
+// Cost Category Routes =>
+    Route::get('/categories/costs', [CostCategoryController::class, 'index'])->name('users.categories.costs.index');
+    Route::get('/categories/costs/create', [CostCategoryController::class, 'create'])->name('users.categories.costs.create');
+    Route::post('/categories/costs/store', [CostCategoryController::class, 'store'])->name('users.categories.costs.store');
+    Route::get('/categories/costs/{category_id}/edit', [CostCategoryController::class, 'edit'])->name('users.categories.costs.edit');
+    Route::put('/categories/costs/{category_id}/update', [CostCategoryController::class, 'update'])->name('users.categories.costs.update');
+    Route::get('/categories/costs/{category_id}/delete', [CostCategoryController::class, 'delete'])->name('users.categories.costs.delete');
+
+
+// Cost Routes =>
+    Route::get('/costs', [CostController::class, 'index'])->name('users.costs.index');
+    Route::get('/costs/create', [CostController::class, 'create'])->name('users.costs.create');
+    Route::post('/costs/store', [CostController::class, 'store'])->name('users.costs.store');
+    Route::get('/costs/{cost_id}/show', [CostController::class, 'show'])->name('users.costs.show');
+    Route::get('/costs/{cost_id}/edit', [CostController::class, 'edit'])->name('users.costs.edit');
+    Route::put('/costs/{cost_id}/update', [CostController::class, 'update'])->name('users.costs.update');
+    Route::get('/costs/{cost_id}/delete', [CostController::class, 'delete'])->name('users.costs.delete');
 
 
 // Reports Routes =>

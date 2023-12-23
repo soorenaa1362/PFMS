@@ -31,6 +31,8 @@ return new class extends Migration
             $table->timestamp('date');
             $table->text('description')->nullable();
 
+            $table->softDeletes();
+
             $table->timestamps();
         });
     }

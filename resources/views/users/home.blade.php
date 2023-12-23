@@ -63,7 +63,7 @@
                                         درآمدها
                                     </h5>
                                 </a>
-                                <a href="">
+                                <a href="{{ route('users.costs.index') }}">
                                     <i class="fas fa-hand-holding-usd text-danger text-center fa-3x"></i>
                                     <h5 class="text-center mt-2 text-danger" style="font-size: 18px;">
                                         مخارج
