@@ -40,6 +40,8 @@
                         <div class="row">
                             <div class="col-md-6 mb-2">
                                 شماره کارت : {{ $card->number }}
+                                {{-- شماره کارت : {{ $cardNumberImolode }} --}}
+                                {{-- شماره کارت : {{ wordwrap($card->number , 4 , '-' , true ) }} --}}
                             </div>
                             <div class="col-md-6 mb-2">
                                 موجودی : {{ number_format($card->current_cash) }} تومان

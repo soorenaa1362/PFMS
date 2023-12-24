@@ -1,7 +1,7 @@
 @extends('users.layouts.app')
 
 @section('title')
-    نمایش جزییات درآمد
+    نمایش جزییات خرجکرد
 @endsection
 
 @section('content')
@@ -16,7 +16,7 @@
                             @include('users.sections.profile_icon')
 
                             <h6 class="mt-2">
-                                نمایش جزییات درآمد
+                                نمایش جزییات خرجکرد
                             </h6>
 
                             @include('users.sections.logout_icon')
@@ -27,49 +27,49 @@
 
                         <div class="row">
                             <div class="col-md-6 mb-2">
-                                عنوان : {{ $income->title }}
+                                عنوان : {{ $cost->title }}
                             </div>
                             <div class="col-md-6 mb-2">
-                                تاریخ : {{ $income->getDateJalali() }}
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6 mb-2">
-                                کارت : {{ $income->card->name}}
-                            </div>
-                            <div class="col-md-6 mb-2">
-                                مبلغ : {{ number_format($income->amount) }} تومان
+                                تاریخ : {{ $cost->getDateJalali() }}
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-6 mb-2">
-                                @if ( $income->category->parent == null )
-                                    دسته بندی : {{ $income->category->title }}
+                                کارت : {{ $cost->card->name}}
+                            </div>
+                            <div class="col-md-6 mb-2">
+                                مبلغ : {{ number_format($cost->amount) }} تومان
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-2">
+                                @if ( $cost->category->parent == null )
+                                    دسته بندی : {{ $cost->category->title }}
                                 @else
-                                    دسته بندی : {{ $income->category->title }} ({{ $income->category->parent->title }})
+                                    دسته بندی : {{ $cost->category->title }} ({{ $cost->category->parent->title }})
                                 @endif
                             </div>
-                            @if ($income->description === null)
+                            @if ($cost->description === null)
 
                             @else
                             <div class="col-md-6 mb-8">
-                                    توضیحات : <br> {{ $income->description }}
+                                    توضیحات : <br> {{ $cost->description }}
                                 </div>
                             @endif
                         </div>
                         <hr>
 
                         <div class="d-grid gap-2 col-12 mx-auto">
-                            <a href="{{ route('users.incomes.edit', $income->id) }}"
+                            <a href="{{ route('users.costs.edit', $cost->id) }}"
                                 class="btn btn-warning"
                                 style="border-radius: 15px;">
                                 <i class="fas fa-edit"></i>
                                 ویرایش اطلاعات
                             </a>
-                            <a href="{{ route('users.incomes.delete', $income->id) }}"
+                            <a href="{{ route('users.costs.delete', $cost->id) }}"
                                 style="border-radius: 15px;"
                                 class="btn btn-danger"
-                                onclick="return confirm('آیا میخواهید این درآمد را حذف کنید؟')">
+                                onclick="return confirm('آیا میخواهید این خرجکرد را حذف کنید؟')">
                                 <i class="fas fa-trash-alt"></i>
                                 حذف
                             </a>

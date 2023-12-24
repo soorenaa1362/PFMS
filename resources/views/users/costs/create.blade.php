@@ -39,7 +39,9 @@
                                     <label for="title">عنوان</label>
                                     <input class="form-control" name="title" value="{{ old('title') }}">
                                     @error('title')
-                                        <span class="text-danger">{{ $message }}</span>
+                                        <span class="text-danger" style="font-size: 14px;">
+                                            {{ $message }}
+                                        </span>
                                     @enderror
                                 </div>
 
@@ -47,7 +49,9 @@
                                     <label for="amount">مبلغ (تومان)</label>
                                     <input class="form-control" name="amount" value="{{ old('amount') }}">
                                     @error('amount')
-                                        <span class="text-danger">{{ $message }}</span>
+                                        <span class="text-danger" style="font-size: 14px;">
+                                            {{ $message }}
+                                        </span>
                                     @enderror
                                 </div>
 
@@ -59,6 +63,11 @@
                                             <option value="{{ $card->id }}">{{ $card->name }}</option>
                                         @endforeach
                                     </select>
+                                    @error('card_id')
+                                        <span class="text-danger" style="font-size: 14px;">
+                                            {{ $message }}
+                                        </span>
+                                    @enderror
                                 </div>
 
                                 <div class="form-group col-md-6 mt-2">
@@ -71,6 +80,11 @@
                                             </option>
                                         @endforeach
                                     </select>
+                                    @error('category_id')
+                                        <span class="text-danger" style="font-size: 14px;">
+                                            {{ $message }}
+                                        </span>
+                                    @enderror
                                 </div>
 
                                 <div class="form-group col-md-6 mt-2">
@@ -80,7 +94,9 @@
                                     <input id="date" name="date"
                                         type="hidden" value="">
                                     @error('date')
-                                        <span class="text-danger" style="font-size: 14px;">{{ $message }}</span>
+                                        <span class="text-danger" style="font-size: 14px;">
+                                            {{ $message }}
+                                        </span>
                                     @enderror
                                 </div>
 

@@ -168,6 +168,8 @@ return [
         'first_cash'                  => 'موجودی اولیه',
         'amount'                => 'مبلغ',
         'expiration_date'       => 'تاریخ انقضا',
+        'card_id'               => 'کارت بانکی',
+        'category_id'               => 'دسته بندی',
     ],
 
 ];

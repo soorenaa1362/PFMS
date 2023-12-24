@@ -83,7 +83,11 @@
                                             </th>
                                             <th>
                                                 <a href="{{ route('users.cards.show', $card->id) }}">
-                                                    {{ number_format($card->current_cash) }} تومان
+                                                    @if( $card->current_cash > 0 )
+                                                        {{ number_format($card->current_cash) }} تومان
+                                                    @else
+                                                        0
+                                                    @endif
                                                 </a>
                                             </th>
                                             <th>

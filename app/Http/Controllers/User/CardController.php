@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use Carbon\Carbon;
 use App\Models\Card;
 use App\Models\Income;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Morilog\Jalali\Jalalian;
 use App\Models\IncomeCategory;
@@ -85,12 +86,40 @@ class CardController extends Controller
 
         $card = Card::find($card_id);
 
+        // $cardNumberWW = wordwrap($card->number , 4 , '-' , true );
+        // dd(explode($cardNumberWW, 1));
+
+
+
+        $cardNumber = preg_replace('/[^0-9]/', '', $card->number);
+        // dd($cardNumber);
+        $cardNumberRev = strrev($cardNumber);
+        // dd($cardNumberRev);
+
+        $cardNumberImolode = implode('-', str_split($cardNumberRev, 4));
+        // dd($cardNumberImolode);
+
+        $cardNumberRev = strrev( $cardNumberImolode );
+        // $cardNumberFormatted = Str::of( $cardNumberImolode );
+        // dd($cardNumberFormatted);
+
+
+        // function formatCardNumber($card)
+        // {
+        //     $cardNumber = preg_replace('/[^0-9]/', '', $card->number);
+        //     $chunks = str_split($card, 4);
+        //     $formatted = implode('-', $chunks);
+        //     $formatted = Str::of($formatted)->trim('-');
+        //     return $formatted;
+        // }
+
         $incomes = Income::where('user_id', $userId)->orderBy('id', 'DESC')
             ->where('card_id', $card_id)->paginate(3);
 
         return view('users.cards.show', compact([
             'card',
-            'incomes'
+            'incomes',
+            'cardNumberImolode'
         ]));
     }
 
