@@ -61,7 +61,7 @@ class ReportController extends Controller
 
         $incomes = Income::where('user_id', $userId)
             ->whereBetween('date', [Carbon::now()->subDays(7), Carbon::now()])
-            ->orderBy('date', 'DESC')->paginate(2);
+            ->orderBy('date', 'ASC')->paginate(5);
 
         $incomeCategories = IncomeCategory::where('user_id', $userId)->get();
 
@@ -88,7 +88,7 @@ class ReportController extends Controller
 
         $incomes = Income::where('user_id', $userId)
             ->whereBetween('date', [Carbon::now()->subDays(30), Carbon::now()])
-            ->orderBy('date', 'DESC')->paginate(2);
+            ->orderBy('date', 'ASC')->paginate(5);
 
         $incomeCategories = IncomeCategory::where('user_id', $userId)->get();
 

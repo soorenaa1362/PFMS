@@ -31,12 +31,19 @@ Route::group(['prefix' => '/users' , 'namespace' => 'User'], function () {
 
     Route::get('/cards/{card_id}/checkTransactions', [CardController::class, 'checkTransactions'])->name('users.cards.checkTransactions');
     Route::get('/cards/{card_id}/transaction/select', [CardController::class, 'transactionSelect'])->name('users.cards.transaction.select');
+
+// Card Transaction Income Route =>
     Route::get('/cards/{card_id}/incomes/create', [CardController::class, 'incomeCreate'])->name('users.cards.incomes.create');
     Route::post('/cards/{card_id}/incomes/store', [CardController::class, 'incomeStore'])->name('users.cards.incomes.store');
     Route::get('/cards/{card_id}/incomes', [CardController::class, 'incomes'])->name('users.cards.incomes.index');
 
+// Card Transaction Cost Route =>
+    Route::get('/cards/{card_id}/costs/create', [CardController::class, 'costCreate'])->name('users.cards.costs.create');
+    Route::post('/cards/{card_id}/costs/store', [CardController::class, 'costStore'])->name('users.cards.costs.store');
+    Route::get('/cards/{card_id}/costs', [CardController::class, 'costs'])->name('users.cards.costs.index');
 
-// Category Route :
+
+// Category Route =>
     Route::get('/categories', [CategoryController::Class, 'select'])->name('users.categories.select');
 
 

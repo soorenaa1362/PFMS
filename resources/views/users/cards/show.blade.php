@@ -40,8 +40,6 @@
                         <div class="row">
                             <div class="col-md-6 mb-2">
                                 شماره کارت : {{ $card->number }}
-                                {{-- شماره کارت : {{ $cardNumberImolode }} --}}
-                                {{-- شماره کارت : {{ wordwrap($card->number , 4 , '-' , true ) }} --}}
                             </div>
                             <div class="col-md-6 mb-2">
                                 موجودی : {{ number_format($card->current_cash) }} تومان
@@ -137,10 +135,65 @@
                                     @endforeach
                                 </tbody>
                             </table>
-                            <a href="{{ route('users.cards.incomes.index', $card->id) }}"
-                                class="d-flex justify-content-end text-secondary">
-                                نمایش موارد بیشتر
-                            </a>
+                            @if ( $incomeCount > 3 )
+                                <a href="{{ route('users.cards.incomes.index', $card->id) }}"
+                                    class="d-flex justify-content-end text-secondary">
+                                    نمایش موارد بیشتر
+                                </a>
+                            @endif
+                        @endif
+
+                        @if ( !blank($costs) )
+                            <hr>
+                            <div class="d-grid gap-2 mt-2">
+                                <h6 class="text-center text-light p-2 bg-danger"
+                                    style="border-radius: 10px;">
+                                    <i class="fas fa-hand-holding-usd"></i>
+                                    آخرین خرجکردها
+                                </h6>
+                            </div>
+                            <table class="table table-bordered table-striped text-center">
+                                <thead>
+                                    <tr>
+                                        <th>تاریخ</th>
+                                        <th>عنوان</th>
+                                        <th>مبلغ (تومان)</th>
+                                        <th>دسته بندی</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($costs as $cost)
+                                        <tr>
+                                            <th>
+                                                <a href="{{ route('users.costs.show', [$cost->id]) }}">
+                                                    {{ $cost->getDateJalali() }}
+                                                </a>
+                                            </th>
+                                            <th>
+                                                <a href="{{ route('users.costs.show', [$cost->id]) }}">
+                                                    {{ $cost->title }}
+                                                </a>
+                                            </th>
+                                            <th>
+                                                <a href="{{ route('users.costs.show', [$cost->id]) }}">
+                                                    {{ number_format($cost->amount) }}
+                                                </a>
+                                            </th>
+                                            <th>
+                                                <a href="{{ route('users.costs.show', [$cost->id]) }}">
+                                                    {{ $cost->category->title }}
+                                                </a>
+                                            </th>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                            @if ( $costCount > 3 )
+                                <a href="{{ route('users.cards.costs.index', $card->id) }}"
+                                    class="d-flex justify-content-end text-secondary">
+                                    نمایش موارد بیشتر
+                                </a>
+                            @endif
                         @endif
 
                         @include('users.sections.footer')
@@ -180,7 +233,6 @@
             </div>
         </div>
     </div>
-
 
     {{-- @include('users.sections.modal') --}}
 

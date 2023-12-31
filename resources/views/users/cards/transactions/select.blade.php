@@ -38,7 +38,7 @@
                                 </a>
                             </div>
                             <div>
-                                <a href="" class="text-center text-danger d-grid gap-2">
+                                <a href="{{ route('users.cards.costs.create', $card->id) }}" class="text-center text-danger d-grid gap-2">
                                     <i class="fas fa-hand-holding-usd text-danger fa-4x"></i>
                                     <span style="font-size: 15px;">ثبت خرجکرد</span>
                                 </a>

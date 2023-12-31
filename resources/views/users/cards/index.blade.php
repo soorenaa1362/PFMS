@@ -58,8 +58,8 @@
                             <table class="table table-bordered table-striped text-center">
                                 <thead>
                                     <tr>
-                                        <th>نام</th>
-                                        <th>نام مستعار</th>
+                                        <th>نام بانک</th>
+                                        {{-- <th>نام مستعار</th> --}}
                                         <th>موجودی</th>
                                         <th>تاریخ ثبت کارت</th>
                                     </tr>
@@ -72,7 +72,7 @@
                                                     {{ $card->name }}
                                                 </a>
                                             </th>
-                                            <th>
+                                            {{-- <th>
                                                 @if ($card->alias == null)
                                                     ---------
                                                 @else
@@ -80,7 +80,7 @@
                                                         {{ $card->alias }}
                                                     </a>
                                                 @endif
-                                            </th>
+                                            </th> --}}
                                             <th>
                                                 <a href="{{ route('users.cards.show', $card->id) }}">
                                                     @if( $card->current_cash > 0 )

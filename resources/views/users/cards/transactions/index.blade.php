@@ -92,6 +92,59 @@
 
                         @endif
 
+                        @if (blank($costs))
+                            <h6 class="text-center bg-danger p-2 text-light">
+                                هنوز هیچ خرجکردی ثبت نشده است.
+                            </h6>
+                        @else
+                            <div class="d-grid gap-2 mt-2">
+                                <h6 class="text-center text-light p-2 bg-danger"
+                                    style="border-radius: 10px;">
+                                    <i class="fas fa-hand-holding-usd"></i>
+                                    لیست خرجکردها
+                                </h6>
+                            </div>
+                            <table class="table table-bordered table-striped text-center">
+                                <thead>
+                                    <tr>
+                                        <th>تاریخ</th>
+                                        <th>عنوان</th>
+                                        <th>مبلغ (تومان)</th>
+                                        <th>دسته بندی</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($costs as $cost)
+                                        <tr>
+                                            <th>
+                                                <a href="{{ route('users.costs.show', [$cost->id]) }}">
+                                                    {{ $cost->getDateJalali() }}
+                                                </a>
+                                            </th>
+                                            <th>
+                                                <a href="{{ route('users.costs.show', [$cost->id]) }}">
+                                                    {{ $cost->title }}
+                                                </a>
+                                            </th>
+                                            <th>
+                                                <a href="{{ route('users.costs.show', [$cost->id]) }}">
+                                                    {{ number_format($cost->amount) }}
+                                                </a>
+                                            </th>
+                                            <th>
+                                                <a href="{{ route('users.costs.show', [$cost->id]) }}">
+                                                    {{ $cost->category->title }}
+                                                </a>
+                                            </th>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+
+                            {{ $costs->links() }}
+
+                        @endif
+
                         @include('users.sections.footer')
 
                     </div> <!-- card body -->

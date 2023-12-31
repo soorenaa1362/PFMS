@@ -10,6 +10,12 @@
             <div class="col-12 col-md-8">
                 <div class="card shadow p-2 mb-5 bg-body">
 
+                    <div class="d-flex justify-content-end">
+                        <a href="{{ route('users.reports.incomes.select') }}" class="text-dark p-1">
+                            <i class="fa fa-hand-o-left fa-2x"></i>
+                        </a>
+                    </div>
+
                     <div class="card-header text-center text-light bg-primary p-3 m-2"
                         style="border-radius: 15px;">
                         <div class="d-flex justify-content-between">
@@ -53,19 +59,13 @@
                             @else
                                 <h6 class="text-center text-light p-3 bg-secondary"
                                     style="border-radius: 10px;">
-                                    مجموع درآمد امروز : {{ number_format($totalIncome) }} تومان
+                                    مجموع درآمد ماه : {{ number_format($totalIncome) }} تومان
                                 </h6>
-                                {{-- <div class="d-grid gap-2 m-2">
-                                    <a class="btn btn-success" href="{{ route('users.incomes.create') }}"
-                                        style="border-radius: 15px;">
-                                        <i class="fa fa-plus"></i>
-                                        درآمد جدید
-                                    </a>
-                                </div> --}}
                                 <hr>
                                 <table class="table table-bordered table-striped text-center">
                                     <thead>
                                         <tr>
+                                            <th>تاریخ</th>
                                             <th>عنوان</th>
                                             <th>مبلغ</th>
                                             <th>کارت بانکی</th>
@@ -74,6 +74,11 @@
                                     <tbody>
                                         @foreach ($incomes as $income)
                                             <tr>
+                                                <th>
+                                                    <a href="{{ route('users.incomes.show', $income->id) }}">
+                                                        {{ $income->getDateJalali() }}
+                                                    </a>
+                                                </th>
                                                 <th>
                                                     <a href="{{ route('users.incomes.show', $income->id) }}">
                                                         {{ $income->title }}

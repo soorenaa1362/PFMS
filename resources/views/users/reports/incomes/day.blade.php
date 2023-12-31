@@ -10,6 +10,12 @@
             <div class="col-12 col-md-8">
                 <div class="card shadow p-2 mb-5 bg-body">
 
+                    <div class="d-flex justify-content-end">
+                        <a href="{{ route('users.reports.incomes.select') }}" class="text-dark p-1">
+                            <i class="fa fa-hand-o-left fa-2x"></i>
+                        </a>
+                    </div>
+
                     <div class="card-header text-center text-light bg-primary p-3 m-2"
                         style="border-radius: 15px;">
                         <div class="d-flex justify-content-between">

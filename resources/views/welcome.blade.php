@@ -7,7 +7,7 @@
 @section('content')
     <div class="container mt-5 p-4">
         <div class="row d-flex justify-content-center">
-            <div class="col-12 col-md-8">
+            <div class="col-12 col-md-6 p-3">
                 <div class="card shadow p-2 mb-5 bg-body">
                     <div class="card-header text-center text-light bg-primary p-3 m-2"
                         style="border-radius: 30px 30px 5px 5px;">
