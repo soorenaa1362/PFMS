@@ -1,7 +1,7 @@
 @extends('users.layouts.app')
 
 @section('title')
-    گزارش درآمدها
+    گزارش خرجکردها
 @endsection
 
 @section('content')
@@ -20,7 +20,7 @@
 
                             @include('users.sections.profile_icon')
 
-                            <h6 class="mt-2">گزارش درآمدها</h6>
+                            <h6 class="mt-2">گزارش خرجکردها</h6>
 
                             @include('users.sections.logout_icon')
 
@@ -31,21 +31,21 @@
                         <div class="d-flex justify-content-around">
 
                             <div>
-                                <a href="{{ route('users.reports.incomes.day') }}"
+                                <a href="{{ route('users.reports.costs.day') }}"
                                     class="text-center text-success d-grid gap-2">
                                     <i class="far fa-file-alt text-success fa-4x"></i>
                                     <span style="font-size: 15px;">گزارش روزانه</span>
                                 </a>
                             </div>
                             <div>
-                                <a href="{{ route('users.reports.incomes.week') }}"
+                                <a href="{{ route('users.reports.costs.week') }}"
                                     class="text-center text-info d-grid gap-2">
                                     <i class="far fa-file-alt text-info fa-4x"></i>
                                     <span style="font-size: 15px;">گزارش هفتگی</span>
                                 </a>
                             </div>
                             <div>
-                                <a href="{{ route('users.reports.incomes.month') }}"
+                                <a href="{{ route('users.reports.costs.month') }}"
                                     class="text-center text-dark d-grid gap-2">
                                     <i class="far fa-file-alt text-dark fa-4x"></i>
                                     <span style="font-size: 15px;">گزارش ماهانه</span>

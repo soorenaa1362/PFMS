@@ -95,6 +95,12 @@ Route::group(['prefix' => '/users' , 'namespace' => 'User'], function () {
     Route::get('/reports/incomes/month', [ReportController::class, 'incomesMonth'])->name('users.reports.incomes.month');
 
 
+// Reports Routes : Costs =>
+    Route::get('/reports/costs', [ReportController::class, 'costs'])->name('users.reports.costs.select');
+    Route::get('/reports/costs/day', [ReportController::class, 'costsDay'])->name('users.reports.costs.day');
+    Route::get('/reports/costs/week', [ReportController::class, 'costsWeek'])->name('users.reports.costs.week');
+    Route::get('/reports/costs/month', [ReportController::class, 'costsMonth'])->name('users.reports.costs.month');
+
 
 // Reports Routes : Deleted =>
     Route::get('/deleted', [DeletedController::class, 'select'])->name('users.deleted.select');

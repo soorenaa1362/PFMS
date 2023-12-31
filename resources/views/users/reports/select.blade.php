@@ -33,7 +33,8 @@
                                 </a>
                             </div>
                             <div>
-                                <a href="" class="text-center text-danger d-grid gap-2">
+                                <a href="{{ route('users.reports.costs.select') }}"
+                                    class="text-center text-danger d-grid gap-2">
                                     <i class="fas fa-hand-holding-usd text-danger fa-4x"></i>
                                     <span style="font-size: 15px;">گزارش خرجکردها</span>
                                 </a>
@@ -44,7 +45,8 @@
                         <div class="d-flex justify-content-around">
 
                             <div>
-                                <a href="{{ route('users.deleted.select') }}" class="text-center text-secondary d-grid gap-2">
+                                <a href="{{ route('users.deleted.select') }}"
+                                    class="text-center text-secondary d-grid gap-2">
                                     <i class="far fa-trash-alt text-secondary fa-4x"></i>
                                     <span style="font-size: 15px;">تراکنش های حذف شده</span>
                                 </a>
