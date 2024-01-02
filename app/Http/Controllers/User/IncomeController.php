@@ -20,6 +20,7 @@ class IncomeController extends Controller
         }else{
             $userId = Auth::user()->id;
         }
+        
         $incomes = Income::where('user_id', $userId)->paginate(3);
         $incomeCategories = IncomeCategory::where('user_id', $userId)->get();
 
@@ -54,7 +55,12 @@ class IncomeController extends Controller
             $categories = IncomeCategory::where('user_id', $userId)->where('parent_id', '!=', null)->get();
         }
 
-        return view('users.incomes.create', compact('cards', 'categories'));
+        $parents = IncomeCategory::where('user_id', $userId)->where('parent_id', null)->get();
+        if( count($parents) === 0 ){
+            return redirect()->route('users.incomes.index');
+        }else{
+            return view('users.incomes.create', compact('cards', 'categories'));
+        }
     }
 
 

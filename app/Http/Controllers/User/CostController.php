@@ -55,7 +55,12 @@ class CostController extends Controller
             $categories = CostCategory::where('user_id', $userId)->where('parent_id', '!=', null)->get();
         }
 
-        return view('users.costs.create', compact('cards', 'categories'));
+        $parents = CostCategory::where('user_id', $userId)->where('parent_id', null)->get();
+        if( count($parents) === 0 ){
+            return redirect()->route('users.costs.index');
+        }else{
+            return view('users.costs.create', compact('cards', 'categories'));
+        }
     }
 
 
