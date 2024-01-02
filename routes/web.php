@@ -5,6 +5,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\User\CardController;
 use App\Http\Controllers\User\CostController;
 use App\Http\Controllers\User\HomeController;
+use App\Http\Controllers\User\GuideController;
 use App\Http\Controllers\User\IncomeController;
 use App\Http\Controllers\User\ReportController;
 use App\Http\Controllers\User\DeletedController;
@@ -19,6 +20,8 @@ Route::get('/', [WelcomeController::class, 'welcome'])->name('welcome');
 Route::group(['prefix' => '/users' , 'namespace' => 'User'], function () {
 
     Route::get('/home', [HomeController::class, 'home'])->name('users.home');
+
+    Route::get('/guide', [GuideController::class, 'guide'])->name('users.guide');
 
 // Card Routes =>
     Route::get('/cards', [CardController::class, 'index'])->name('users.cards.index');

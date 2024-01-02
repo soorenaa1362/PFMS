@@ -28,6 +28,9 @@ body{
     direction: rtl !important;
 }
 
+.accordion-button::after{
+    background-image: none !important;
+}
 
 
 
