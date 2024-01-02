@@ -71,7 +71,7 @@
                     <div class="accordion" id="accordionCardsOpen">
                         <div class="accordion-item">
                             <h2 class="accordion-header" id="cardsOpen-headingOne">
-                                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                     data-bs-target="#cardsOpen-collapseOne" aria-expanded="true"
                                     aria-controls="cardsOpen-collapseOne">
                                     <i class="fa fa-credit-card text-secondary fa-2x mx-2"></i>
@@ -85,7 +85,11 @@
                                         در این بخش , لیست کارت های بانکی و فرم ثبت اطلاعات کارت بانکی
                                         برای شما نمایش داده می شود.
                                         برای ثبت اطلاعات کارت بانکی باید روی گزینه ی
-                                        <span class="text-success">+ کارت جدید</span>
+                                        <a href="{{ route('users.cards.create') }}">
+                                            <span class="text-success">
+                                                + کارت جدید
+                                            </span>
+                                        </a>
                                         کلیک نمایید .
                                         <br>
                                         <hr>
@@ -133,7 +137,7 @@
                     <div class="accordion" id="accordionIncomesOpen">
                         <div class="accordion-item">
                             <h2 class="accordion-header" id="incomesOpen-headingOne">
-                                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                     data-bs-target="#incomesOpen-collapseOne" aria-expanded="true"
                                     aria-controls="incomesOpen-collapseOne">
                                     <i class="fas fa-donate text-success fa-2x mx-2"></i>
@@ -147,7 +151,11 @@
                                         در این بخش , لیست و فرم ثبت درآمدها
                                         برای شما نمایش داده می شود.
                                         برای ثبت اطلاعات درآمدی خود باید روی گزینه ی
-                                        <span class="text-success">+ ثبت درآمد جدید</span>
+                                        <a href="{{ route('users.incomes.create') }}">
+                                            <span class="text-success">
+                                                + ثبت درآمد جدید
+                                            </span>
+                                        </a>
                                         کلیک نمایید .
                                         <br>
                                         <hr>
@@ -195,7 +203,7 @@
                     <div class="accordion" id="accordionCostsOpen">
                         <div class="accordion-item">
                             <h2 class="accordion-header" id="costsOpen-headingOne">
-                                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                     data-bs-target="#costsOpen-collapseOne" aria-expanded="true"
                                     aria-controls="costsOpen-collapseOne">
                                     <i class="fas fa-hand-holding-usd text-danger fa-2x mx-2"></i>
@@ -209,7 +217,11 @@
                                         در این بخش , لیست و فرم ثبت خرجکرد
                                         برای شما نمایش داده می شود.
                                         برای ثبت اطلاعات درآمدی خود باید روی گزینه ی
-                                        <span class="text-success">+ ثبت خرجکرد جدید</span>
+                                        <a href="{{ route('users.costs.create') }}">
+                                            <span class="text-success">
+                                                + ثبت خرجکرد جدید
+                                            </span>
+                                        </a>
                                         کلیک نمایید .
                                         <br>
                                         <hr>
@@ -257,14 +269,14 @@
                     <div class="accordion" id="accordionCategoriesOpen">
                         <div class="accordion-item">
                             <h2 class="accordion-header" id="categoriesOpen-headingOne">
-                                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                     data-bs-target="#categoriesOpen-collapseOne" aria-expanded="true"
                                     aria-controls="categoriesOpen-collapseOne">
                                     <i class="fas fa-sitemap text-info fa-2x mx-2"></i>
                                     <strong class="mx-2 text-info">دسته بندی ها</strong>
                                 </button>
                             </h2>
-                            <div id="categoriesOpen-collapseOne" class="accordion-collapse collapse show"
+                            <div id="categoriesOpen-collapseOne" class="accordion-collapse collapse"
                                 aria-labelledby="categoriesOpen-headingOne">
                                 <div class="accordion-body">
                                     <p>
@@ -272,7 +284,11 @@
                                         درآمدی و دیگری شامل لیست و فرم دسته های خرجکرد است که با
                                         کلیک بر روی هر کدام وارد بخش مربوط به آن می شوید .
                                         برای ایجاد دسته بندی جدید باید روی گزینه ی
-                                        <span class="text-success">+ دسته بندی جدید</span>
+                                        <a href="{{ route('users.categories.select') }}">
+                                            <span class="text-success">
+                                                + دسته بندی جدید
+                                            </span>
+                                        </a>
                                         کلیک نمایید .
                                         <hr>
                                         در هنگام ثبت دسته بندی , میتوان دسته ها را به شکل دسته و
@@ -307,6 +323,88 @@
                                             تنهایی کافیست , اما توصیه میشود که در صورت وجود
                                             دسته بندی والد , دسته ی والد هم مشخص گردد .
                                         </span>
+                                    </p>
+                                </div> <!-- accordion-body -->
+                            </div> <!-- accordion-collapse -->
+                        </div> <!-- accordion-item -->
+                    </div> <!-- accordion -->
+
+                    <div class="accordion" id="accordionReportsOpen">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="reportsOpen-headingOne">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#reportsOpen-collapseOne" aria-expanded="true"
+                                    aria-controls="reportsOpen-collapseOne">
+                                    <i class="fa fa-newspaper-o text-warning fa-2x mx-2"></i>
+                                    <strong class="mx-2 text-warning">گزارشات</strong>
+                                </button>
+                            </h2>
+                            <div id="reportsOpen-collapseOne" class="accordion-collapse collapse"
+                                aria-labelledby="reportsOpen-headingOne">
+                                <div class="accordion-body">
+                                    <p>
+                                        در این بخش میتوانید گزارش تمامی درآمدها , خرجکردها
+                                        و تراکنشهای حذف شده ی خود را مشاهده کنید . فقط کافیست روی
+                                        گزینه ی مورد نظر کلیک کرده تا به اطلاعات مد نظر دست
+                                        پیدا کنید .
+                                        <hr>
+                                        <strong class="text-success">
+                                            گزارش درآمدها =>
+                                        </strong>
+                                        <br>
+
+                                        <strong>* گزارش روزانه :</strong>
+                                        لیست تمامی درآمدهای امروز را به نمایش می گذارد .
+                                        <br>
+
+                                        <strong>* گزارش هفتگی :</strong>
+                                        لیست تمامی درآمدهای هفت روز گذشته را به نمایش می گذارد .
+                                        <br>
+
+                                        <strong>* گزارش ماهانه :</strong>
+                                        لیست تمامی درآمدهای سی روز گذشته را به نمایش می گذارد .
+                                        <br>
+
+                                        <hr>
+                                        <strong class="text-success">
+                                            گزارش خرجکردها =>
+                                        </strong>
+                                        <br>
+
+                                        <strong>* گزارش روزانه :</strong>
+                                        لیست تمامی خرجکردهای امروز را به نمایش می گذارد .
+                                        <br>
+
+                                        <strong>* گزارش هفتگی :</strong>
+                                        لیست تمامی خرجکردهای هفت روز گذشته را به نمایش می گذارد .
+                                        <br>
+
+                                        <strong>* گزارش ماهانه :</strong>
+                                        لیست تمامی خرجکردهای سی روز گذشته را به نمایش می گذارد .
+                                        <br>
+
+                                        <hr>
+                                        <strong class="text-success">
+                                            تراکنش های حذف شده =>
+                                        </strong>
+                                        <p>
+                                            به جهت حفظ اطلاعات , در این سیستم قابلیتی در نظر گرفته شده
+                                            که بر اساس آن کاربر نمی تواند به شکل مستقیم
+                                            اطلاعات را از دیتابیس حذف کند . به عبارت دیگر
+                                            هر مورد که خواسته یا ناخواسته توسط کاربر حذف شده
+                                            باشد , در لیست تراکنش های حذف شده قرار میگیرد
+                                            تا کاربر بتواند آنرا بازیابی کند .
+                                            البته که اگر کاربر قصد داشته باشد موردی را به شکل
+                                            کامل از دیتابیس حذف کند باید از این بخش اقدام کند .
+                                        </p>
+
+                                        <strong>* درآمدهای حذف شده :</strong>
+                                        لیست تمامی درآمدهای حذف شده را به نمایش می گذارد .
+                                        <br>
+
+                                        <strong>* خرجکردهای حذف شده :</strong>
+                                        لیست تمامی خرجکردهای حذف شده را به نمایش می گذارد .
+                                        <br>
                                     </p>
                                 </div> <!-- accordion-body -->
                             </div> <!-- accordion-collapse -->
