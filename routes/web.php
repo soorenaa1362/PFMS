@@ -7,12 +7,13 @@ use App\Http\Controllers\User\CostController;
 use App\Http\Controllers\User\HomeController;
 use App\Http\Controllers\User\GuideController;
 use App\Http\Controllers\User\IncomeController;
-use App\Http\Controllers\User\ReportController;
 use App\Http\Controllers\User\DeletedController;
 use App\Http\Controllers\User\WelcomeController;
 use App\Http\Controllers\User\CategoryController;
 use App\Http\Controllers\User\CostCategoryController;
+use App\Http\Controllers\User\Report\ReportController;
 use App\Http\Controllers\User\IncomeCategoryController;
+use App\Http\Controllers\User\Report\IncomeReportController;
 
 
 Route::get('/', [WelcomeController::class, 'welcome'])->name('welcome');
@@ -92,11 +93,11 @@ Route::group(['prefix' => '/users' , 'namespace' => 'User'], function () {
     Route::get('/reports', [ReportController::class, 'select'])->name('users.reports.select');
 
 // Reports Routes : Incomes =>
-    Route::get('/reports/incomes', [ReportController::class, 'incomes'])->name('users.reports.incomes.select');
-    Route::get('/reports/incomes/time', [ReportController::class, 'incomeTimeSelect'])->name('users.reports.incomes.timeSelect');
-    Route::get('/reports/incomes/day', [ReportController::class, 'incomesDay'])->name('users.reports.incomes.time.day');
-    Route::get('/reports/incomes/week', [ReportController::class, 'incomesWeek'])->name('users.reports.incomes.time.week');
-    Route::get('/reports/incomes/month', [ReportController::class, 'incomesMonth'])->name('users.reports.incomes.time.month');
+    Route::get('/reports/incomes', [IncomeReportController::class, 'incomes'])->name('users.reports.incomes.select');
+    Route::get('/reports/incomes/time', [IncomeReportController::class, 'incomeTimeSelect'])->name('users.reports.incomes.timeSelect');
+    Route::get('/reports/incomes/day', [IncomeReportController::class, 'incomesDay'])->name('users.reports.incomes.time.day');
+    Route::get('/reports/incomes/week', [IncomeReportController::class, 'incomesWeek'])->name('users.reports.incomes.time.week');
+    Route::get('/reports/incomes/month', [IncomeReportController::class, 'incomesMonth'])->name('users.reports.incomes.time.month');
 
 
 // Reports Routes : Costs =>
