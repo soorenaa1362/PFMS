@@ -26,6 +26,12 @@ class ReportController extends Controller
     }
 
 
+    public function incomeTimeSelect()
+    {
+        return view('users.reports.incomes.time.timeSelect');
+    }
+
+
     public function incomesDay()
     {
         if(Auth::guest()){
@@ -45,7 +51,7 @@ class ReportController extends Controller
             $totalIncome += $income->amount;
         }
 
-        return view('users.reports.incomes.day', compact([
+        return view('users.reports.incomes.time.day', compact([
             'incomes',
             'incomeCategories',
             'totalIncome'
@@ -72,7 +78,7 @@ class ReportController extends Controller
             $totalIncome += $income->amount;
         }
 
-        return view('users.reports.incomes.week', compact([
+        return view('users.reports.incomes.time.week', compact([
             'incomes',
             'incomeCategories',
             'totalIncome'
@@ -99,7 +105,7 @@ class ReportController extends Controller
             $totalIncome += $income->amount;
         }
 
-        return view('users.reports.incomes.month', compact([
+        return view('users.reports.incomes.time.month', compact([
             'incomes',
             'incomeCategories',
             'totalIncome'

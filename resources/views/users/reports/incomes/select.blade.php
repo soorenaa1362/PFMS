@@ -31,26 +31,20 @@
                         <div class="d-flex justify-content-around">
 
                             <div>
-                                <a href="{{ route('users.reports.incomes.day') }}"
+                                <a href="{{ route('users.reports.incomes.timeSelect') }}"
                                     class="text-center text-success d-grid gap-2">
-                                    <i class="far fa-file-alt text-success fa-4x"></i>
-                                    <span style="font-size: 15px;">گزارش روزانه</span>
+                                    <i class="fas fa-calendar text-success fa-4x"></i>
+                                    <span style="font-size: 15px;">بر اساس زمان</span>
                                 </a>
                             </div>
                             <div>
-                                <a href="{{ route('users.reports.incomes.week') }}"
-                                    class="text-center text-info d-grid gap-2">
-                                    <i class="far fa-file-alt text-info fa-4x"></i>
-                                    <span style="font-size: 15px;">گزارش هفتگی</span>
+                                <a href=""
+                                    class="text-center text-primary d-grid gap-2">
+                                    <i class="fas fa-sitemap text-primary fa-4x"></i>
+                                    <span style="font-size: 15px;">بر اساس دسته بندی</span>
                                 </a>
                             </div>
-                            <div>
-                                <a href="{{ route('users.reports.incomes.month') }}"
-                                    class="text-center text-dark d-grid gap-2">
-                                    <i class="far fa-file-alt text-dark fa-4x"></i>
-                                    <span style="font-size: 15px;">گزارش ماهانه</span>
-                                </a>
-                            </div>
+
                         </div>
 
                         @include('users.sections.footer')

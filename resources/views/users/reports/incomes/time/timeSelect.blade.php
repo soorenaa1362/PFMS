@@ -1,7 +1,7 @@
 @extends('users.layouts.app')
 
 @section('title')
-    گزارشات
+    گزارش درآمدها
 @endsection
 
 @section('content')
@@ -9,13 +9,18 @@
         <div class="row d-flex justify-content-center">
             <div class="col-12 col-md-8">
                 <div class="card shadow p-2 mb-5 bg-body">
+                    <div class="d-flex justify-content-end">
+                        <a href="{{ route('users.reports.incomes.select') }}" class="text-dark p-1">
+                            <i class="fa fa-hand-o-left fa-2x"></i>
+                        </a>
+                    </div>
                     <div class="card-header text-center text-light bg-primary p-3 m-2"
                         style="border-radius: 15px;">
                         <div class="d-flex justify-content-between">
 
                             @include('users.sections.profile_icon')
 
-                            <h6 class="mt-2">گزارشات</h6>
+                            <h6 class="mt-2">گزارش درآمدها</h6>
 
                             @include('users.sections.logout_icon')
 
@@ -26,32 +31,26 @@
                         <div class="d-flex justify-content-around">
 
                             <div>
-                                <a href="{{ route('users.reports.incomes.select') }}"
+                                <a href="{{ route('users.reports.incomes.time.day') }}"
                                     class="text-center text-success d-grid gap-2">
-                                    <i class="fas fa-donate text-success fa-4x"></i>
-                                    <span style="font-size: 15px;">گزارش درآمدها</span>
+                                    <i class="far fa-file-alt text-success fa-4x"></i>
+                                    <span style="font-size: 15px;">گزارش روزانه</span>
                                 </a>
                             </div>
                             <div>
-                                <a href="{{ route('users.reports.costs.select') }}"
-                                    class="text-center text-danger d-grid gap-2">
-                                    <i class="fas fa-hand-holding-usd text-danger fa-4x"></i>
-                                    <span style="font-size: 15px;">گزارش خرجکردها</span>
+                                <a href="{{ route('users.reports.incomes.time.week') }}"
+                                    class="text-center text-info d-grid gap-2">
+                                    <i class="far fa-file-alt text-info fa-4x"></i>
+                                    <span style="font-size: 15px;">گزارش هفتگی</span>
                                 </a>
                             </div>
-
-                        </div>
-                        <br>
-                        <div class="d-flex justify-content-around">
-
                             <div>
-                                <a href="{{ route('users.deleted.select') }}"
-                                    class="text-center text-secondary d-grid gap-2">
-                                    <i class="far fa-trash-alt text-secondary fa-4x"></i>
-                                    <span style="font-size: 15px;">تراکنش های حذف شده</span>
+                                <a href="{{ route('users.reports.incomes.time.month') }}"
+                                    class="text-center text-dark d-grid gap-2">
+                                    <i class="far fa-file-alt text-dark fa-4x"></i>
+                                    <span style="font-size: 15px;">گزارش ماهانه</span>
                                 </a>
                             </div>
-
                         </div>
 
                         @include('users.sections.footer')
