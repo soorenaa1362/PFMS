@@ -62,7 +62,7 @@
             </div> <!-- row -->
 
             <div class="row d-flex justify-content-center">
-                <div class="card col-5 shadow p-2 m-3 bg-body">
+                <div class="card col-5 shadow p-2 m-2 bg-body">
                     <a href="">
                         <div class="row d-flex justify-content-center">
                             <i class="fa fa-desktop text-primary text-center fa-3x mt-2"></i>
@@ -72,7 +72,7 @@
                         </div>
                     </a>
                 </div> <!-- col-3 -->
-                <div class="card col-5 shadow p-2 m-3 bg-body">
+                <div class="card col-5 shadow p-2 m-2 bg-body">
                     <a href="{{ route('users.cards.index') }}">
                         <div class="row d-flex justify-content-center">
                             <i class="fa fa-credit-card text-secondary text-center fa-3x mt-2"></i>
@@ -85,7 +85,7 @@
             </div> <!-- row -->
 
             <div class="row d-flex justify-content-center">
-                <div class="card col-5 shadow p-2 m-3 bg-body">
+                <div class="card col-5 shadow p-2 m-2 bg-body">
                     <a href="{{ route('users.incomes.index') }}">
                         <div class="row d-flex justify-content-center">
                             <i class="fas fa-donate text-success text-center fa-3x mt-2"></i>
@@ -95,7 +95,7 @@
                         </div>
                     </a>
                 </div> <!-- col-3 -->
-                <div class="card col-5 shadow p-2 m-3 bg-body">
+                <div class="card col-5 shadow p-2 m-2 bg-body">
                     <a href="{{ route('users.costs.index') }}">
                         <div class="row d-flex justify-content-center">
                             <i class="fas fa-hand-holding-usd text-danger text-center fa-3x mt-2"></i>
@@ -108,7 +108,7 @@
             </div> <!-- row -->
 
             <div class="row d-flex justify-content-center">
-                <div class="card col-5 shadow p-2 m-3 bg-body">
+                <div class="card col-5 shadow p-2 m-2 bg-body">
                     <a href="{{ route('users.categories.select') }}">
                         <div class="row d-flex justify-content-center">
                             <i class="fas fa-sitemap text-info text-center fa-3x mt-2"></i>
@@ -118,7 +118,7 @@
                         </div>
                     </a>
                 </div> <!-- col-3 -->
-                <div class="card col-5 shadow p-2 m-3 bg-body">
+                <div class="card col-5 shadow p-2 m-2 bg-body">
                     <a href="{{ route('users.reports.select') }}">
                         <div class="row d-flex justify-content-center">
                             <i class="fa fa-newspaper-o text-warning text-center fa-3x mt-2"></i>
@@ -131,7 +131,7 @@
             </div> <!-- row -->
 
             <div class="row d-flex justify-content-center">
-                <div class="card col-5 shadow p-2 m-3 bg-body">
+                <div class="card col-5 shadow p-2 m-2 bg-body">
                     <a href="">
                         <div class="row d-flex justify-content-center">
                             <i class="fas fa-wrench text-dark text-center fa-3x mt-2"></i>
@@ -141,7 +141,7 @@
                         </div>
                     </a>
                 </div> <!-- col-3 -->
-                <div class="card col-5 shadow p-2 m-3 bg-body">
+                <div class="card col-5 shadow p-2 m-2 bg-body">
                     <a href="{{ route('logout') }}" onclick="event.preventDefault();
                         document.getElementById('logout-form').submit();"
                     >

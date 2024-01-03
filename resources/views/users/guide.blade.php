@@ -6,58 +6,20 @@
 
 @section('content')
 
-    {{-- <div class="container mt-3 p-4">
-        <div class="row d-flex justify-content-center">
-            <div class="col-12 col-md-6">
-
-                <div class="card-header text-center text-light bg-primary p-3 m-2" style="border-radius: 10px;">
-                    <div class="d-flex justify-content-evenly">
-                        <h6 class="mt-2">راهنمای کار با سیستم مدیریت مالی فراز</h6>
-                    </div>
-                </div>
-
-                <div class="card-body d-grid gap-2">
-                    <p class="text-center">
-                        برای شروع به کار ابتدا باید اطلاعات کارت های بانکی
-                        خود را در بخش کارت ها وارد کرده و سپس به ثبت
-                        تراکنش های مالی خود بپردازید.
-                    </p>
-                    <hr>
-                    <div>
-                        <i class="fa fa-credit-card text-secondary fa-2x"></i>
-                        <p>
-                            <span class="h5 text-secondary">کارت ها :</span>
-                            در این بخش لیست کارت های بانکی و فرم ثبت اطلاعات کارت بانکی
-                            برای شما نمایش داده می شود.
-                            برای ثبت اطلاعات کارت بانکی باید روی گزینه ی
-                            <span class="text-success">+ کارت جدید</span>
-                            کلیک نمایید .
-                            <br>
-                            <span class="p-4">موارد دریافتی =></span>
-                            <br>
-                            <span class="p-5">نام : نام بانک</span>
-                            <br>
-                            <span class="p-5">
-                                نام مستعار : نامی اختیاری که میتوانید
-                                برای کارت خود در نظر بگیرید تا مانع از اشتباه گرفتن
-                                آن با سایر کارت ها شود.
-                            </span>
-                            <br>
-                        </p>
-                    </div>
-                </div>
-
-            </div> <!-- col-12 -->
-        </div> <!-- row -->
-    </div> <!-- container --> --}}
-
     <div class="container mt-3 p-4">
         <div class="row d-flex justify-content-center">
             <div class="col-12 col-md-6">
 
-                <div class="card-header text-center text-light bg-primary p-3 m-2" style="border-radius: 10px;">
-                    <div class="d-flex justify-content-evenly">
+                <div class="card-header text-center text-light bg-primary p-3 m-2"
+                    style="border-radius: 15px;">
+                    <div class="d-flex justify-content-between">
+
+                        @include('users.sections.profile_icon')
+
                         <h6 class="mt-2">راهنمای کار با سیستم مدیریت مالی فراز</h6>
+
+                        @include('users.sections.logout_icon')
+
                     </div>
                 </div>
 
@@ -410,6 +372,8 @@
                             </div> <!-- accordion-collapse -->
                         </div> <!-- accordion-item -->
                     </div> <!-- accordion -->
+
+                    @include('users.sections.footer')
 
                 </div> <!-- card-body -->
 
