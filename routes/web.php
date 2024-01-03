@@ -94,10 +94,14 @@ Route::group(['prefix' => '/users' , 'namespace' => 'User'], function () {
 
 // Reports Routes : Incomes =>
     Route::get('/reports/incomes', [IncomeReportController::class, 'incomes'])->name('users.reports.incomes.select');
-    Route::get('/reports/incomes/time', [IncomeReportController::class, 'incomeTimeSelect'])->name('users.reports.incomes.timeSelect');
-    Route::get('/reports/incomes/day', [IncomeReportController::class, 'incomesDay'])->name('users.reports.incomes.time.day');
-    Route::get('/reports/incomes/week', [IncomeReportController::class, 'incomesWeek'])->name('users.reports.incomes.time.week');
-    Route::get('/reports/incomes/month', [IncomeReportController::class, 'incomesMonth'])->name('users.reports.incomes.time.month');
+
+    Route::get('/reports/incomes/time', [IncomeReportController::class, 'timeSelect'])->name('users.reports.incomes.timeSelect');
+    Route::get('/reports/incomes/day', [IncomeReportController::class, 'day'])->name('users.reports.incomes.time.day');
+    Route::get('/reports/incomes/week', [IncomeReportController::class, 'week'])->name('users.reports.incomes.time.week');
+    Route::get('/reports/incomes/month', [IncomeReportController::class, 'month'])->name('users.reports.incomes.time.month');
+
+    Route::get('/reports/incomes/category', [IncomeReportController::class, 'categorySelect'])->name('users.reports.incomes.categorySelect');
+    Route::post('/reports/incomes/category', [IncomeReportController::class, 'category'])->name('users.reports.incomes.category');
 
 
 // Reports Routes : Costs =>

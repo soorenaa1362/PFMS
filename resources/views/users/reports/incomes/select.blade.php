@@ -38,7 +38,7 @@
                                 </a>
                             </div>
                             <div>
-                                <a href=""
+                                <a href="{{ route('users.reports.incomes.categorySelect') }}"
                                     class="text-center text-primary d-grid gap-2">
                                     <i class="fas fa-sitemap text-primary fa-4x"></i>
                                     <span style="font-size: 15px;">بر اساس دسته بندی</span>

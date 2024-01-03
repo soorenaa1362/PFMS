@@ -17,13 +17,13 @@ class IncomeReportController extends Controller
     }
 
 
-    public function incomeTimeSelect()
+    public function timeSelect()
     {
         return view('users.reports.incomes.time.timeSelect');
     }
 
 
-    public function incomesDay()
+    public function day()
     {
         if(Auth::guest()){
             return redirect()->route('login');
@@ -50,7 +50,7 @@ class IncomeReportController extends Controller
     }
 
 
-    public function incomesWeek()
+    public function week()
     {
         if(Auth::guest()){
             return redirect()->route('login');
@@ -77,7 +77,7 @@ class IncomeReportController extends Controller
     }
 
 
-    public function incomesMonth()
+    public function month()
     {
         if(Auth::guest()){
             return redirect()->route('login');
@@ -102,4 +102,40 @@ class IncomeReportController extends Controller
             'totalIncome'
         ]));
     }
+
+
+    public function categorySelect()
+    {
+        if(Auth::guest()){
+            return redirect()->route('login');
+        }else{
+            $userId = Auth::user()->id;
+        }
+
+        $categories = IncomeCategory::where('user_id', $userId)->where('parent_id', '!=', null)->get();
+
+        if( count($categories) == 0 ){
+            $categories = IncomeCategory::where('user_id', $userId)->where('parent_id', null)->get();
+        }else{
+            $categories = IncomeCategory::where('user_id', $userId)->where('parent_id', '!=', null)->get();
+        }
+
+        return view('users.reports.incomes.category.select', compact('categories'));
+    }
+
+
+    public function category(Request $request)
+    {
+        $category = IncomeCategory::find($request->category_id);
+
+        if( $request->category_id === null ){
+            return redirect()->back();
+        }else{
+            $incomes = Income::where('category_id', $category->id)
+                ->orderBy('date', 'ASC')->paginate(5);
+
+            return view('users.reports.incomes.category.index', compact('category', 'incomes'));
+        }
+    }
+
 }
