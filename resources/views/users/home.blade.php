@@ -5,18 +5,15 @@
 @endsection
 
 @section('content')
-    @if (blank($cards))
+    @if ( blank($cards) )
 
-        <div class="container mt-3 p-4">
+        <div class="container">
             <div class="row d-flex justify-content-center">
                 <div class="col-12 col-md-6">
 
                     <div class="card-header text-center text-light bg-primary p-3 m-2" style="border-radius: 10px;">
                         <div class="d-flex justify-content-evenly">
                             <a href="#" data-bs-toggle="modal" data-bs-target="#profileModal">
-                                {{-- <img class="avatar" src="{{ asset('images/avatar.jpg') }}" alt="user"
-                                    style="width: 40px; height: 40px; border-radius:50%;"
-                                > --}}
                                 <i class="fas fa-user-alt text-light fa-2x"></i>
                             </a>
 
@@ -25,16 +22,19 @@
                     </div>
 
                     <div class="card-body d-grid gap-2">
-                        <h5 class="text-center">
-                            راهنمای استفاده از سیستم مدیریت مالی فراز
-                        </h5>
-                        <hr>
-                        <p class="text-center">
-                            لطفا ابتدا اطلاعات کارت های بانکی
-                            خود را وارد کرده تا بتوانید ثبت تراکنش های
-                            مالی را انجام دهید .
+                        <p class="text-center my-4">
+                            برای آشنایی بیشتر با نحوه ی کارکرد سیستم مالی فراز ,
+                            لطفا سری به راهنمای سیستم در لینک زیر بزنید
+                            و در غیر اینصورت کار را با ثبت اطلاعات کارت بانکی
+                            خود شروع نمایید .
                         </p>
-                        <a href="{{ route('users.cards.create') }}" class="btn btn-success"
+
+                        <a href="{{ route('users.guide') }}" class="btn btn-secondary"
+                            style="border-radius: 20px;">
+                            راهنمای استفاده از سیستم
+                        </a>
+
+                        <a href="{{ route('users.cards.create') }}" class="btn btn-success mt-2"
                             style="border-radius: 20px;">
                             ثبت اطلاعات کارت بانکی
                         </a>
@@ -46,7 +46,7 @@
 
     @else
 
-        <div class="container mt-3 p-4">
+        <div class="container">
 
             <div class="row d-flex justify-content-center">
                 <div class="card col-11 shadow p-2 m-3 bg-body">

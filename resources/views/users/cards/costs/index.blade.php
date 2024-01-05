@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-    <div class="container mt-3 p-2">
+    <div class="container">
         <div class="row d-flex justify-content-center">
             <div class="col-12 col-md-8">
                 <div class="card shadow p-2 mb-5 bg-body">

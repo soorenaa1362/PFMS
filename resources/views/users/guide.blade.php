@@ -6,7 +6,7 @@
 
 @section('content')
 
-    <div class="container mt-3 p-4">
+    <div class="container">
         <div class="row d-flex justify-content-center">
             <div class="col-12 col-md-6">
 
@@ -24,6 +24,7 @@
                 </div>
 
                 <div class="card-body d-grid gap-2">
+                    
                     <p class="text-center">
                         برای شروع به کار ابتدا باید اطلاعات کارت های بانکی
                         خود را در بخش کارت ها وارد کرده و سپس به ثبت
@@ -373,19 +374,13 @@
                         </div> <!-- accordion-item -->
                     </div> <!-- accordion -->
 
-                    @include('users.sections.footer')
+                    {{-- @include('users.sections.footer') --}}
 
                 </div> <!-- card-body -->
 
             </div> <!-- col-12 -->
         </div> <!-- row -->
     </div> <!-- container -->
-
-
-
-
-
-
 
 @endsection
 

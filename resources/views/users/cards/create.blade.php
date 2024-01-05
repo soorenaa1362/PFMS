@@ -5,10 +5,10 @@
 @endsection
 
 @section('content')
-    <div class="container mt-3 p-4">
+    <div class="container">
         <div class="row d-flex justify-content-center">
             <div class="col-12 col-md-8">
-                <div class="card shadow p-2 mb-5 bg-body">
+                {{-- <div class="card shadow p-2 mb-5 bg-body"> --}}
                     <div class="card-header text-center text-light bg-primary p-3 m-1"
                         style="border-radius: 15px;">
                         <div class="d-flex justify-content-between">
@@ -27,7 +27,7 @@
 
                             <div class="row">
                                 <div class="form-group col-md-6 mt-2">
-                                    <label for="name">نام</label>
+                                    <label for="name">نام بانک</label>
                                     <input class="form-control" name="name" value="{{ old('name') }}">
                                     @error('name')
                                         <span class="text-danger">{{ $message }}</span>
@@ -35,7 +35,10 @@
                                 </div>
 
                                 <div class="form-group col-md-6 mt-2">
-                                    <label for="alias">نام مستعار</label>
+                                    <label for="alias">
+                                        نام مستعار
+                                        <span style="font-size: 13px;">(نامی دلخواه که میتوانید برای کارت خود در نظر بگیرید)</span>
+                                    </label>
                                     <input class="form-control" name="alias" value="{{ old('alias') }}">
                                     @error('alias')
                                         <span class="text-danger">{{ $message }}</span>
@@ -43,7 +46,10 @@
                                 </div>
 
                                 <div class="form-group col-md-6 mt-2">
-                                    <label for="number">شماره کارت</label>
+                                    <label for="number">
+                                        شماره کارت
+                                        <span style="font-size: 13px;">(به انگلیسی وارد شود)</span>
+                                    </label>
                                     <input class="form-control" name="number" value="{{ old('number') }}">
                                     @error('number')
                                         <span class="text-danger">{{ $message }}</span>
@@ -51,7 +57,10 @@
                                 </div>
 
                                 <div class="form-group col-md-6 mt-2">
-                                    <label for="current_cash">موجودی</label>
+                                    <label for="current_cash">
+                                        موجودی به تومان
+                                        <span style="font-size: 13px;">(به انگلیسی وارد شود)</span>
+                                    </label>
                                     <input class="form-control" name="current_cash" value="{{ old('current_cash') }}">
                                     @error('current_cash')
                                         <span class="text-danger">{{ $message }}</span>
@@ -78,7 +87,7 @@
                         @include('users.sections.footer')
 
                     </div> <!-- card body -->
-                </div> <!-- card -->
+                {{-- </div>  --}}
             </div> <!-- col 12 -->
         </div> <!-- row -->
     </div> <!-- container -->

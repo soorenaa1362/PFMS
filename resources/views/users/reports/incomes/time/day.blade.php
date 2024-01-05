@@ -5,16 +5,10 @@
 @endsection
 
 @section('content')
-    <div class="container mt-3 p-2">
+    <div class="container">
         <div class="row d-flex justify-content-center">
             <div class="col-12 col-md-8">
-                <div class="card shadow p-2 mb-5 bg-body">
-
-                    <div class="d-flex justify-content-end">
-                        <a href="{{ route('users.reports.incomes.timeSelect') }}" class="text-dark p-1">
-                            <i class="fa fa-hand-o-left fa-2x"></i>
-                        </a>
-                    </div>
+                {{-- <div class="card shadow p-2 mb-5 bg-body"> --}}
 
                     <div class="card-header text-center text-light bg-primary p-3 m-2"
                         style="border-radius: 15px;">
@@ -109,7 +103,7 @@
 
                     </div> <!-- card body -->
 
-                </div> <!-- card -->
+                {{-- </div>  --}}
             </div> <!-- col 12 -->
         </div> <!-- row -->
     </div> <!-- container -->

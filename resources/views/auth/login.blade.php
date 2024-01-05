@@ -5,11 +5,11 @@
 @endsection
 
 @section('content')
-    <div class="container mt-5 p-4">
+    <div class="container mt-5">
         <div class="row d-flex justify-content-center">
-            <div class="col-12 col-md-6">
-                <div class="card shadow p-3 mb-5 bg-body">
-                    <div class="card-header bg-success text-center text-light mt-2">ورود به سیستم</div>
+            <div class="col-12 col-md-6 px-3 mt-3">
+                {{-- <div class="card shadow p-3 mb-5 bg-body"> --}}
+                    <div class="card-header bg-primary text-center text-light mt-2">ورود به سیستم</div>
                     <div class="card-body">
 
                         <form method="POST" action="{{ route('login') }}">
@@ -40,7 +40,7 @@
                                         رمز عبور خود را فراموش کرده ام.
                                     </a>
                                 @endif
-                                <button class="btn btn-success text-light" type="submit">ورود</button>
+                                <button class="btn btn-primary text-light" type="submit">ورود</button>
                             </div>
                             <hr>
 
@@ -49,7 +49,7 @@
                             </div>
                         </form>
                     </div> <!-- card body -->
-                </div> <!-- card -->
+                {{-- </div>  --}}
             </div> <!-- col 12 -->
         </div> <!-- row -->
     </div> <!-- container -->

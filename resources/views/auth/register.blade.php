@@ -5,11 +5,11 @@
 @endsection
 
 @section('content')
-    <div class="container mt-3 p-4">
+    <div class="container">
         <div class="row d-flex justify-content-center">
-            <div class="col-12 col-md-6">
-                <div class="card shadow p-3 mb-5 bg-body">
-                    <div class="card-header bg-success text-center text-light mt-2">ثبت نام در سیستم</div>
+            <div class="col-12 col-md-6 px-3">
+                {{-- <div class="card shadow p-3 mb-5 bg-body"> --}}
+                    <div class="card-header bg-primary text-center text-light mt-2">ثبت نام در سیستم</div>
                     <div class="card-body">
                         <form method="POST" action="{{ route('register') }}">
                             @csrf
@@ -33,16 +33,6 @@
                                 @enderror
                             </div>
 
-                            {{-- <div class="mb-3">
-                                <label for="email" class="form-label">ایمیل</label>
-                                <input name="email" type="email" class="form-control" id="email"  value="{{ old('email') }}" autocomplete="email">
-                                @error('email')
-                                    <span class="text-danger">
-                                        {{ $message }}
-                                    </span>
-                                @enderror
-                            </div> --}}
-
                             <div class="mb-3">
                                 <label for="password" class="form-label">رمز عبور</label>
                                 <input name="password" type="password" class="form-control" id="password">
@@ -65,11 +55,11 @@
 
                             <div class="d-flex justify-content-between">
                                 <a href="{{ route("login") }}" class="mt-2">قبلا در سیستم ثبت نام کرده ام.</a>
-                                <button class="btn btn-success text-light" type="submit">ثبت نام</button>
+                                <button class="btn btn-primary text-light" type="submit">ثبت نام</button>
                             </div>
                         </form>
                     </div> <!-- card body -->
-                </div> <!-- card -->
+                {{-- </div> --}}
             </div> <!-- col 12 -->
         </div> <!-- row -->
     </div> <!-- container -->

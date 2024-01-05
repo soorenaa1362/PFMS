@@ -5,10 +5,10 @@
 @endsection
 
 @section('content')
-    <div class="container mt-3 p-2">
+    <div class="container">
         <div class="row d-flex justify-content-center">
             <div class="col-12 col-md-8">
-                <div class="card shadow p-2 mb-5 bg-body">
+                {{-- <div class="card shadow p-2 mb-5 bg-body"> --}}
 
                     <div class="card-header text-center text-light bg-primary p-3 m-2"
                         style="border-radius: 15px;">
@@ -29,7 +29,7 @@
                     @endif
                     <div class="card-body">
                         @if (blank($cards))
-                            <div class="d-grid gap-2 mt-2">
+                            <div class="d-grid gap-2">
                                 <h6 class="text-center">
                                     هنوز هیچ کارتی در سیستم ثبت نکرده اید.
                                 </h6>
@@ -55,7 +55,7 @@
                                 </a>
                             </div>
                             <hr>
-                            <table class="table table-bordered table-striped text-center">
+                            <table class="table table-bordered table-striped text-center mt-3">
                                 <thead>
                                     <tr>
                                         <th>نام بانک</th>
@@ -108,7 +108,7 @@
 
                     </div> <!-- card body -->
 
-                </div> <!-- card -->
+                {{-- </div>  --}}
             </div> <!-- col 12 -->
         </div> <!-- row -->
     </div> <!-- container -->
