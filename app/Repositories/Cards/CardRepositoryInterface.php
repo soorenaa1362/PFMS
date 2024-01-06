@@ -19,5 +19,7 @@ interface CardRepositoryInterface
     public function getCardCosts($card_id);
 
     public function getCardCostCount($card_id);
+
+    public function storeCard($request);
 }
 

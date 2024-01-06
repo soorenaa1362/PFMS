@@ -12,7 +12,6 @@ use Illuminate\Http\Request;
 use Morilog\Jalali\Jalalian;
 use App\Models\IncomeCategory;
 use App\Http\Controllers\Controller;
-// use App\Repositories\CardRepository;
 use Illuminate\Support\Facades\Auth;
 use App\Repositories\Cards\EloquentCardRepository;
 
@@ -30,6 +29,30 @@ class CardController extends Controller
             'cards',
             'totalCash',
         ]));
+    }
+
+
+    public function create()
+    {
+        $cardRepository = new EloquentCardRepository();
+        $userId = $cardRepository->getUserId();
+
+        if($userId == null){
+            return redirect()->route('login');
+        }else{
+            return view('users.cards.create');
+        }
+    }
+
+
+    public function store(Request $request)
+    {
+        $cardRepository = new EloquentCardRepository();
+
+        $card = $cardRepository->storeCard($request);
+
+        return redirect()->route('users.cards.index')
+            ->withSuccess('اطلاعات کارت با موفقیت در سیستم ثبت شد.');
     }
 
 

@@ -41,6 +41,31 @@ class EloquentCardRepository implements CardRepositoryInterface
     }
 
 
+    public function storeCard($request)
+    {
+        $userId = $this->getUserId();
+        
+        $request->validate([
+            'name' => 'required|string',
+            'alias' => 'nullable|string',
+            'number' => 'required|numeric|unique:cards',
+            'current_cash' => 'required|numeric',
+            'description' => 'nullable|string',
+        ]);
+
+        $card = Card::create([
+            'user_id' => $userId,
+            'name' => $request->name,
+            'alias' => $request->alias,
+            'number' => $request->number,
+            'current_cash' => $request->current_cash,
+            'description' => $request->description,
+        ]);
+
+        return $card;
+    }
+
+
     public function showCard($card_id)
     {
         $userId = $this->getUserId();
@@ -83,7 +108,7 @@ class EloquentCardRepository implements CardRepositoryInterface
             ->where('card_id', $card_id)->paginate(3);
         return $costs;
     }
-    
+
 
     public function getCardCostCount($card_id)
     {
