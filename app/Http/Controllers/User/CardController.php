@@ -12,14 +12,15 @@ use Illuminate\Http\Request;
 use Morilog\Jalali\Jalalian;
 use App\Models\IncomeCategory;
 use App\Http\Controllers\Controller;
-use App\Repositories\CardRepository;
+// use App\Repositories\CardRepository;
 use Illuminate\Support\Facades\Auth;
+use App\Repositories\Cards\EloquentCardRepository;
 
 class CardController extends Controller
 {
     public function index()
     {
-        $cardRepository = new CardRepository();
+        $cardRepository = new EloquentCardRepository();
 
         $cards = $cardRepository->getCards();
 
@@ -34,7 +35,7 @@ class CardController extends Controller
 
     public function show($card_id)
     {
-        $cardRepository = new CardRepository();
+        $cardRepository = new EloquentCardRepository();
 
         $card = $cardRepository->showCard($card_id);
 
