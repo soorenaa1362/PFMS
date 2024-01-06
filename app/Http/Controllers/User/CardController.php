@@ -76,6 +76,21 @@ class CardController extends Controller
             'costCount'
         ]));
     }
+
+
+    public function edit($card_id)
+    {
+        $cardRepository = new EloquentCardRepository();
+        $userId = $cardRepository->getUserId();
+
+        if($userId == null){
+            return redirect()->route('login');
+        }else{
+            $card = $cardRepository->editCard($card_id);
+
+            return view('users.cards.edit', compact('card'));
+        }
+    }
 }
 
 

@@ -44,7 +44,7 @@ class EloquentCardRepository implements CardRepositoryInterface
     public function storeCard($request)
     {
         $userId = $this->getUserId();
-        
+
         $request->validate([
             'name' => 'required|string',
             'alias' => 'nullable|string',
@@ -116,6 +116,14 @@ class EloquentCardRepository implements CardRepositoryInterface
         $card = Card::find($card_id);
 
         return count(Cost::where('user_id', $userId)->where('card_id', $card_id)->get());
+    }
+
+
+    public function editCard($card_id)
+    {
+        $card = Card::find($card_id);
+
+        return $card;
     }
 }
 
