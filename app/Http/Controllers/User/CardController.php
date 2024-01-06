@@ -30,6 +30,28 @@ class CardController extends Controller
             'totalCash',
         ]));
     }
+
+
+    public function show($card_id)
+    {
+        $cardRepository = new CardRepository();
+
+        $card = $cardRepository->showCard($card_id);
+
+        $incomes = $cardRepository->getCardIncomes($card_id);
+        $incomeCount = $cardRepository->getCardIncomeCount($card_id);
+
+        $costs = $cardRepository->getCardCosts($card_id);
+        $costCount = $cardRepository->getCardCostCount($card_id);
+
+        return view('users.cards.show', compact([
+            'card',
+            'incomes',
+            'incomeCount',
+            'costs',
+            'costCount'
+        ]));
+    }
 }
 
 
