@@ -25,5 +25,10 @@ interface CardRepositoryInterface
     public function editCard($card_id);
 
     public function updateCard($request, $card_id);
+
+    public function getIncomeCategories($userId);
+
+    public function incomeStore($request, $card_id);
+
 }
 

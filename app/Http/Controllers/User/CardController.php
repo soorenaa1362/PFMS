@@ -128,6 +128,47 @@ class CardController extends Controller
 
         return view('users.cards.transactions.index', compact('card', 'incomes', 'costs'));
     }
+
+
+    public function transactionSelect($card_id)
+    {
+        $cardRepository = new EloquentCardRepository();
+
+        $userId = $cardRepository->getUserId();
+
+        $card = Card::find($card_id);
+
+        return view('users.cards.transactions.select', compact('card'));
+    }
+
+
+    public function incomeCreate($card_id)
+    {
+        $cardRepository = new EloquentCardRepository();
+
+        $userId = $cardRepository->getUserId();
+
+        $card = Card::find($card_id);
+
+        $categories = $cardRepository->getIncomeCategories($userId);
+
+        return view('users.cards.incomes.create', compact('card', 'categories'));
+    }
+
+
+    public function incomeStore(Request $request, $card_id)
+    {
+        $cardRepository = new EloquentCardRepository();
+
+        $userId = $cardRepository->getUserId();
+
+        $card = Card::find($card_id);
+
+        $income = $cardRepository->incomeStore($request, $card_id);
+
+        return redirect()->route('users.cards.checkTransactions', $card->id)
+            ->withSuccess('اطلاعات درآمد با موفقیت در سیستم ثبت شد.');
+    }
 }
 
 
