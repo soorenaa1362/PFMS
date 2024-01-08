@@ -103,6 +103,33 @@ class CardController extends Controller
         return redirect()->route('users.cards.index')
             ->withSuccess('اطلاعات کارت مورد نظر با موفقیت بروزرسانی شد.');
     }
+
+
+    public function delete($card_id)
+    {
+        $card = Card::find($card_id);
+        $card->delete();
+
+        return redirect()->route('users.cards.index')
+            ->withSuccess('عملیات حذف کارت بانکی با موفقیت انجام شد.');
+    }
+
+
+    public function checkTransactions($card_id)
+    {
+        $cardRepository = new EloquentCardRepository();
+
+        $userId = $cardRepository->getUserId();
+
+        $card = Card::find($card_id);
+
+        $incomes = $cardRepository->getCardIncomes($card_id);
+        $costs = $cardRepository->getCardCosts($card_id);
+
+        return view('users.cards.transactions.index', compact('card', 'incomes', 'costs'));
+    }
 }
+
+
 
 

@@ -23,5 +23,7 @@ interface CardRepositoryInterface
     public function storeCard($request);
 
     public function editCard($card_id);
+
+    public function updateCard($request, $card_id);
 }
 
