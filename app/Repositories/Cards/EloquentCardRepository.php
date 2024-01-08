@@ -61,8 +61,6 @@ class EloquentCardRepository implements CardRepositoryInterface
             'current_cash' => $request->current_cash,
             'description' => $request->description,
         ]);
-
-        return $card;
     }
 
 
@@ -124,6 +122,28 @@ class EloquentCardRepository implements CardRepositoryInterface
         $card = Card::find($card_id);
 
         return $card;
+    }
+
+
+    public function updateCard($request, $card_id)
+    {
+        $card = Card::find($card_id);
+
+        $request->validate([
+            'name' => 'required|string',
+            'alias' => 'nullable|string',
+            'number' => 'required|numeric|unique:cards,number,'.$card_id,
+            'current_cash' => 'required|string',
+            'description' => 'nullable|string',
+        ]);
+
+        $card->update([
+            'name' => $request->name,
+            'alias' => $request->alias,
+            'number' => $request->number,
+            'current_cash' => $request->current_cash,
+            'description' => $request->description,
+        ]);
     }
 }
 

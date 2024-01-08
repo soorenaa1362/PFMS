@@ -91,6 +91,18 @@ class CardController extends Controller
             return view('users.cards.edit', compact('card'));
         }
     }
+
+
+    public function update(Request $request, $card_id)
+    {
+        $cardRepository = new EloquentCardRepository();
+        $userId = $cardRepository->getUserId();
+
+        $cardRepository->updateCard($request, $card_id);
+
+        return redirect()->route('users.cards.index')
+            ->withSuccess('اطلاعات کارت مورد نظر با موفقیت بروزرسانی شد.');
+    }
 }
 
 
