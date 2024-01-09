@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Incomes;
 
+use App\Models\Card;
 use App\Models\Income;
 use App\Models\IncomeCategory;
 use Illuminate\Support\Facades\Auth;
@@ -55,6 +56,17 @@ class EloquentIncomeRepository implements IncomeRepositoryInterface
             }
 
             return $totalIncome;
+        }
+    }
+
+
+    public function getCards($userId)
+    {
+        if(Auth::guest()){
+            return redirect()->route('login');
+        }else{
+            $cards = Card::where('user_id', $userId)->get();
+            return $cards;
         }
     }
 }

@@ -31,4 +31,21 @@ class IncomeController extends Controller
             'incomeCategories'
         ]));
     }
+
+
+    public function create()
+    {
+        $incomeRepository = new EloquentIncomeRepository();
+
+        $userId = $incomeRepository->getUserId();
+
+        $cards = $incomeRepository->getCards($userId);
+
+        $categories = $incomeRepository->getIncomeCategories($userId);
+
+        return view('users.incomes.create', compact([
+            'cards',
+            'categories',
+        ]));
+    }
 }
