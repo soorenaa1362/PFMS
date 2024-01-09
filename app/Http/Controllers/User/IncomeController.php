@@ -33,6 +33,23 @@ class IncomeController extends Controller
     }
 
 
+    // public function create()
+    // {
+    //     $incomeRepository = new EloquentIncomeRepository();
+
+    //     $userId = $incomeRepository->getUserId();
+
+    //     $cards = $incomeRepository->getCards($userId);
+
+    //     $categories = $incomeRepository->getCategoriesParents($userId);
+
+    //     return view('users.incomes.create', compact([
+    //         'cards',
+    //         'categories',
+    //     ]));
+    // }
+
+
     public function create()
     {
         $incomeRepository = new EloquentIncomeRepository();
@@ -41,11 +58,17 @@ class IncomeController extends Controller
 
         $cards = $incomeRepository->getCards($userId);
 
-        $categories = $incomeRepository->getIncomeCategories($userId);
+        $categories = $incomeRepository->getCategories($userId);
 
-        return view('users.incomes.create', compact([
-            'cards',
-            'categories',
-        ]));
+        $parents = $incomeRepository->getParents($userId);
+
+        if( count($parents) != 0 ){
+            return view('users.incomes.create', compact([
+                'cards',
+                'categories'
+            ]));
+        }else{
+            return redirect()->route('users.incomes.index');
+        }
     }
 }

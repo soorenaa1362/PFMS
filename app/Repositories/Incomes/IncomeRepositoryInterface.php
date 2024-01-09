@@ -13,5 +13,9 @@ interface IncomeRepositoryInterface
     public function getTotalIncome();
 
     public function getCards($userId);
+
+    public function getCategories($userId);
+
+    public function getParents($userId);
 }
 
