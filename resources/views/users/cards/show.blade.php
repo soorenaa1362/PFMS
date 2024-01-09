@@ -81,13 +81,13 @@
                                 <i class="fa fa-exchange"></i>
                                 ثبت تراکنش
                             </a>
-                            <a href="{{ route('users.cards.delete', $card->id) }}"
+                            {{-- <a href="{{ route('users.cards.delete', $card->id) }}"
                                 style="border-radius: 15px;"
                                 class="btn btn-danger"
                                 onclick="return confirm('آیا میخواهید این کارت بانکی را حذف کنید؟')">
                                 <i class="fas fa-trash-alt"></i>
                                 حذف
-                            </a>
+                            </a> --}}
                         </div>
 
                         @if ( !blank($incomes) )
