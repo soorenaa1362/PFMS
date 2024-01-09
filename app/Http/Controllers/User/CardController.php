@@ -37,11 +37,7 @@ class CardController extends Controller
         $cardRepository = new EloquentCardRepository();
         $userId = $cardRepository->getUserId();
 
-        if($userId == null){
-            return redirect()->route('login');
-        }else{
-            return view('users.cards.create');
-        }
+        return view('users.cards.create');
     }
 
 
@@ -83,13 +79,9 @@ class CardController extends Controller
         $cardRepository = new EloquentCardRepository();
         $userId = $cardRepository->getUserId();
 
-        if($userId == null){
-            return redirect()->route('login');
-        }else{
-            $card = $cardRepository->editCard($card_id);
+        $card = $cardRepository->editCard($card_id);
 
-            return view('users.cards.edit', compact('card'));
-        }
+        return view('users.cards.edit', compact('card'));
     }
 
 
@@ -126,7 +118,11 @@ class CardController extends Controller
         $incomes = $cardRepository->getCardIncomes($card_id);
         $costs = $cardRepository->getCardCosts($card_id);
 
-        return view('users.cards.transactions.index', compact('card', 'incomes', 'costs'));
+        return view('users.cards.transactions.index', compact([
+            'card',
+            'incomes',
+            'costs'
+        ]));
     }
 
 
@@ -152,7 +148,10 @@ class CardController extends Controller
 
         $categories = $cardRepository->getIncomeCategories($userId);
 
-        return view('users.cards.incomes.create', compact('card', 'categories'));
+        return view('users.cards.incomes.create', compact([
+            'card',
+            'categories'
+        ]));
     }
 
 
