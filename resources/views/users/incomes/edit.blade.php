@@ -141,4 +141,4 @@
             });
         });
     </script>
-php @endsection
+@endsection

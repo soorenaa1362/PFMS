@@ -79,4 +79,20 @@ class IncomeController extends Controller
 
         return view('users.incomes.show', compact('income'));
     }
+
+
+    public function edit($income_id)
+    {
+        $incomeRepository = new EloquentIncomeRepository();
+
+        $userId = $incomeRepository->getUserId();
+
+        $income = $incomeRepository->showIncome($income_id);
+
+        $cards = $incomeRepository->getCards($userId);
+
+        $categories = $incomeRepository->getCategories($userId);
+
+        return view('users.incomes.edit', compact('income', 'cards', 'categories'));
+    }
 }

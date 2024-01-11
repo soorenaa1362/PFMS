@@ -17,5 +17,9 @@ interface IncomeRepositoryInterface
     public function getCategories($userId);
 
     public function getParents($userId);
+
+    public function storeIncome($request);
+
+    public function showIncome($income_id);
 }
 

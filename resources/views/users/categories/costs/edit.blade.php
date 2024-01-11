@@ -22,7 +22,7 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <form action="{{ route('users.categories.incomes.update', $category->id) }}" method="POST">
+                        <form action="{{ route('users.categories.costs.update', $category->id) }}" method="POST">
                             @csrf
                             @method('put')
 
