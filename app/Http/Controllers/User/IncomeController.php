@@ -33,23 +33,6 @@ class IncomeController extends Controller
     }
 
 
-    // public function create()
-    // {
-    //     $incomeRepository = new EloquentIncomeRepository();
-
-    //     $userId = $incomeRepository->getUserId();
-
-    //     $cards = $incomeRepository->getCards($userId);
-
-    //     $categories = $incomeRepository->getCategoriesParents($userId);
-
-    //     return view('users.incomes.create', compact([
-    //         'cards',
-    //         'categories',
-    //     ]));
-    // }
-
-
     public function create()
     {
         $incomeRepository = new EloquentIncomeRepository();
@@ -70,5 +53,18 @@ class IncomeController extends Controller
         }else{
             return redirect()->route('users.incomes.index');
         }
+    }
+
+
+    public function store(Request $request)
+    {
+        $incomeRepository = new EloquentIncomeRepository();
+
+        $incomeRepository->getUserId();
+
+        $income = $incomeRepository->storeIncome($request);
+
+        return redirect()->route('users.incomes.index')
+            ->withSuccess('عملیات ثبت درآمد با موفقیت انجام شد.');
     }
 }
