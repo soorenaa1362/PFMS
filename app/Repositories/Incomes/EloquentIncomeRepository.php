@@ -109,35 +109,51 @@ class EloquentIncomeRepository implements IncomeRepositoryInterface
 
     public function storeIncome($request)
     {
-        $userId = $this->getUserId();
-        
-        $myDate = Carbon::createFromTimestamp($request->date)->format('Y/m/d');
-        $myDateJalali = Jalalian::fromDateTime($myDate)->format('Y/m/d');
+        if(Auth::guest()){
+            return redirect()->route('login');
+        }else{
+            $userId = $this->getUserId();
 
-        $request->validate([
-            'title' => 'required|string',
-            'amount' => 'required|numeric',
-            'card_id' => 'required',
-            'category_id' => 'required',
-            'date' => 'required',
-            'description' => 'nullable|string',
-        ]);
+            $myDate = Carbon::createFromTimestamp($request->date)->format('Y/m/d');
+            $myDateJalali = Jalalian::fromDateTime($myDate)->format('Y/m/d');
 
-        $income = Income::create([
-            'user_id' => $userId,
-            'title' => $request->title,
-            'amount' => $request->amount,
-            'card_id' => $request->card_id,
-            'category_id' => $request->category_id,
-            'date' => $myDate,
-            'description' => $request->description,
-        ]);
+            $request->validate([
+                'title' => 'required|string',
+                'amount' => 'required|numeric',
+                'card_id' => 'required',
+                'category_id' => 'required',
+                'date' => 'required',
+                'description' => 'nullable|string',
+            ]);
 
-        $card = Card::where('id', $income->card_id)->first();
-        $newCash = $card->current_cash + $income->amount;
-        $card->update([
-            'current_cash' => $newCash
-        ]);
+            $income = Income::create([
+                'user_id' => $userId,
+                'title' => $request->title,
+                'amount' => $request->amount,
+                'card_id' => $request->card_id,
+                'category_id' => $request->category_id,
+                'date' => $myDate,
+                'description' => $request->description,
+            ]);
+
+            $card = Card::where('id', $income->card_id)->first();
+            $newCash = $card->current_cash + $income->amount;
+            $card->update([
+                'current_cash' => $newCash
+            ]);
+        }
+    }
+
+
+    public function showIncome($income_id)
+    {
+        if(Auth::guest()){
+            return redirect()->route('login');
+        }else{
+            $income = Income::where('id', $income_id)->first();
+
+            return $income;
+        }
     }
 }
 
