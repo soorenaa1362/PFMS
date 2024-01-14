@@ -39,4 +39,23 @@ class EloquentIncomeCategoryRepository implements IncomeCategoryRepositoryInterf
 
         return $categories;
     }
+
+
+    public function storeIncomeCategory($request)
+    {
+        $userId = $this->getUserId();
+        
+        $request->validate([
+            'title' => 'required|string',
+            'parent_id' => 'nullable|string',
+            'description' => 'nullable|string',
+        ]);
+
+        IncomeCategory::create([
+            'user_id' => $userId,
+            'title' => $request->title,
+            'parent_id' => $request->parent_id,
+            'description' => $request->description
+        ]);
+    }
 }

@@ -32,20 +32,10 @@ class IncomeCategoryController extends Controller
 
     public function store(Request $request)
     {
-        $userId = Auth::user()->id;
+        $incomeCategoryRepository = new EloquentIncomeCategoryRepository();
+        $userId = $incomeCategoryRepository->getUserId();
 
-        $request->validate([
-            'title' => 'required|string',
-            'parent_id' => 'nullable|string',
-            'description' => 'nullable|string',
-        ]);
-
-        IncomeCategory::create([
-            'user_id' => $userId,
-            'title' => $request->title,
-            'parent_id' => $request->parent_id,
-            'description' => $request->description
-        ]);
+        $incomeCategoryRepository->storeIncomeCategory($request);
 
         return redirect()->route('users.categories.incomes.index')
             ->withSuccess('دسته بندی با موفقیت در سیستم ثبت شد.');
