@@ -108,6 +108,17 @@ class IncomeController extends Controller
     }
 
 
+    public function delete($income_id)
+    {
+        $incomeRepository = new EloquentIncomeRepository();
+
+        $incomeRepository->deleteIncome($income_id);
+
+        return redirect()->route('users.incomes.index')
+            ->withSuccess('درآمد مورد نظر با موفقیت حذف شد.');
+    }
+
+
 
 
 }
