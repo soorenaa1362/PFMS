@@ -14,7 +14,7 @@ class IncomeCategoryController extends Controller
     {
         $incomeCategoryRepository = new EloquentIncomeCategoryRepository();
         $userId = $incomeCategoryRepository->getUserId();
-        $categories = IncomeCategory::where('user_id', $userId)->paginate(5);
+        $categories = $incomeCategoryRepository->getCategories($userId);
 
         return view('users.categories.incomes.index', compact('categories'));
     }
