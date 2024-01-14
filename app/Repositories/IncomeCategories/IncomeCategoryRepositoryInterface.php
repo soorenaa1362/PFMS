@@ -16,6 +16,6 @@ interface IncomeCategoryRepositoryInterface
 
     public function getParents($userId);
 
-    
+    public function updateIncomeCategory($request, $category_id);
 }
 

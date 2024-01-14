@@ -35,9 +35,13 @@ class EloquentIncomeCategoryRepository implements IncomeCategoryRepositoryInterf
 
     public function createForm($userId)
     {
-        $categories = IncomeCategory::where('user_id', $userId)->where('parent_id', null)->get();
+        if(Auth::guest()){
+            return redirect()->route('login');
+        }else{
+            $categories = IncomeCategory::where('user_id', $userId)->where('parent_id', null)->get();
 
-        return $categories;
+            return $categories;
+        }
     }
 
 
@@ -66,17 +70,42 @@ class EloquentIncomeCategoryRepository implements IncomeCategoryRepositoryInterf
 
     public function getCategory($category_id)
     {
-        $category = IncomeCategory::find($category_id);
+        if(Auth::guest()){
+            return redirect()->route('login');
+        }else{
+            $category = IncomeCategory::find($category_id);
 
-        return $category;
+            return $category;
+        }
     }
 
 
     public function getParents($userId)
     {
-        $parents = IncomeCategory::where('user_id', $userId)->where('parent_id', null)->get();
+        if(Auth::guest()){
+            return redirect()->route('login');
+        }else{
+            $parents = IncomeCategory::where('user_id', $userId)->where('parent_id', null)->get();
 
-        return $parents;
+            return $parents;
+        }
+    }
+
+
+    public function updateIncomeCategory($request, $category_id)
+    {
+        $category = IncomeCategory::find($category_id);
+
+        $request->validate([
+            'title' => 'required|string',
+            'description' => 'nullable|string',
+        ]);
+
+        $category->update([
+            'title' => $request->title,
+            'parent_id' => $request->parent_id,
+            'description' => $request->description,
+        ]);
     }
 
 
