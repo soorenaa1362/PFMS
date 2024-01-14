@@ -68,14 +68,8 @@ class IncomeCategoryController extends Controller
 
     public function delete($category_id)
     {
-        $userId = Auth::user()->id;
-        $category = IncomeCategory::find($category_id);
-        $category->delete();
-
-        $categories = IncomeCategory::where('user_id', $userId)->where('parent_id', $category_id)->get();
-        foreach($categories as $category){
-            $category->delete();
-        }
+        $incomeCategoryRepository = new EloquentIncomeCategoryRepository();
+        $incomeCategoryRepository->deleteIncomeCategory($category_id);
 
         return redirect()->route('users.categories.incomes.index')
             ->withSuccess('دسته بندی مورد نظر با موفقیت حذف شد.');
