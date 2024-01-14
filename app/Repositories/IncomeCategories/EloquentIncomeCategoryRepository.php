@@ -11,7 +11,7 @@ class EloquentIncomeCategoryRepository implements IncomeCategoryRepositoryInterf
 {
     public function getUserId()
     {
-        if( Auth::guest() ){
+        if(Auth::guest()){
             return redirect()->route('login');
         }else{
             $userId = Auth::user()->id;
@@ -23,7 +23,7 @@ class EloquentIncomeCategoryRepository implements IncomeCategoryRepositoryInterf
 
     public function getCategories($userId)
     {
-        if( Auth::guest() ){
+        if(Auth::guest()){
             return redirect()->route('login');
         }else{
             $categories = IncomeCategory::where('user_id', $userId)->paginate(5);
@@ -43,19 +43,42 @@ class EloquentIncomeCategoryRepository implements IncomeCategoryRepositoryInterf
 
     public function storeIncomeCategory($request)
     {
-        $userId = $this->getUserId();
-        
-        $request->validate([
-            'title' => 'required|string',
-            'parent_id' => 'nullable|string',
-            'description' => 'nullable|string',
-        ]);
+        if(Auth::guest()){
+            return redirect()->route('login');
+        }else{
+            $userId = $this->getUserId();
 
-        IncomeCategory::create([
-            'user_id' => $userId,
-            'title' => $request->title,
-            'parent_id' => $request->parent_id,
-            'description' => $request->description
-        ]);
+            $request->validate([
+                'title' => 'required|string',
+                'parent_id' => 'nullable|string',
+                'description' => 'nullable|string',
+            ]);
+
+            IncomeCategory::create([
+                'user_id' => $userId,
+                'title' => $request->title,
+                'parent_id' => $request->parent_id,
+                'description' => $request->description
+            ]);
+        }
     }
+
+
+    public function getCategory($category_id)
+    {
+        $category = IncomeCategory::find($category_id);
+
+        return $category;
+    }
+
+
+    public function getParents($userId)
+    {
+        $parents = IncomeCategory::where('user_id', $userId)->where('parent_id', null)->get();
+
+        return $parents;
+    }
+
+
+
 }

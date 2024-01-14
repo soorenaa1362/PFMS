@@ -44,13 +44,15 @@ class IncomeCategoryController extends Controller
 
     public function edit($category_id)
     {
-        $userId = Auth::user()->id;
-        $category = IncomeCategory::find($category_id);
-        $parents = IncomeCategory::where('user_id', $userId)->where('parent_id', null)->get();
-        // $parents = IncomeCategory::where('user_id', $userId)
-        //     ->where('parent_id', null)->where('id', '!=', $category_id)->get();
+        $incomeCategoryRepository = new EloquentIncomeCategoryRepository();
+        $userId = $incomeCategoryRepository->getUserId();
+        $category = $incomeCategoryRepository->getCategory($category_id);
+        $parents = $incomeCategoryRepository->getParents($userId);
 
-        return view('users.categories.incomes.edit', compact('category', 'parents'));
+        return view('users.categories.incomes.edit', compact([
+            'category',
+            'parents'
+        ]));
     }
 
 
