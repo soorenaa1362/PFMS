@@ -6,14 +6,17 @@ use Illuminate\Http\Request;
 use App\Models\IncomeCategory;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use App\Repositories\IncomeCategories\EloquentIncomeCategoryRepository;
 
 class IncomeCategoryController extends Controller
 {
     public function index()
     {
-        $incomeCategoryRepository = new EloquentIncomeCategoryRepository();
-        $userId = $incomeCategoryRepository->getUserId();
+        if( Auth::guest() ){
+            return redirect()->route('login');
+        }else{
+            $userId = Auth::user()->id;
+        }
+
         $categories = IncomeCategory::where('user_id', $userId)->paginate(5);
 
         return view('users.categories.incomes.index', compact('categories'));
@@ -27,7 +30,7 @@ class IncomeCategoryController extends Controller
         }else{
             $userId = Auth::user()->id;
         }
-
+        
         $categories = IncomeCategory::where('user_id', $userId)->where('parent_id', null)->get();
 
         return view('users.categories.incomes.create', compact('categories'));
