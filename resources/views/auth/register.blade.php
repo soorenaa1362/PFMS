@@ -53,9 +53,12 @@
                                 @enderror
                             </div>
 
-                            <div class="d-flex justify-content-between">
-                                <a href="{{ route("login") }}" class="mt-2">قبلا در سیستم ثبت نام کرده ام.</a>
+                            <div class="d-grid my-4">
+                            {{-- <div class="d-flex justify-content-between"> --}}
                                 <button class="btn btn-primary text-light" type="submit">ثبت نام</button>
+                            </div>
+                            <div class="d-grid justify-content-center">
+                                <a href="{{ route("login") }}" class="mt-2">قبلا در سیستم ثبت نام کرده ام.</a>
                             </div>
                         </form>
                     </div> <!-- card body -->

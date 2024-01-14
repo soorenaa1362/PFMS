@@ -34,17 +34,18 @@
                                 @enderror
                             </div>
 
-                            <div class="d-flex justify-content-between">
-                                @if (Route::has('password.request'))
+                            <div class="d-grid my-4">
+                            {{-- <div class="d-flex justify-content-between"> --}}
+                                {{-- @if (Route::has('password.request'))
                                     <a class="btn btn-link" href="{{ route('password.request') }}">
                                         رمز عبور خود را فراموش کرده ام.
                                     </a>
-                                @endif
+                                @endif --}}
                                 <button class="btn btn-primary text-light" type="submit">ورود</button>
                             </div>
-                            <hr>
+                            {{-- <hr> --}}
 
-                            <div class="d-flex justify-content-center">
+                            <div class="d-grid justify-content-center">
                                 <a href="{{ route("register") }}">میخواهم ثبت نام کنم.</a>
                             </div>
                         </form>

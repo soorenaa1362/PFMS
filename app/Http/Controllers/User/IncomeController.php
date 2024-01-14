@@ -95,4 +95,19 @@ class IncomeController extends Controller
 
         return view('users.incomes.edit', compact('income', 'cards', 'categories'));
     }
+
+
+    public function update(Request $request, $income_id)
+    {
+        $incomeRepository = new EloquentIncomeRepository();
+
+        $incomeRepository->updateIncome($request, $income_id);
+
+        return redirect()->route('users.incomes.index')
+            ->withSuccess('عملیات بروزرسانی اطلاعات درآمد با موفقیت انجام شد.');
+    }
+
+
+
+
 }
