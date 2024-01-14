@@ -31,4 +31,12 @@ class EloquentIncomeCategoryRepository implements IncomeCategoryRepositoryInterf
             return $categories;
         }
     }
+
+
+    public function createForm($userId)
+    {
+        $categories = IncomeCategory::where('user_id', $userId)->where('parent_id', null)->get();
+
+        return $categories;
+    }
 }

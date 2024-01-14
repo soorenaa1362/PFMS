@@ -22,13 +22,9 @@ class IncomeCategoryController extends Controller
 
     public function create()
     {
-        if(Auth::guest()){
-            return redirect()->route('login');
-        }else{
-            $userId = Auth::user()->id;
-        }
-
-        $categories = IncomeCategory::where('user_id', $userId)->where('parent_id', null)->get();
+        $incomeCategoryRepository = new EloquentIncomeCategoryRepository();
+        $userId = $incomeCategoryRepository->getUserId();
+        $categories = $incomeCategoryRepository->createForm($userId);
 
         return view('users.categories.incomes.create', compact('categories'));
     }
