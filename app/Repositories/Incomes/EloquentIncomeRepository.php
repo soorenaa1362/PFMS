@@ -115,7 +115,6 @@ class EloquentIncomeRepository implements IncomeRepositoryInterface
             $userId = $this->getUserId();
 
             $myDate = Carbon::createFromTimestamp($request->date)->format('Y/m/d');
-            $myDateJalali = Jalalian::fromDateTime($myDate)->format('Y/m/d');
 
             $request->validate([
                 'title' => 'required|string',
@@ -168,13 +167,9 @@ class EloquentIncomeRepository implements IncomeRepositoryInterface
     public function updateIncome($request, $income_id)
     {
         $userId = $this->getUserId();
-
         $income = $this->showIncome($income_id);
-
         $oldIncomeAmount = $income->amount;
-
         $card = Card::where('id', $income->card_id)->first();
-
         $myDate = Carbon::createFromTimestamp($request->date)->format('Y/m/d');
 
         if($request->date == null){
