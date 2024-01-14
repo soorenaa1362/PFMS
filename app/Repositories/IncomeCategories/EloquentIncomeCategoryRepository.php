@@ -115,13 +115,17 @@ class EloquentIncomeCategoryRepository implements IncomeCategoryRepositoryInterf
 
     public function deleteIncomeCategory($category_id)
     {
-        $userId = Auth::user()->id;
-        $category = IncomeCategory::find($category_id);
-        $category->delete();
-
-        $categories = IncomeCategory::where('user_id', $userId)->where('parent_id', $category_id)->get();
-        foreach($categories as $category){
+        if(Auth::guest()){
+            return redirect()->route('login');
+        }else{
+            $userId = Auth::user()->id;
+            $category = IncomeCategory::find($category_id);
             $category->delete();
+
+            $categories = IncomeCategory::where('user_id', $userId)->where('parent_id', $category_id)->get();
+            foreach($categories as $category){
+                $category->delete();
+            }
         }
     }
 
