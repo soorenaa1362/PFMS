@@ -10,17 +10,24 @@ use Illuminate\Http\Request;
 use Morilog\Jalali\Jalalian;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use App\Repositories\Costs\EloquentCostRepository;
 
 class CostController extends Controller
 {
     public function index()
     {
-        $costRepository = new EloquentCostRepository();
-        $userId = $costRepository->getUserId();
-        $costs = $costRepository->getCosts($userId);
-        $costCategories = $costRepository->getCategories($userId);
-        $totalCost = $costRepository->getTotalCost($costs);
+        if(Auth::guest()){
+            return redirect()->route('login');
+        }else{
+            $userId = Auth::user()->id;
+        }
+
+        $costs = Cost::where('user_id', $userId)->paginate(3);
+        $costCategories = CostCategory::where('user_id', $userId)->get();
+
+        $totalCost = 0;
+        foreach($costs as $cost){
+            $totalCost += $cost->amount;
+        }
 
         return view('users.costs.index', compact([
             'costs',
