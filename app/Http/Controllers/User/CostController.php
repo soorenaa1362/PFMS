@@ -55,46 +55,13 @@ class CostController extends Controller
         if(Auth::guest()){
             return redirect()->route('login');
         }else{
-            $userId = Auth::user()->id;
+            $costRepository = new EloquentCostRepository();
+            $userId = $costRepository->getUserId();
+            $cost = $costRepository->storeCost($request, $userId);
+
+            return redirect()->route('users.costs.index')
+                ->withSuccess('عملیات ثبت خرجکرد با موفقیت انجام شد.');
         }
-
-        $myDate = Carbon::createFromTimestamp($request->date)->format('Y/m/d');
-        $myDateJalali = Jalalian::fromDateTime($myDate)->format('Y/m/d');
-
-        $request->validate([
-            'title' => 'required|string',
-            'amount' => 'required|numeric',
-            'card_id' => 'required',
-            'category_id' => 'required',
-            'date' => 'required',
-            'description' => 'nullable|string',
-        ]);
-
-        $cost = new Cost;
-        $cost->user_id = $userId;
-        $cost->title = $request->title;
-        $cost->amount = $request->amount;
-        $cost->card_id = $request->card_id;
-        $cost->category_id = $request->category_id;
-        $cost->date = $myDate;
-        $cost->description = $request->description;
-
-        $card = Card::where('id', $cost->card_id)->first();
-
-        if($request->amount > $card->current_cash){
-            return redirect()->back()
-                ->withSuccess('مبلغ خرجکرد نباید بیشتر از موجودی کارت باشد.');
-        }else{
-            $cost->save();
-        }
-
-        $newCash = $card->current_cash - $cost->amount;
-        $card->update([
-            'current_cash' => $newCash
-        ]);
-
-        return redirect()->route('users.costs.index')
-            ->withSuccess('عملیات ثبت خرجکرد با موفقیت انجام شد.');
     }
 
 

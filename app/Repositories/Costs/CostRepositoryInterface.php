@@ -17,5 +17,7 @@ interface CostRepositoryInterface
     public function getSubCategories($userId);
 
     public function getParents($userId);
+
+    public function storeCost($request, $userId);
 }
 
