@@ -16,17 +16,21 @@ class CostController extends Controller
 {
     public function index()
     {
-        $costRepository = new EloquentCostRepository();
-        $userId = $costRepository->getUserId();
-        $costs = $costRepository->getCosts($userId);
-        $costCategories = $costRepository->getCategories($userId);
-        $totalCost = $costRepository->getTotalCost($costs);
+        if(Auth::guest()){
+            return redirect()->route('login');
+        }else{
+            $costRepository = new EloquentCostRepository();
+            $userId = $costRepository->getUserId();
+            $costs = $costRepository->getCosts($userId);
+            $costCategories = $costRepository->getCategories($userId);
+            $totalCost = $costRepository->getTotalCost($costs);
 
-        return view('users.costs.index', compact([
-            'costs',
-            'totalCost',
-            'costCategories'
-        ]));
+            return view('users.costs.index', compact([
+                'costs',
+                'totalCost',
+                'costCategories'
+            ]));
+        }
     }
 
 
@@ -35,23 +39,12 @@ class CostController extends Controller
         if(Auth::guest()){
             return redirect()->route('login');
         }else{
-            $userId = Auth::user()->id;
-        }
+            $costRepository = new EloquentCostRepository();
+            $userId = $costRepository->getUserId();
+            $cards = $costRepository->getCards($userId);
+            $categories = $costRepository->getSubCategories($userId);
+            $parents = $costRepository->getParents($userId);
 
-        $cards = Card::where('user_id', $userId)->where('current_cash', '>', 0)->get();
-
-        $categories = CostCategory::where('user_id', $userId)->where('parent_id', '!=', null)->get();
-
-        if( count($categories) === 0 ){
-            $categories = CostCategory::where('user_id', $userId)->where('parent_id', null)->get();
-        }else{
-            $categories = CostCategory::where('user_id', $userId)->where('parent_id', '!=', null)->get();
-        }
-
-        $parents = CostCategory::where('user_id', $userId)->where('parent_id', null)->get();
-        if( count($parents) === 0 ){
-            return redirect()->route('users.costs.index');
-        }else{
             return view('users.costs.create', compact('cards', 'categories'));
         }
     }

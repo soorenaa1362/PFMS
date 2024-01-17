@@ -11,5 +11,11 @@ interface CostRepositoryInterface
     public function getCategories($userId);
 
     public function getTotalCost($costs);
+
+    function getCards($userId);
+
+    public function getSubCategories($userId);
+
+    public function getParents($userId);
 }
 
