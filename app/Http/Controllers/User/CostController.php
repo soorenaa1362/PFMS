@@ -67,11 +67,15 @@ class CostController extends Controller
 
     public function show($cost_id)
     {
-        $costRepository = new EloquentCostRepository();
-        $userId = $costRepository->getUserId();
-        $cost = $costRepository->getCost($cost_id);
+        if(Auth::guest()){
+            return redirect()->route('login');
+        }else{
+            $costRepository = new EloquentCostRepository();
+            $userId = $costRepository->getUserId();
+            $cost = $costRepository->getCost($cost_id);
 
-        return view('users.costs.show', compact('cost'));
+            return view('users.costs.show', compact('cost'));
+        }
     }
 
 
@@ -80,21 +84,14 @@ class CostController extends Controller
         if(Auth::guest()){
             return redirect()->route('login');
         }else{
-            $userId = Auth::user()->id;
+            $costRepository = new EloquentCostRepository();
+            $userId = $costRepository->getUserId();
+            $cost = $costRepository->getCost($cost_id);
+            $cards = $costRepository->getCards($userId);
+            $categories = $costRepository->getSubCategories($userId);
+
+            return view('users.costs.edit', compact('cost', 'cards', 'categories'));
         }
-
-        $cost = cost::find($cost_id);
-        $cards = Card::where('user_id', $userId)->get();
-        // $cards = Card::where('user_id', $userId)->where('current_cash', '>', 0)->get();
-        $categories = costCategory::where('user_id', $userId)->where('parent_id', '!=', null)->get();
-
-        if( count($categories) == 0 ){
-            $categories = CostCategory::where('user_id', $userId)->where('parent_id', null)->get();
-        }else{
-            $categories = CostCategory::where('user_id', $userId)->where('parent_id', '!=', null)->get();
-        }
-
-        return view('users.costs.edit', compact('cost', 'cards', 'categories'));
     }
 
 
