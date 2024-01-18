@@ -23,5 +23,7 @@ interface CostRepositoryInterface
     public function getCost($cost_id);
 
     public function updateCost($request, $cost_id);
+
+    public function deleteCost($cost_id);
 }
 
