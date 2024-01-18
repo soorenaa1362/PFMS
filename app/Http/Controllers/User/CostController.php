@@ -111,11 +111,15 @@ class CostController extends Controller
 
     public function delete($cost_id)
     {
-        $costRepository = new EloquentCostRepository();
-        $costRepository->deleteCost($cost_id);
+        if(Auth::guest()){
+            return redirect()->route('login');
+        }else{
+            $costRepository = new EloquentCostRepository();
+            $costRepository->deleteCost($cost_id);
 
-        return redirect()->route('users.costs.index')
-            ->withSuccess('خرجکرد مورد نظر با موفقیت حذف شد.');
+            return redirect()->route('users.costs.index')
+                ->withSuccess('خرجکرد مورد نظر با موفقیت حذف شد.');
+        }
     }
 
 
