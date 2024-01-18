@@ -146,4 +146,4 @@
             });
         });
     </script>
-php @endsection
+@endsection

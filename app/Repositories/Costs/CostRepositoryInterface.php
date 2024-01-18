@@ -21,5 +21,7 @@ interface CostRepositoryInterface
     public function storeCost($request, $userId);
 
     public function getCost($cost_id);
+
+    public function updateCost($request, $cost_id);
 }
 

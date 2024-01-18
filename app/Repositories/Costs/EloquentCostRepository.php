@@ -121,4 +121,54 @@ class EloquentCostRepository implements CostRepositoryInterface
         $cost = Cost::where('id', $cost_id)->first();
         return $cost;
     }
+
+
+    public function updateCost($request, $cost_id)
+    {
+        $userId = $this->getUserId();
+        $cost = $this->getCost($cost_id);
+
+        $oldCostAmount = $cost->amount;
+        $card = Card::where('id', $cost->card_id)->first();
+
+        $myDate = Carbon::createFromTimestamp($request->date)->format('Y/m/d');
+
+        if( $request->date == null ){
+            $cost->user_id = $userId;
+            $cost->card_id = $request->card_id;
+            $cost->category_id = $request->category_id;
+            $cost->title = $request->title;
+            $cost->amount = $request->amount;
+            $cost->description = $request->description;
+        }else{
+            $cost->user_id = $userId;
+            $cost->card_id = $request->card_id;
+            $cost->category_id = $request->category_id;
+            $cost->title = $request->title;
+            $cost->amount = $request->amount;
+            $cost->date = $myDate;
+            $cost->description = $request->description;
+        }
+
+        $newCard = Card::find($cost->card_id);
+
+        if( $card == $newCard ){
+            $cost->update();
+            $newCash = ($card->current_cash + $oldCostAmount) - $cost->amount;
+            $card->update([
+                'current_cash' => $newCash
+            ]);
+        }else{
+            $cost->update();
+            $oldCash = ($card->current_cash + $oldCostAmount);
+            $card->update([
+                'current_cash' => $oldCash
+            ]);
+
+            $newCash = $newCard->current_cash - $cost->amount;
+            $newCard->update([
+                'current_cash' => $newCash
+            ]);
+        }
+    }
 }
