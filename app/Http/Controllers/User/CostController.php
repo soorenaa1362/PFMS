@@ -67,13 +67,9 @@ class CostController extends Controller
 
     public function show($cost_id)
     {
-        if(Auth::guest()){
-            return redirect()->route('login');
-        }else{
-            $userId = Auth::user()->id;
-        }
-
-        $cost = Cost::where('user_id', $userId)->where('id', $cost_id)->first();
+        $costRepository = new EloquentCostRepository();
+        $userId = $costRepository->getUserId();
+        $cost = $costRepository->getCost($cost_id);
 
         return view('users.costs.show', compact('cost'));
     }

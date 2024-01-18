@@ -19,5 +19,7 @@ interface CostRepositoryInterface
     public function getParents($userId);
 
     public function storeCost($request, $userId);
+
+    public function getCost($cost_id);
 }
 

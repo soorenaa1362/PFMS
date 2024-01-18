@@ -116,5 +116,9 @@ class EloquentCostRepository implements CostRepositoryInterface
     }
 
 
-    
+    public function getCost($cost_id)
+    {
+        $cost = Cost::where('id', $cost_id)->first();
+        return $cost;
+    }
 }
