@@ -6,23 +6,21 @@ use App\Models\CostCategory;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use App\Repositories\CostCategories\EloquentCostCategoryRepository;
 
 class CostCategoryController extends Controller
 {
     public function index()
     {
-        if(Auth::guest()){
+        if( Auth::guest() ){
             return redirect()->route('login');
         }else{
-            $costCategoryRepository = new EloquentCostCategoryRepository();
-            $userId = $costCategoryRepository->getUserId();
-            $categories = $costCategoryRepository->getCategories($userId);
-
-            return view('users.categories.costs.index', compact('categories'));
+            $userId = Auth::user()->id;
         }
-    }
 
+        $categories = CostCategory::where('user_id', $userId)->paginate(5);
+
+        return view('users.categories.costs.index', compact('categories'));
+    }
 
 
     public function create()
