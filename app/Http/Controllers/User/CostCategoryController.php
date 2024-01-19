@@ -56,13 +56,16 @@ class CostCategoryController extends Controller
 
     public function edit($category_id)
     {
-        $userId = Auth::user()->id;
-        $category = CostCategory::find($category_id);
-        $parents = CostCategory::where('user_id', $userId)->where('parent_id', null)->get();
-        // $parents = CostCategory::where('user_id', $userId)
-        //     ->where('parent_id', null)->where('id', '!=', $category_id)->get();
+        if(Auth::guest()){
+            return redirect()->route('login');
+        }else{
+            $costCategoryRepository = new EloquentCostCategoryRepository();
+            $userId = $costCategoryRepository->getUserId();
+            $category = $costCategoryRepository->getCategory($category_id);
+            $parents = $costCategoryRepository->getParents($userId);
 
-        return view('users.categories.costs.edit', compact('category', 'parents'));
+            return view('users.categories.costs.edit', compact('category', 'parents'));
+        }
     }
 
 

@@ -33,7 +33,7 @@ class EloquentCostCategoryRepository implements CostCategoryRepositoryInterface
     public function storeCostCategory($request)
     {
         $userId = $this->getUserId();
-        
+
         $request->validate([
             'title' => 'required|string',
             'parent_id' => 'nullable|string',
@@ -47,4 +47,19 @@ class EloquentCostCategoryRepository implements CostCategoryRepositoryInterface
             'description' => $request->description
         ]);
     }
+
+
+    public function getCategory($category_id)
+    {
+        $category = CostCategory::find($category_id);
+        return $category;
+    }
+
+
+
+
+
+
+
+
 }
