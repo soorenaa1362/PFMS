@@ -21,4 +21,11 @@ class EloquentCostCategoryRepository implements CostCategoryRepositoryInterface
         $categories = CostCategory::where('user_id', $userId)->paginate(5);
         return $categories;
     }
+
+
+    public function getParents($userId)
+    {
+        $categories = CostCategory::where('user_id', $userId)->where('parent_id', null)->get();
+        return $categories;
+    }
 }

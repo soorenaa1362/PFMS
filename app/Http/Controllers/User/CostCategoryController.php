@@ -27,8 +27,9 @@ class CostCategoryController extends Controller
 
     public function create()
     {
-        $userId = Auth::user()->id;
-        $categories = CostCategory::where('user_id', $userId)->where('parent_id', null)->get();
+        $costCategoryRepository = new EloquentCostCategoryRepository();
+        $userId = $costCategoryRepository->getUserId();
+        $categories = $costCategoryRepository->getParents($userId);
 
         return view('users.categories.costs.create', compact('categories'));
     }
