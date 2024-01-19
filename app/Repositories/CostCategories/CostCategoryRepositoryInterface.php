@@ -11,5 +11,7 @@ interface CostCategoryRepositoryInterface
     public function getParents($userId);
 
     public function storeCostCategory($request);
+
+    public function updateCostCategory($request, $category_id);
 }
 

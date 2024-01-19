@@ -45,7 +45,6 @@ class CostCategoryController extends Controller
             return redirect()->route('login');
         }else{
             $costCategoryRepository = new EloquentCostCategoryRepository();
-            $userId = $costCategoryRepository->getUserId();
             $costCategoryRepository->storeCostCategory($request);
 
             return redirect()->route('users.categories.costs.index')
@@ -71,21 +70,15 @@ class CostCategoryController extends Controller
 
     public function update(Request $request, $category_id)
     {
-        $category = CostCategory::find($category_id);
+        if(Auth::guest()){
+            return redirect()->route('login');
+        }else{
+            $costCategoryRepository = new EloquentCostCategoryRepository();
+            $costCategoryRepository->updateCostCategory($request, $category_id);
 
-        $request->validate([
-            'title' => 'required|string',
-            'description' => 'nullable|string',
-        ]);
-
-        $category->update([
-            'title' => $request->title,
-            'parent_id' => $request->parent_id,
-            'description' => $request->description,
-        ]);
-
-        return redirect()->route('users.categories.costs.index')
-            ->withSuccess('عملیات بروزرسانی دسته بندی با موفقیت انجام شد.');
+            return redirect()->route('users.categories.costs.index')
+                ->withSuccess('عملیات بروزرسانی دسته بندی با موفقیت انجام شد.');
+        }
     }
 
 

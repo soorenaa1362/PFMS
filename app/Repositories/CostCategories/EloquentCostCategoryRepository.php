@@ -56,6 +56,23 @@ class EloquentCostCategoryRepository implements CostCategoryRepositoryInterface
     }
 
 
+    public function updateCostCategory($request, $category_id)
+    {
+        $category = $this->getCategory($category_id);
+
+        $request->validate([
+            'title' => 'required|string',
+            'description' => 'nullable|string',
+        ]);
+
+        $category->update([
+            'title' => $request->title,
+            'parent_id' => $request->parent_id,
+            'description' => $request->description,
+        ]);
+    }
+
+
 
 
 
