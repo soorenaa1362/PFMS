@@ -9,5 +9,7 @@ interface CostCategoryRepositoryInterface
     public function getCategories($userId);
 
     public function getParents($userId);
+
+    public function storeCostCategory($request);
 }
 

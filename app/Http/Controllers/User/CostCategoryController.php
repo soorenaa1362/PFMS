@@ -27,33 +27,30 @@ class CostCategoryController extends Controller
 
     public function create()
     {
-        $costCategoryRepository = new EloquentCostCategoryRepository();
-        $userId = $costCategoryRepository->getUserId();
-        $categories = $costCategoryRepository->getParents($userId);
+        if(Auth::guest()){
+            return redirect()->route('login');
+        }else{
+            $costCategoryRepository = new EloquentCostCategoryRepository();
+            $userId = $costCategoryRepository->getUserId();
+            $categories = $costCategoryRepository->getParents($userId);
 
-        return view('users.categories.costs.create', compact('categories'));
+            return view('users.categories.costs.create', compact('categories'));
+        }
     }
 
 
     public function store(Request $request)
     {
-        $userId = Auth::user()->id;
+        if(Auth::guest()){
+            return redirect()->route('login');
+        }else{
+            $costCategoryRepository = new EloquentCostCategoryRepository();
+            $userId = $costCategoryRepository->getUserId();
+            $costCategoryRepository->storeCostCategory($request);
 
-        $request->validate([
-            'title' => 'required|string',
-            'parent_id' => 'nullable|string',
-            'description' => 'nullable|string',
-        ]);
-
-        CostCategory::create([
-            'user_id' => $userId,
-            'title' => $request->title,
-            'parent_id' => $request->parent_id,
-            'description' => $request->description
-        ]);
-
-        return redirect()->route('users.categories.costs.index')
-            ->withSuccess('دسته بندی با موفقیت در سیستم ثبت شد.');
+            return redirect()->route('users.categories.costs.index')
+                ->withSuccess('دسته بندی با موفقیت در سیستم ثبت شد.');
+        }
     }
 
 
