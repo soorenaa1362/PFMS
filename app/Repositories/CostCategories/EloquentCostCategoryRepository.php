@@ -73,7 +73,17 @@ class EloquentCostCategoryRepository implements CostCategoryRepositoryInterface
     }
 
 
+    public function deleteCostCategory($category_id)
+    {
+        $userId = $this->getUserId();
+        $category = $this->getCategory($category_id);
+        $category->delete();
 
+        $categories = CostCategory::where('user_id', $userId)->where('parent_id', $category_id)->get();
+        foreach($categories as $category){
+            $category->delete();
+        }
+    }
 
 
 

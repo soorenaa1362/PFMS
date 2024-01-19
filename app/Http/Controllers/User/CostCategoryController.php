@@ -84,16 +84,14 @@ class CostCategoryController extends Controller
 
     public function delete($category_id)
     {
-        $userId = Auth::user()->id;
-        $category = CostCategory::find($category_id);
-        $category->delete();
+        if(Auth::guest()){
+            return redirect()->route('login');
+        }else{
+            $costCategoryRepository = new EloquentCostCategoryRepository();
+            $costCategoryRepository->deleteCostCategory($category_id);
 
-        $categories = CostCategory::where('user_id', $userId)->where('parent_id', $category_id)->get();
-        foreach($categories as $category){
-            $category->delete();
+            return redirect()->route('users.categories.costs.index')
+                ->withSuccess('دسته بندی مورد نظر با موفقیت حذف شد.');
         }
-
-        return redirect()->route('users.categories.costs.index')
-            ->withSuccess('دسته بندی مورد نظر با موفقیت حذف شد.');
     }
 }

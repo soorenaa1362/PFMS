@@ -13,5 +13,7 @@ interface CostCategoryRepositoryInterface
     public function storeCostCategory($request);
 
     public function updateCostCategory($request, $category_id);
+
+    public function deleteCostCategory($category_id);
 }
 
