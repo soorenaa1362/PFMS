@@ -61,7 +61,7 @@ class CostController extends Controller
 
             if($cost == true){
                 return redirect()->route('users.costs.index')
-                ->withSuccess('عملیات ثبت خرجکرد با موفقیت انجام شد.');
+                    ->withSuccess('عملیات ثبت خرجکرد با موفقیت انجام شد.');
             }else{
                 return redirect()->route('users.costs.create')
                     ->withSuccess('مبلغ خرجکرد نباید از موجودی کارت بیشتر باشد.');
