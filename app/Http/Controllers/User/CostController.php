@@ -59,8 +59,13 @@ class CostController extends Controller
             $userId = $costRepository->getUserId();
             $cost = $costRepository->storeCost($request, $userId);
 
-            return redirect()->route('users.costs.index')
+            if($cost == true){
+                return redirect()->route('users.costs.index')
                 ->withSuccess('عملیات ثبت خرجکرد با موفقیت انجام شد.');
+            }else{
+                return redirect()->route('users.costs.create')
+                    ->withSuccess('مبلغ خرجکرد نباید از موجودی کارت بیشتر باشد.');
+            }
         }
     }
 

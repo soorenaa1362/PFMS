@@ -12,7 +12,7 @@ interface CostRepositoryInterface
 
     public function getTotalCost($costs);
 
-    function getCards($userId);
+    public function getCards($userId);
 
     public function getSubCategories($userId);
 

@@ -100,19 +100,34 @@ class EloquentCostRepository implements CostRepositoryInterface
         $cost->date = $myDate;
         $cost->description = $request->description;
 
-        $card = Card::where('id', $cost->card_id)->first();
+        $cardId = $request->card_id;
+        $card = Card::where('id', $cardId)->first();
+        $costAmount = $request->amount;
+        $comparsion = $this->comparsion($cardId, $costAmount);
 
-        if($request->amount > $card->current_cash){
-            return redirect()->back()
-                ->withSuccess('مبلغ خرجکرد نباید بیشتر از موجودی کارت باشد.');
-        }else{
+        if($comparsion == true){
             $cost->save();
+            $newCash = $card->current_cash - $cost->amount;
+            $card->update([
+                'current_cash' => $newCash
+            ]);
+            return true;
+        }else{
+            return false;
         }
+    }
 
-        $newCash = $card->current_cash - $cost->amount;
-        $card->update([
-            'current_cash' => $newCash
-        ]);
+
+    public function comparsion($cardId, $costAmount)
+    {
+        $card = Card::where('id', $cardId)->first();
+        $cardCurrentCash = $card->current_cash;
+
+        if($cardCurrentCash >= $costAmount){
+            return true;
+        }else{
+            return false;
+        }
     }
 
 
