@@ -110,19 +110,14 @@ class IncomeController extends Controller
 
     public function delete($income_id)
     {
-        $income = Income::find($income_id);
-        $income->delete();
+        if(Auth::guest()){
+            return redirect()->route('login');
+        }else{
+            $incomeRepository = new EloquentIncomeRepository();
+            $incomeRepository->deleteIncome($income_id);
 
-        $card = Card::where('id', $income->card_id)->first();
-        $oldCurrentCash = $card->current_cash;
-        $incomeAmount = $income->amount;
-        $newCurrentCash = $oldCurrentCash - $incomeAmount;
-
-        $card->update([
-            'current_cash' => $newCurrentCash,
-        ]);
-
-        return redirect()->route('users.incomes.index')
-            ->withSuccess('درآمد مورد نظر با موفقیت حذف شد.');
+            return redirect()->route('users.incomes.index')
+                ->withSuccess('درآمد مورد نظر با موفقیت حذف شد.');
+        }
     }
 }

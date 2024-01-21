@@ -165,4 +165,20 @@ class EloquentIncomeRepository implements IncomeRepositoryInterface
             ]);
         }
     }
+
+
+    public function deleteIncome($income_id)
+    {
+        $income = $this->getIncome($income_id);
+        $income->delete();
+
+        $card = Card::where('id', $income->card_id)->first();
+        $oldCurrentCash = $card->current_cash;
+        $incomeAmount = $income->amount;
+        $newCurrentCash = $oldCurrentCash - $incomeAmount;
+
+        $card->update([
+            'current_cash' => $newCurrentCash,
+        ]);
+    }
 }

@@ -19,6 +19,10 @@ interface IncomeRepositoryInterface
     public function storeIncome($request);
 
     public function getIncome($income_id);
+
+    public function updateIncome($request, $income_id);
+
+    public function deleteIncome($income_id);
 }
 
 
