@@ -109,4 +109,11 @@ class EloquentIncomeRepository implements IncomeRepositoryInterface
             'current_cash' => $newCash
         ]);
     }
+
+
+    public function getIncome($income_id)
+    {
+        $income = Income::where('id', $income_id)->first();
+        return $income;
+    }
 }

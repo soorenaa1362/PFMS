@@ -70,12 +70,11 @@ class IncomeController extends Controller
         if(Auth::guest()){
             return redirect()->route('login');
         }else{
-            $userId = Auth::user()->id;
+            $incomeRepository = new EloquentIncomeRepository();
+            $income = $incomeRepository->getIncome($income_id);
+
+            return view('users.incomes.show', compact('income'));
         }
-
-        $income = Income::where('user_id', $userId)->where('id', $income_id)->first();
-
-        return view('users.incomes.show', compact('income'));
     }
 
 
