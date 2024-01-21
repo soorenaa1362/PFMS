@@ -10,13 +10,15 @@ interface IncomeRepositoryInterface
 
     public function getIncomeCategories($userId);
 
+    public function getTotalIncome($incomes);
+
     public function getCards($userId);
 
     public function getSubCategories($userId);
 
     public function getParents($userId);
 
-    public function storeIncome($request);
+    public function storeIncome($request, $userId);
 
     public function getIncome($income_id);
 

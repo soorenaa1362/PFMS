@@ -78,10 +78,8 @@ class EloquentIncomeRepository implements IncomeRepositoryInterface
     }
 
 
-    public function storeIncome($request)
+    public function storeIncome($request, $userId)
     {
-        $userId = $this->getUserId();
-
         $myDate = Carbon::createFromTimestamp($request->date)->format('Y/m/d');
 
         $request->validate([

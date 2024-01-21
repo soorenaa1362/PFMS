@@ -57,7 +57,7 @@ class IncomeController extends Controller
         }else{
             $incomeRepository = new EloquentIncomeRepository();
             $userId = $incomeRepository->getUserId();
-            $incomeRepository->storeIncome($request);
+            $incomeRepository->storeIncome($request, $userId);
 
             return redirect()->route('users.incomes.index')
                 ->withSuccess('عملیات ثبت درآمد با موفقیت انجام شد.');
