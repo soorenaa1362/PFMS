@@ -51,21 +51,6 @@
                                 </div>
 
                                 <div class="form-group col-md-4 mt-2">
-                                    <label for="card_id">کارت بانکی</label>
-                                    <select class="form-select" name="card_id" id="card_id">
-                                        <option value="">---------</option>
-                                        @foreach ($cards as $card)
-                                            <option value="{{ $card->id }}">{{ $card->name }}</option>
-                                        @endforeach
-                                    </select>
-                                    @error('card_id')
-                                        <span class="text-danger" style="font-size: 14px;">
-                                            {{ $message }}
-                                        </span>
-                                    @enderror
-                                </div>
-
-                                <div class="form-group col-md-6 mt-2">
                                     <label for="category_id">دسته بندی</label>
                                     <select class="form-select" name="category_id" id="category_id">
                                         <option value="">---------</option>
@@ -76,6 +61,29 @@
                                         @endforeach
                                     </select>
                                     @error('category_id')
+                                        <span class="text-danger" style="font-size: 14px;">
+                                            {{ $message }}
+                                        </span>
+                                    @enderror
+                                </div>
+
+                                <div class="form-group col-md-6 mt-2">
+                                    <label for="card_id">کارت بانکی</label>
+                                    <select class="form-select" name="card_id" id="card_id">
+                                        <option value="">---------</option>
+                                        @foreach ($cards as $card)
+                                            <option value="{{ $card->id }}">
+                                                @if($card->alias == null)
+                                                    {{ $card->name }}
+                                                    ({{ number_format($card->current_cash) }} تومان)
+                                                @else
+                                                    {{ $card->name }} - {{ $card->alias }}
+                                                    ({{ number_format($card->current_cash) }} تومان)
+                                                @endif
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    @error('card_id')
                                         <span class="text-danger" style="font-size: 14px;">
                                             {{ $message }}
                                         </span>

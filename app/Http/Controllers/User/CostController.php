@@ -45,7 +45,11 @@ class CostController extends Controller
             $categories = $costRepository->getSubCategories($userId);
             $parents = $costRepository->getParents($userId);
 
-            return view('users.costs.create', compact('cards', 'categories'));
+            if($parents === false){
+                return redirect()->route('users.costs.index');
+            }else{
+                return view('users.costs.create', compact('cards', 'categories'));
+            }
         }
     }
 

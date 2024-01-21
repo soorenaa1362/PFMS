@@ -71,7 +71,7 @@ class EloquentIncomeRepository implements IncomeRepositoryInterface
             ->where('parent_id', null)->get();
 
         if( count($parents) === 0 ){
-            return redirect()->route('users.incomes.index');
+            return false;
         }else{
             return $parents;
         }

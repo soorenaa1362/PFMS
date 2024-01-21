@@ -45,7 +45,11 @@ class IncomeController extends Controller
             $categories = $incomeRepository->getSubCategories($userId);
             $parents = $incomeRepository->getParents($userId);
 
-            return view('users.incomes.create', compact('cards', 'categories'));
+            if($parents === false){
+                return redirect()->route('users.incomes.index');
+            }else{
+                return view('users.incomes.create', compact('cards', 'categories'));
+            }
         }
     }
 

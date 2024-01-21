@@ -70,11 +70,11 @@ class EloquentCostRepository implements CostRepositoryInterface
         $parents = CostCategory::where('user_id', $userId)
             ->where('parent_id', null)->get();
 
-        if( count($parents) === 0 ){
-            return redirect()->route('users.costs.index');
-        }else{
-            return $parents;
-        }
+            if( count($parents) === 0 ){
+                return false;
+            }else{
+                return $parents;
+            }
     }
 
 
