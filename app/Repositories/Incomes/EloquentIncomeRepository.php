@@ -41,4 +41,39 @@ class EloquentIncomeRepository implements IncomeRepositoryInterface
 
         return $totalIncome;
     }
+
+
+    public function getCards($userId)
+    {
+        $cards = Card::where('user_id', $userId)->get();
+        return $cards;
+    }
+
+
+    public function getSubCategories($userId)
+    {
+        $subCategories = IncomeCategory::where('user_id', $userId)
+            ->where('parent_id', '!=', null)->get();
+
+        if( count($subCategories) === 0 ){
+            $categories = IncomeCategory::where('user_id', $userId)->where('parent_id', null)->get();
+        }else{
+            $categories = IncomeCategory::where('user_id', $userId)->where('parent_id', '!=', null)->get();
+        }
+
+        return $categories;
+    }
+
+
+    public function getParents($userId)
+    {
+        $parents = IncomeCategory::where('user_id', $userId)
+            ->where('parent_id', null)->get();
+
+        if( count($parents) === 0 ){
+            return redirect()->route('users.incomes.index');
+        }else{
+            return $parents;
+        }
+    }
 }
