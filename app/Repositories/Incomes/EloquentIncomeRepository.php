@@ -116,4 +116,53 @@ class EloquentIncomeRepository implements IncomeRepositoryInterface
         $income = Income::where('id', $income_id)->first();
         return $income;
     }
+
+
+    public function updateIncome($request, $income_id)
+    {
+        $userId = $this->getUserId();
+        $income = $this->getIncome($income_id);
+        $oldIncomeAmount = $income->amount;
+        $card = Card::where('id', $income->card_id)->first();
+
+        $myDate = Carbon::createFromTimestamp($request->date)->format('Y/m/d');
+
+        if($request->date == null){
+            $income->user_id = $userId;
+            $income->card_id = $request->card_id;
+            $income->category_id = $request->category_id;
+            $income->title = $request->title;
+            $income->amount = $request->amount;
+            $income->description = $request->description;
+        }else{
+            $income->user_id = $userId;
+            $income->card_id = $request->card_id;
+            $income->category_id = $request->category_id;
+            $income->title = $request->title;
+            $income->amount = $request->amount;
+            $income->date = $myDate;
+            $income->description = $request->description;
+        }
+
+        $newCard = Card::find($income->card_id);
+
+        if( $card == $newCard ){
+            $income->update();
+            $newCash = ($card->current_cash - $oldIncomeAmount) + $income->amount;
+            $card->update([
+                'current_cash' => $newCash
+            ]);
+        }else{
+            $income->update();
+            $oldCash = ($card->current_cash - $oldIncomeAmount);
+            $card->update([
+                'current_cash' => $oldCash
+            ]);
+
+            $newCash = $newCard->current_cash + $income->amount;
+            $newCard->update([
+                'current_cash' => $newCash
+            ]);
+        }
+    }
 }
