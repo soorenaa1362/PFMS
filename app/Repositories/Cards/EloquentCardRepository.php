@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Models\Card;
 use App\Models\Cost;
 use App\Models\Income;
+use App\Models\CostCategory;
 use Morilog\Jalali\Jalalian;
 use App\Models\IncomeCategory;
 use Illuminate\Support\Facades\Auth;
@@ -233,5 +234,59 @@ class EloquentCardRepository implements CardRepositoryInterface
             ]);
         }
     }
+
+
+    public function getCostCategories($userId)
+    {
+        if(Auth::guest()){
+            return redirect()->route('login');
+        }else{
+            $categories = CostCategory::where('user_id', $userId)->where('parent_id', '!=', null)->get();
+
+            if( count($categories) === 0 ){
+                $categories = CostCategory::where('user_id', $userId)->where('parent_id', null)->get();
+            }else{
+                $categories = CostCategory::where('user_id', $userId)->where('parent_id', '!=', null)->get();
+            }
+
+            return $categories;
+        }
+    }
+
+
+    public function costStore($request, $card_id)
+    {
+        if(Auth::guest()){
+            return redirect()->route('login');
+        }else{
+            $userId = $this->getUserId();
+
+            $myDate = Carbon::createFromTimestamp($request->date)->format('Y/m/d');
+
+            $cost = Cost::create([
+                'user_id' => $userId,
+                'card_id' => $card_id,
+                'category_id' => $request->category_id,
+                'title' => $request->title,
+                'amount' => $request->amount,
+                'date' => $myDate,
+            ]);
+
+            $card = Card::where('id', $cost->card_id)->first();
+            $newCash = $card->current_cash - $cost->amount;
+            $card->update([
+                'current_cash' => $newCash
+            ]);
+        }
+    }
+
+
+
+
+
+
+
+
+
 }
 

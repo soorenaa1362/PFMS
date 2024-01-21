@@ -30,5 +30,9 @@ interface CardRepositoryInterface
 
     public function incomeStore($request, $card_id);
 
+    public function getCostCategories($userId);
+
+    public function costStore($request, $card_id);
+
 }
 

@@ -19,7 +19,11 @@
 
                             @include('users.sections.profile_icon')
 
-                            <h6 class="mt-2">ثبت درآمد</h6>
+                            @if ($card->alias == null)
+                                <h6 class="mt-2">ثبت درآمد : {{ $card->name }}</h6>
+                            @else
+                                <h6 class="mt-2">ثبت درآمد : {{ $card->name }} ({{ $card->alias }})</h6>
+                            @endif
 
                             @include('users.sections.logout_icon')
 
@@ -38,6 +42,10 @@
                                 </a>
                             </div>
                         @else
+                        <h6 class="text-center text-light p-3 bg-secondary"
+                            style="border-radius: 10px;">
+                            موجودی : {{ number_format($card->current_cash) }} تومان
+                        </h6>
                             <form action="{{ route('users.cards.incomes.store', $card->id) }}" method="POST">
                                 @csrf
 
