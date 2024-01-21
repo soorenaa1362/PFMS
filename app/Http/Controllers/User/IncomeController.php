@@ -83,20 +83,14 @@ class IncomeController extends Controller
         if(Auth::guest()){
             return redirect()->route('login');
         }else{
-            $userId = Auth::user()->id;
+            $incomeRepository = new EloquentIncomeRepository();
+            $userId = $incomeRepository->getUserId();
+            $income = $incomeRepository->getIncome($income_id);
+            $cards = $incomeRepository->getCards($userId);
+            $categories = $incomeRepository->getSubCategories($userId);
+
+            return view('users.incomes.edit', compact('income', 'cards', 'categories'));
         }
-
-        $income = Income::find($income_id);
-        $cards = Card::where('user_id', $userId)->get();
-        $categories = IncomeCategory::where('user_id', $userId)->where('parent_id', '!=', null)->get();
-
-        if( count($categories) == 0 ){
-            $categories = IncomeCategory::where('user_id', $userId)->where('parent_id', null)->get();
-        }else{
-            $categories = IncomeCategory::where('user_id', $userId)->where('parent_id', '!=', null)->get();
-        }
-
-        return view('users.incomes.edit', compact('income', 'cards', 'categories'));
     }
 
 

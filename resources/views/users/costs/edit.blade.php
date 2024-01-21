@@ -89,7 +89,7 @@
                                     </select>
                                 </div>
 
-                                <div class="form-group col-md-6 mt-2">
+                                <div class="form-group col-md-5 mt-2">
                                     <label for="date">تاریخ</label>
                                     <input type="text" class="form-control round addpo"
                                         id="dateFake" name="dateFake" readonly required
