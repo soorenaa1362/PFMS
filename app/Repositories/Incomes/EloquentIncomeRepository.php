@@ -20,7 +20,7 @@ class EloquentIncomeRepository implements IncomeRepositoryInterface
 
     public function getIncomes($userId)
     {
-        $incomes = Income::where('user_id', $userId)->get();
+        $incomes = Income::where('user_id', $userId)->paginate(5);
         return $incomes;
     }
 
@@ -75,5 +75,38 @@ class EloquentIncomeRepository implements IncomeRepositoryInterface
         }else{
             return $parents;
         }
+    }
+
+
+    public function storeIncome($request)
+    {
+        $userId = $this->getUserId();
+
+        $myDate = Carbon::createFromTimestamp($request->date)->format('Y/m/d');
+
+        $request->validate([
+            'title' => 'required|string',
+            'amount' => 'required|numeric',
+            'card_id' => 'required',
+            'category_id' => 'required',
+            'date' => 'required',
+            'description' => 'nullable|string',
+        ]);
+
+        $income = Income::create([
+            'user_id' => $userId,
+            'title' => $request->title,
+            'amount' => $request->amount,
+            'card_id' => $request->card_id,
+            'category_id' => $request->category_id,
+            'date' => $myDate,
+            'description' => $request->description,
+        ]);
+
+        $card = Card::where('id', $income->card_id)->first();
+        $newCash = $card->current_cash + $income->amount;
+        $card->update([
+            'current_cash' => $newCash
+        ]);
     }
 }

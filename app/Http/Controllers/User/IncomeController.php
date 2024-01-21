@@ -55,39 +55,13 @@ class IncomeController extends Controller
         if(Auth::guest()){
             return redirect()->route('login');
         }else{
-            $userId = Auth::user()->id;
+            $incomeRepository = new EloquentIncomeRepository();
+            $userId = $incomeRepository->getUserId();
+            $incomeRepository->storeIncome($request);
+
+            return redirect()->route('users.incomes.index')
+                ->withSuccess('عملیات ثبت درآمد با موفقیت انجام شد.');
         }
-
-        $myDate = Carbon::createFromTimestamp($request->date)->format('Y/m/d');
-        $myDateJalali = Jalalian::fromDateTime($myDate)->format('Y/m/d');
-
-        $request->validate([
-            'title' => 'required|string',
-            'amount' => 'required|numeric',
-            'card_id' => 'required',
-            'category_id' => 'required',
-            'date' => 'required',
-            'description' => 'nullable|string',
-        ]);
-
-        $income = Income::create([
-            'user_id' => $userId,
-            'title' => $request->title,
-            'amount' => $request->amount,
-            'card_id' => $request->card_id,
-            'category_id' => $request->category_id,
-            'date' => $myDate,
-            'description' => $request->description,
-        ]);
-
-        $card = Card::where('id', $income->card_id)->first();
-        $newCash = $card->current_cash + $income->amount;
-        $card->update([
-            'current_cash' => $newCash
-        ]);
-
-        return redirect()->route('users.incomes.index')
-            ->withSuccess('عملیات ثبت درآمد با موفقیت انجام شد.');
     }
 
 
