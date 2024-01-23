@@ -102,32 +102,27 @@ class IncomeReportController extends Controller
         if(Auth::guest()){
             return redirect()->route('login');
         }else{
-            $userId = Auth::user()->id;
+            $userId = $this->reportIncomeRepository->getUserId();
+            $categories = $this->reportIncomeRepository->getCategories($userId);
+            return view('users.reports.incomes.category.select', compact('categories'));
         }
-
-        $categories = IncomeCategory::where('user_id', $userId)->where('parent_id', '!=', null)->get();
-
-        if( count($categories) == 0 ){
-            $categories = IncomeCategory::where('user_id', $userId)->where('parent_id', null)->get();
-        }else{
-            $categories = IncomeCategory::where('user_id', $userId)->where('parent_id', '!=', null)->get();
-        }
-
-        return view('users.reports.incomes.category.select', compact('categories'));
     }
 
 
     public function category(Request $request)
     {
-        $category = IncomeCategory::find($request->category_id);
-
-        if( $request->category_id === null ){
-            return redirect()->back();
+        if(Auth::guest()){
+            return redirect()->route('login');
         }else{
-            $incomes = Income::where('category_id', $category->id)
-                ->orderBy('date', 'ASC')->paginate(5);
+            $category = $this->reportIncomeRepository->getCategory($request);
 
-            return view('users.reports.incomes.category.index', compact('category', 'incomes'));
+            if( $request->category_id === null ){
+                return redirect()->back();
+            }else{
+                $incomes = $this->reportIncomeRepository->getIncomesOfCategory($category);
+
+                return view('users.reports.incomes.category.index', compact('category', 'incomes'));
+            }
         }
     }
 

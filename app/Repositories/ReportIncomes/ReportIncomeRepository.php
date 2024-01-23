@@ -64,4 +64,34 @@ class ReportIncomeRepository implements ReportIncomeRepositoryInterface
 
         return $incomes;
     }
+
+
+    public function getCategories($userId)
+    {
+        $categories = IncomeCategory::where('user_id', $userId)->where('parent_id', '!=', null)->get();
+
+        if( count($categories) == 0 ){
+            $categories = IncomeCategory::where('user_id', $userId)->where('parent_id', null)->get();
+        }else{
+            $categories = IncomeCategory::where('user_id', $userId)->where('parent_id', '!=', null)->get();
+        }
+
+        return $categories;
+    }
+
+
+    public function getCategory($request)
+    {
+        $category = IncomeCategory::find($request->category_id);
+        return $category;
+    }
+
+
+    public function getIncomesOfCategory($category)
+    {
+        $incomes = Income::where('category_id', $category->id)
+            ->orderBy('date', 'ASC')->paginate(5);
+
+        return $incomes;
+    }
 }

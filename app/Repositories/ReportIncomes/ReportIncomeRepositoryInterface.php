@@ -16,6 +16,11 @@ interface ReportIncomeRepositoryInterface
 
     public function getIncomesOfMonth($userId);
 
+    public function getCategories($userId);
+
+    public function getCategory($request);
+
+    public function getIncomesOfCategory($category);
 }
 
 
