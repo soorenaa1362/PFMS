@@ -44,4 +44,14 @@ class ReportIncomeRepository implements ReportIncomeRepositoryInterface
 
         return $totalIncome;
     }
+
+
+    public function getIncomesOfWeek($userId)
+    {
+        $incomes = Income::where('user_id', $userId)
+            ->whereBetween('date', [Carbon::now()->subDays(7), Carbon::now()])
+            ->orderBy('date', 'DESC')->paginate(5);
+
+        return $incomes;
+    }
 }

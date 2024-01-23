@@ -11,6 +11,9 @@ interface ReportIncomeRepositoryInterface
     public function getIncomeCategories($userId);
 
     public function getTotalIncome($incomes);
+
+    public function getIncomesOfWeek($userId);
+
 }
 
 
