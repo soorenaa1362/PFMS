@@ -83,25 +83,17 @@ class IncomeReportController extends Controller
         if(Auth::guest()){
             return redirect()->route('login');
         }else{
-            $userId = Auth::user()->id;
+            $userId = $this->reportIncomeRepository->getUserId();
+            $incomes = $this->reportIncomeRepository->getIncomesOfMonth($userId);
+            $incomeCategories = $this->reportIncomeRepository->getIncomeCategories($userId);
+            $totalIncome = $this->reportIncomeRepository->getTotalIncome($incomes);
+
+            return view('users.reports.incomes.time.month', compact([
+                'incomes',
+                'incomeCategories',
+                'totalIncome'
+            ]));
         }
-
-        $incomes = Income::where('user_id', $userId)
-            ->whereBetween('date', [Carbon::now()->subDays(30), Carbon::now()])
-            ->orderBy('date', 'ASC')->paginate(5);
-
-        $incomeCategories = IncomeCategory::where('user_id', $userId)->get();
-
-        $totalIncome = 0;
-        foreach($incomes as $income){
-            $totalIncome += $income->amount;
-        }
-
-        return view('users.reports.incomes.time.month', compact([
-            'incomes',
-            'incomeCategories',
-            'totalIncome'
-        ]));
     }
 
 

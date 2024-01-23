@@ -14,6 +14,8 @@ interface ReportIncomeRepositoryInterface
 
     public function getIncomesOfWeek($userId);
 
+    public function getIncomesOfMonth($userId);
+
 }
 
 
