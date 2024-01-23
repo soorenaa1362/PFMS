@@ -8,18 +8,35 @@ use Illuminate\Http\Request;
 use App\Models\IncomeCategory;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Repositories\ReportIncomes\ReportIncomeRepository;
 
 class IncomeReportController extends Controller
 {
+    public $reportIncomeRepository;
+
+    public function __construct(ReportIncomeRepository $reportIncomeRepository)
+    {
+        $this->reportIncomeRepository = $reportIncomeRepository;
+    }
+
+
     public function incomes()
     {
-        return view('users.reports.incomes.select');
+        if(Auth::guest()){
+            return redirect()->route('login');
+        }else{
+            return view('users.reports.incomes.select');
+        }
     }
 
 
     public function timeSelect()
     {
-        return view('users.reports.incomes.time.timeSelect');
+        if(Auth::guest()){
+            return redirect()->route('login');
+        }else{
+            return view('users.reports.incomes.time.timeSelect');
+        }
     }
 
 
@@ -28,25 +45,17 @@ class IncomeReportController extends Controller
         if(Auth::guest()){
             return redirect()->route('login');
         }else{
-            $userId = Auth::user()->id;
+            $userId = $this->reportIncomeRepository->getUserId();
+            $incomes = $this->reportIncomeRepository->getIncomesOfDay($userId);
+            $incomeCategories = $this->reportIncomeRepository->getIncomeCategories($userId);
+            $totalIncome = $this->reportIncomeRepository->getTotalIncome($incomes);
+
+            return view('users.reports.incomes.time.day', compact([
+                'incomes',
+                'incomeCategories',
+                'totalIncome'
+            ]));
         }
-
-        $incomes = Income::where('user_id', $userId)
-            ->whereBetween('date', [Carbon::now()->subDays(1), Carbon::now()])
-            ->orderBy('date', 'DESC')->paginate(5);
-
-        $incomeCategories = IncomeCategory::where('user_id', $userId)->get();
-
-        $totalIncome = 0;
-        foreach($incomes as $income){
-            $totalIncome += $income->amount;
-        }
-
-        return view('users.reports.incomes.time.day', compact([
-            'incomes',
-            'incomeCategories',
-            'totalIncome'
-        ]));
     }
 
 
