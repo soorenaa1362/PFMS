@@ -65,17 +65,26 @@ class CardRepository implements CardRepositoryInterface
     }
 
 
-    public function showCard($card_id)
+    public function getCard($card_id)
     {
-        $userId = $this->getUserId();
-        $card = Card::find($card_id);
-
-        $costs = Cost::where('user_id', $userId)->orderBy('id', 'DESC')
-            ->where('card_id', $card_id)->paginate(3);
-        $costCount = count(Cost::where('user_id', $userId)->where('card_id', $card_id)->get());
-
+        $card = Card::where('id', $card_id)->first();
         return $card;
     }
+
+
+    public function getIncomes($card_id)
+    {
+        $incomes = Income::where('card_id', $card_id)->orderBy('id', 'DESC')->get();
+        return $incomes;
+    }
+
+
+    public function getCosts($card_id)
+    {
+        $costs = Cost::where('card_id', $card_id)->orderBy('id', 'DESC')->get();
+        return $costs;
+    }
+
 
 
     public function getCardIncomes($card_id)

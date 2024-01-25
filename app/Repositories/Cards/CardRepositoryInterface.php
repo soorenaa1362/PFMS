@@ -10,7 +10,11 @@ interface CardRepositoryInterface
 
     public function getTotalCash();
 
-    public function showCard($card_id);
+    public function getCard($card_id);
+
+    public function getIncomes($card_id);
+
+    public function getCosts($card_id);
 
     public function getCardIncomes($card_id);
 

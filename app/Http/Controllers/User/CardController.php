@@ -70,18 +70,15 @@ class CardController extends Controller
         if(Auth::guest()){
             return redirect()->route('login');
         }else{
-            $card = $this->cardRepository->showCard($card_id);
-            $incomes = $this->cardRepository->getCardIncomes($card_id);
-            $incomeCount = $this->cardRepository->getCardIncomeCount($card_id);
-            $costs = $this->cardRepository->getCardCosts($card_id);
-            $costCount = $this->cardRepository->getCardCostCount($card_id);
+            $userId = $this->cardRepository->getUserId();
+            $card = $this->cardRepository->getCard($card_id);
+            $incomes = $this->cardRepository->getIncomes($card_id);
+            $costs = $this->cardRepository->getCosts($card_id);
 
             return view('users.cards.show', compact([
                 'card',
                 'incomes',
-                'incomeCount',
                 'costs',
-                'costCount'
             ]));
         }
     }

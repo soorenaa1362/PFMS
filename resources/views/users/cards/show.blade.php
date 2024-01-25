@@ -135,7 +135,7 @@
                                     @endforeach
                                 </tbody>
                             </table>
-                            @if ( $incomeCount > 3 )
+                            @if ( count($incomes) >= 4 )
                                 <a href="{{ route('users.cards.incomes.index', $card->id) }}"
                                     class="d-flex justify-content-end text-secondary">
                                     نمایش موارد بیشتر
@@ -188,7 +188,7 @@
                                     @endforeach
                                 </tbody>
                             </table>
-                            @if ( $costCount > 3 )
+                            @if ( count($osts) >= 4 )
                                 <a href="{{ route('users.cards.costs.index', $card->id) }}"
                                     class="d-flex justify-content-end text-secondary">
                                     نمایش موارد بیشتر
