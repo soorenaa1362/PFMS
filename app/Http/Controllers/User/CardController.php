@@ -19,186 +19,236 @@ class CardController extends Controller
 {
     public function index()
     {
-        $cardRepository = new EloquentCardRepository();
+        if(Auth::guest()){
+            return redirect()->route('login');
+        }else{
+            $cardRepository = new EloquentCardRepository();
+            $cards = $cardRepository->getCards();
+            $totalCash = $cardRepository->getTotalCash();
 
-        $cards = $cardRepository->getCards();
-
-        $totalCash = $cardRepository->getTotalCash();
-
-        return view('users.cards.index', compact([
-            'cards',
-            'totalCash',
-        ]));
+            return view('users.cards.index', compact([
+                'cards',
+                'totalCash',
+            ]));
+        }
     }
 
 
     public function create()
     {
-        $cardRepository = new EloquentCardRepository();
-        $userId = $cardRepository->getUserId();
+        if(Auth::guest()){
+            return redirect()->route('login');
+        }else{
+            $cardRepository = new EloquentCardRepository();
+            $userId = $cardRepository->getUserId();
 
-        return view('users.cards.create');
+            return view('users.cards.create');
+        }
     }
 
 
     public function store(Request $request)
     {
-        $cardRepository = new EloquentCardRepository();
+        if(Auth::guest()){
+            return redirect()->route('login');
+        }else{
+            $cardRepository = new EloquentCardRepository();
 
-        $card = $cardRepository->storeCard($request);
+            $card = $cardRepository->storeCard($request);
 
-        return redirect()->route('users.cards.index')
-            ->withSuccess('اطلاعات کارت با موفقیت در سیستم ثبت شد.');
+            return redirect()->route('users.cards.index')
+                ->withSuccess('اطلاعات کارت با موفقیت در سیستم ثبت شد.');
+        }
     }
 
 
     public function show($card_id)
     {
-        $cardRepository = new EloquentCardRepository();
+        if(Auth::guest()){
+            return redirect()->route('login');
+        }else{
+            $cardRepository = new EloquentCardRepository();
 
-        $card = $cardRepository->showCard($card_id);
+            $card = $cardRepository->showCard($card_id);
 
-        $incomes = $cardRepository->getCardIncomes($card_id);
-        $incomeCount = $cardRepository->getCardIncomeCount($card_id);
+            $incomes = $cardRepository->getCardIncomes($card_id);
+            $incomeCount = $cardRepository->getCardIncomeCount($card_id);
 
-        $costs = $cardRepository->getCardCosts($card_id);
-        $costCount = $cardRepository->getCardCostCount($card_id);
+            $costs = $cardRepository->getCardCosts($card_id);
+            $costCount = $cardRepository->getCardCostCount($card_id);
 
-        return view('users.cards.show', compact([
-            'card',
-            'incomes',
-            'incomeCount',
-            'costs',
-            'costCount'
-        ]));
+            return view('users.cards.show', compact([
+                'card',
+                'incomes',
+                'incomeCount',
+                'costs',
+                'costCount'
+            ]));
+        }
     }
 
 
     public function edit($card_id)
     {
-        $cardRepository = new EloquentCardRepository();
-        $userId = $cardRepository->getUserId();
+        if(Auth::guest()){
+            return redirect()->route('login');
+        }else{
+            $cardRepository = new EloquentCardRepository();
+            $userId = $cardRepository->getUserId();
 
-        $card = $cardRepository->editCard($card_id);
+            $card = $cardRepository->editCard($card_id);
 
-        return view('users.cards.edit', compact('card'));
+            return view('users.cards.edit', compact('card'));
+        }
     }
 
 
     public function update(Request $request, $card_id)
     {
-        $cardRepository = new EloquentCardRepository();
-        $userId = $cardRepository->getUserId();
+        if(Auth::guest()){
+            return redirect()->route('login');
+        }else{
+            $cardRepository = new EloquentCardRepository();
+            $userId = $cardRepository->getUserId();
 
-        $cardRepository->updateCard($request, $card_id);
+            $cardRepository->updateCard($request, $card_id);
 
-        return redirect()->route('users.cards.index')
-            ->withSuccess('اطلاعات کارت مورد نظر با موفقیت بروزرسانی شد.');
+            return redirect()->route('users.cards.index')
+                ->withSuccess('اطلاعات کارت مورد نظر با موفقیت بروزرسانی شد.');
+        }
     }
 
 
     public function delete($card_id)
     {
-        $card = Card::find($card_id);
-        $card->delete();
+        if(Auth::guest()){
+            return redirect()->route('login');
+        }else{
+            $card = Card::find($card_id);
+            $card->delete();
 
-        return redirect()->route('users.cards.index')
-            ->withSuccess('عملیات حذف کارت بانکی با موفقیت انجام شد.');
+            return redirect()->route('users.cards.index')
+                ->withSuccess('عملیات حذف کارت بانکی با موفقیت انجام شد.');
+        }
     }
 
 
     public function checkTransactions($card_id)
     {
-        $cardRepository = new EloquentCardRepository();
+        if(Auth::guest()){
+            return redirect()->route('login');
+        }else{
+            $cardRepository = new EloquentCardRepository();
 
-        $userId = $cardRepository->getUserId();
+            $userId = $cardRepository->getUserId();
 
-        $card = Card::find($card_id);
+            $card = Card::find($card_id);
 
-        $incomes = $cardRepository->getCardIncomes($card_id);
-        $costs = $cardRepository->getCardCosts($card_id);
+            $incomes = $cardRepository->getCardIncomes($card_id);
+            $costs = $cardRepository->getCardCosts($card_id);
 
-        return view('users.cards.transactions.index', compact([
-            'card',
-            'incomes',
-            'costs'
-        ]));
+            return view('users.cards.transactions.index', compact([
+                'card',
+                'incomes',
+                'costs'
+            ]));
+        }
     }
 
 
     public function transactionSelect($card_id)
     {
-        $cardRepository = new EloquentCardRepository();
+        if(Auth::guest()){
+            return redirect()->route('login');
+        }else{
+            $cardRepository = new EloquentCardRepository();
 
-        $userId = $cardRepository->getUserId();
+            $userId = $cardRepository->getUserId();
 
-        $card = Card::find($card_id);
+            $card = Card::find($card_id);
 
-        return view('users.cards.transactions.select', compact('card'));
+            return view('users.cards.transactions.select', compact('card'));
+        }
     }
 
 
     public function incomeCreate($card_id)
     {
-        $cardRepository = new EloquentCardRepository();
+        if(Auth::guest()){
+            return redirect()->route('login');
+        }else{
+            $cardRepository = new EloquentCardRepository();
 
-        $userId = $cardRepository->getUserId();
+            $userId = $cardRepository->getUserId();
 
-        $card = Card::find($card_id);
+            $card = Card::find($card_id);
 
-        $categories = $cardRepository->getIncomeCategories($userId);
+            $categories = $cardRepository->getIncomeCategories($userId);
 
-        return view('users.cards.incomes.create', compact([
-            'card',
-            'categories'
-        ]));
+            return view('users.cards.incomes.create', compact([
+                'card',
+                'categories'
+            ]));
+        }
     }
 
 
     public function incomeStore(Request $request, $card_id)
     {
-        $cardRepository = new EloquentCardRepository();
+        if(Auth::guest()){
+            return redirect()->route('login');
+        }else{
+            $cardRepository = new EloquentCardRepository();
 
-        $userId = $cardRepository->getUserId();
+            $userId = $cardRepository->getUserId();
 
-        $card = Card::find($card_id);
+            $card = Card::find($card_id);
 
-        $income = $cardRepository->incomeStore($request, $card_id);
+            $income = $cardRepository->incomeStore($request, $card_id);
 
-        return redirect()->route('users.cards.checkTransactions', $card->id)
-            ->withSuccess('اطلاعات درآمد با موفقیت در سیستم ثبت شد.');
+            return redirect()->route('users.cards.checkTransactions', $card->id)
+                ->withSuccess('اطلاعات درآمد با موفقیت در سیستم ثبت شد.');
+        }
     }
 
 
     public function costCreate($card_id)
     {
-        $cardRepository = new EloquentCardRepository();
+        if(Auth::guest()){
+            return redirect()->route('login');
+        }else{
+            $cardRepository = new EloquentCardRepository();
 
-        $userId = $cardRepository->getUserId();
+            $userId = $cardRepository->getUserId();
 
-        $card = Card::find($card_id);
+            $card = Card::find($card_id);
 
-        $categories = $cardRepository->getCostCategories($userId);
+            $categories = $cardRepository->getCostCategories($userId);
 
-        return view('users.cards.costs.create', compact([
-            'card',
-            'categories'
-        ]));
+            return view('users.cards.costs.create', compact([
+                'card',
+                'categories'
+            ]));
+        }
     }
 
 
     public function costStore(Request $request, $card_id)
     {
-        $cardRepository = new EloquentCardRepository();
+        if(Auth::guest()){
+            return redirect()->route('login');
+        }else{
+            $cardRepository = new EloquentCardRepository();
 
-        $userId = $cardRepository->getUserId();
+            $userId = $cardRepository->getUserId();
 
-        $card = Card::find($card_id);
+            $card = Card::find($card_id);
 
-        $cost = $cardRepository->costStore($request, $card_id);
+            $cost = $cardRepository->costStore($request, $card_id);
 
-        return redirect()->route('users.cards.checkTransactions', $card->id)
-            ->withSuccess('اطلاعات درآمد با موفقیت در سیستم ثبت شد.');
+            return redirect()->route('users.cards.checkTransactions', $card->id)
+                ->withSuccess('اطلاعات درآمد با موفقیت در سیستم ثبت شد.');
+        }
     }
 
 
