@@ -12,7 +12,7 @@ use App\Models\IncomeCategory;
 use Illuminate\Support\Facades\Auth;
 use App\Repositories\Cards\CardRepositoryInterface;
 
-class EloquentCardRepository implements CardRepositoryInterface
+class CardRepository implements CardRepositoryInterface
 {
     public function getUserId()
     {
