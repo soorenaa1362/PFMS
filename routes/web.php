@@ -13,6 +13,7 @@ use App\Http\Controllers\User\CategoryController;
 use App\Http\Controllers\User\CostCategoryController;
 use App\Http\Controllers\User\Report\ReportController;
 use App\Http\Controllers\User\IncomeCategoryController;
+use App\Http\Controllers\User\Report\CostReportController;
 use App\Http\Controllers\User\Report\IncomeReportController;
 
 
@@ -105,10 +106,20 @@ Route::group(['prefix' => '/users' , 'namespace' => 'User'], function () {
 
 
 // Reports Routes : Costs =>
-    Route::get('/reports/costs', [ReportController::class, 'costs'])->name('users.reports.costs.select');
-    Route::get('/reports/costs/day', [ReportController::class, 'costsDay'])->name('users.reports.costs.day');
-    Route::get('/reports/costs/week', [ReportController::class, 'costsWeek'])->name('users.reports.costs.week');
-    Route::get('/reports/costs/month', [ReportController::class, 'costsMonth'])->name('users.reports.costs.month');
+    // Route::get('/reports/costs', [ReportController::class, 'costs'])->name('users.reports.costs.select');
+    // Route::get('/reports/costs/day', [ReportController::class, 'costsDay'])->name('users.reports.costs.day');
+    // Route::get('/reports/costs/week', [ReportController::class, 'costsWeek'])->name('users.reports.costs.week');
+    // Route::get('/reports/costs/month', [ReportController::class, 'costsMonth'])->name('users.reports.costs.month');
+
+    Route::get('/reports/costs', [CostReportController::class, 'costs'])->name('users.reports.costs.select');
+
+    Route::get('/reports/costs/time', [CostReportController::class, 'timeSelect'])->name('users.reports.costs.timeSelect');
+    Route::get('/reports/costs/day', [CostReportController::class, 'day'])->name('users.reports.costs.time.day');
+    Route::get('/reports/costs/week', [CostReportController::class, 'week'])->name('users.reports.costs.time.week');
+    Route::get('/reports/costs/month', [CostReportController::class, 'month'])->name('users.reports.costs.time.month');
+
+    Route::get('/reports/costs/category', [CostReportController::class, 'categorySelect'])->name('users.reports.costs.categorySelect');
+    Route::post('/reports/costs/category', [CostReportController::class, 'category'])->name('users.reports.costs.category');
 
 
 // Reports Routes : Deleted =>
