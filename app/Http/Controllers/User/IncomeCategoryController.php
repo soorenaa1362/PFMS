@@ -6,72 +6,97 @@ use Illuminate\Http\Request;
 use App\Models\IncomeCategory;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use App\Repositories\IncomeCategories\EloquentIncomeCategoryRepository;
+use App\Repositories\IncomeCategories\IncomeCategoryRepository;
 
 class IncomeCategoryController extends Controller
 {
+    public $incomeCategoryRepository;
+
+    public function __construct(IncomeCategoryRepository $incomeCategoryRepository)
+    {
+        $this->incomeCategoryRepository = $incomeCategoryRepository;
+    }
+
     public function index()
     {
-        $incomeCategoryRepository = new EloquentIncomeCategoryRepository();
-        $userId = $incomeCategoryRepository->getUserId();
-        $categories = $incomeCategoryRepository->getCategories($userId);
+        if(Auth::guest()){
+            return redirect()->route('login');
+        }else{
+            $userId = $this->incomeCategoryRepository->getUserId();
+            $categories = $this->incomeCategoryRepository->getCategories($userId);
 
-        return view('users.categories.incomes.index', compact('categories'));
+            return view('users.categories.incomes.index', compact('categories'));
+        }
     }
 
 
     public function create()
     {
-        $incomeCategoryRepository = new EloquentIncomeCategoryRepository();
-        $userId = $incomeCategoryRepository->getUserId();
-        $categories = $incomeCategoryRepository->createForm($userId);
+        if(Auth::guest()){
+            return redirect()->route('login');
+        }else{
+            $userId = $this->incomeCategoryRepository->getUserId();
+            $categories = $this->incomeCategoryRepository->createForm($userId);
 
-        return view('users.categories.incomes.create', compact('categories'));
+            return view('users.categories.incomes.create', compact('categories'));
+        }
     }
 
 
     public function store(Request $request)
     {
-        $incomeCategoryRepository = new EloquentIncomeCategoryRepository();
-        $userId = $incomeCategoryRepository->getUserId();
+        if(Auth::guest()){
+            return redirect()->route('login');
+        }else{
+            $userId = $this->incomeCategoryRepository->getUserId();
 
-        $incomeCategoryRepository->storeIncomeCategory($request);
+            $this->incomeCategoryRepository->storeIncomeCategory($request);
 
-        return redirect()->route('users.categories.incomes.index')
-            ->withSuccess('دسته بندی با موفقیت در سیستم ثبت شد.');
+            return redirect()->route('users.categories.incomes.index')
+                ->withSuccess('دسته بندی با موفقیت در سیستم ثبت شد.');
+        }
     }
 
 
     public function edit($category_id)
     {
-        $incomeCategoryRepository = new EloquentIncomeCategoryRepository();
-        $userId = $incomeCategoryRepository->getUserId();
-        $category = $incomeCategoryRepository->getCategory($category_id);
-        $parents = $incomeCategoryRepository->getParents($userId);
+        if(Auth::guest()){
+            return redirect()->route('login');
+        }else{
+            $userId = $this->incomeCategoryRepository->getUserId();
+            $category = $this->incomeCategoryRepository->getCategory($category_id);
+            $parents = $this->incomeCategoryRepository->getParents($userId);
 
-        return view('users.categories.incomes.edit', compact([
-            'category',
-            'parents'
-        ]));
+            return view('users.categories.incomes.edit', compact([
+                'category',
+                'parents'
+            ]));
+        }
     }
 
 
     public function update(Request $request, $category_id)
     {
-        $incomeCategoryRepository = new EloquentIncomeCategoryRepository();
-        $incomeCategoryRepository->updateIncomeCategory($request, $category_id);
+        if(Auth::guest()){
+            return redirect()->route('login');
+        }else{
+            $this->incomeCategoryRepository->updateIncomeCategory($request, $category_id);
 
-        return redirect()->route('users.categories.incomes.index')
-            ->withSuccess('عملیات بروزرسانی دسته بندی با موفقیت انجام شد.');
+            return redirect()->route('users.categories.incomes.index')
+                ->withSuccess('عملیات بروزرسانی دسته بندی با موفقیت انجام شد.');
+        }
     }
 
 
     public function delete($category_id)
     {
-        $incomeCategoryRepository = new EloquentIncomeCategoryRepository();
-        $incomeCategoryRepository->deleteIncomeCategory($category_id);
+        if(Auth::guest()){
+            return redirect()->route('login');
+        }else{
+            $this->incomeCategoryRepository->deleteIncomeCategory($category_id);
 
-        return redirect()->route('users.categories.incomes.index')
-            ->withSuccess('دسته بندی مورد نظر با موفقیت حذف شد.');
+            return redirect()->route('users.categories.incomes.index')
+                ->withSuccess('دسته بندی مورد نظر با موفقیت حذف شد.');
+        }
     }
 }

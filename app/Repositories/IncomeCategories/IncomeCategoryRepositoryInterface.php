@@ -8,13 +8,11 @@ interface IncomeCategoryRepositoryInterface
 
     public function getCategories($userId);
 
-    public function createForm($userId);
+    public function getParents($userId);
 
     public function storeIncomeCategory($request);
 
     public function getCategory($category_id);
-
-    public function getParents($userId);
 
     public function updateIncomeCategory($request, $category_id);
 
