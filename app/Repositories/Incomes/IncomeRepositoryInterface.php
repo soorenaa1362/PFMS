@@ -8,7 +8,7 @@ interface IncomeRepositoryInterface
 
     public function getIncomes($userId);
 
-    public function getIncomeCategories($userId);
+    public function getCategories($userId);
 
     public function getTotalIncome($incomes);
 

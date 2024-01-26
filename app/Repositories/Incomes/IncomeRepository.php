@@ -9,7 +9,7 @@ use App\Models\IncomeCategory;
 use Illuminate\Support\Facades\Auth;
 use App\Repositories\Incomes\IncomeRepositoryInterface;
 
-class EloquentIncomeRepository implements IncomeRepositoryInterface
+class IncomeRepository implements IncomeRepositoryInterface
 {
     public function getUserId()
     {
@@ -20,15 +20,15 @@ class EloquentIncomeRepository implements IncomeRepositoryInterface
 
     public function getIncomes($userId)
     {
-        $incomes = Income::where('user_id', $userId)->paginate(5);
+        $incomes = Income::where('user_id', $userId)->paginate(3);
         return $incomes;
     }
 
 
-    public function getIncomeCategories($userId)
+    public function getCategories($userId)
     {
-        $incomeCategories = IncomeCategory::where('user_id', $userId)->get();
-        return $incomeCategories;
+        $categories = IncomeCategory::where('user_id', $userId)->get();
+        return $categories;
     }
 
 
@@ -38,14 +38,14 @@ class EloquentIncomeRepository implements IncomeRepositoryInterface
         foreach($incomes as $income){
             $totalIncome += $income->amount;
         }
-
         return $totalIncome;
     }
 
 
     public function getCards($userId)
     {
-        $cards = Card::where('user_id', $userId)->get();
+        $cards = Card::where('user_id', $userId)
+            ->where('current_cash', '>', 0)->get();
         return $cards;
     }
 
@@ -70,11 +70,11 @@ class EloquentIncomeRepository implements IncomeRepositoryInterface
         $parents = IncomeCategory::where('user_id', $userId)
             ->where('parent_id', null)->get();
 
-        if( count($parents) === 0 ){
-            return false;
-        }else{
-            return $parents;
-        }
+            if( count($parents) === 0 ){
+                return false;
+            }else{
+                return $parents;
+            }
     }
 
 
