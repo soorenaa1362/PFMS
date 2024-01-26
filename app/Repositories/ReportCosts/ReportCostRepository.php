@@ -39,7 +39,7 @@ class ReportCostRepository implements ReportCostRepositoryInterface
     {
         $totalCost = 0;
         foreach($costs as $cost){
-            $totalCost -= $cost->amount;
+            $totalCost += $cost->amount;
         }
 
         return $totalCost;
