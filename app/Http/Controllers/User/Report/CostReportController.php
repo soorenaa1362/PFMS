@@ -119,7 +119,7 @@ class CostReportController extends Controller
             if( $request->category_id === null ){
                 return redirect()->back();
             }else{
-                $Costs = $this->reportCostRepository->getCostsOfCategory($category);
+                $costs = $this->reportCostRepository->getCostsOfCategory($category);
 
                 return view('users.reports.costs.category.index', compact('category', 'costs'));
             }

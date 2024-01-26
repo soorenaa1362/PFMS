@@ -211,18 +211,18 @@ class CardController extends Controller
         if(Auth::guest()){
             return redirect()->route('login');
         }else{
-            $userId = $this->cardRepository->getUserId();
-            $card = Card::find($card_id);
+            $card = $this->cardRepository->getCard($card_id);
             $cost = $this->cardRepository->costStore($request, $card_id);
 
-            return redirect()->route('users.cards.checkTransactions', $card->id)
-                ->withSuccess('اطلاعات درآمد با موفقیت در سیستم ثبت شد.');
+            if($cost == true){
+                return redirect()->route('users.cards.checkTransactions', $card->id)
+                    ->withSuccess('اطلاعات خرجکرد با موفقیت در سیستم ثبت شد.');
+            }else{
+                return redirect()->back()
+                    ->withSuccess('مبلغ خرجکرد نباید بیشتر از موجودی کارت باشد.');
+            }
         }
     }
-
-
-
-
 
 
 

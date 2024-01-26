@@ -42,10 +42,15 @@
                                 </a>
                             </div>
                         @else
-                        <h6 class="text-center text-light p-3 bg-secondary"
-                            style="border-radius: 10px;">
-                            موجودی : {{ number_format($card->current_cash) }} تومان
-                        </h6>
+                            <h6 class="text-center text-light p-3 bg-secondary"
+                                style="border-radius: 10px;">
+                                موجودی : {{ number_format($card->current_cash) }} تومان
+                            </h6>
+                            @if(Session::has('success'))
+                                <div class="alert alert-danger text-center" style="margin-bottom: 0 !important">
+                                    {{ Session::get('success') }}
+                                </div>
+                            @endif
                             <form action="{{ route('users.cards.costs.store', $card->id) }}" method="POST">
                                 @csrf
 

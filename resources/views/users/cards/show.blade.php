@@ -188,7 +188,7 @@
                                     @endforeach
                                 </tbody>
                             </table>
-                            @if ( count($osts) >= 4 )
+                            @if ( count($costs) >= 4 )
                                 <a href="{{ route('users.cards.costs.index', $card->id) }}"
                                     class="d-flex justify-content-end text-secondary">
                                     نمایش موارد بیشتر

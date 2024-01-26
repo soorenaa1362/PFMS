@@ -210,23 +210,39 @@ class CardRepository implements CardRepositoryInterface
     public function costStore($request, $card_id)
     {
         $userId = $this->getUserId();
-
         $myDate = Carbon::createFromTimestamp($request->date)->format('Y/m/d');
 
-        $cost = Cost::create([
-            'user_id' => $userId,
-            'card_id' => $card_id,
-            'category_id' => $request->category_id,
-            'title' => $request->title,
-            'amount' => $request->amount,
-            'date' => $myDate,
-        ]);
+            $request->validate([
+                'title' => 'required|string',
+                'amount' => 'required|numeric',
+                'category_id' => 'required',
+                'date' => 'required',
+                'description' => 'nullable|string',
+            ]);
 
-        $card = Card::where('id', $cost->card_id)->first();
-        $newCash = $card->current_cash - $cost->amount;
-        $card->update([
-            'current_cash' => $newCash
-        ]);
+            $cost = new Cost;
+            $cost->user_id = $userId;
+            $cost->title = $request->title;
+            $cost->amount = $request->amount;
+            $cost->card_id = $card_id;
+            $cost->category_id = $request->category_id;
+            $cost->date = $myDate;
+            $cost->description = $request->description;
+
+            $card = Card::where('id', $cost->card_id)->first();
+
+            if($card->current_cash >= $request->amount){
+                $cost->save();
+
+                $newCash = $card->current_cash - $cost->amount;
+                $card->update([
+                    'current_cash' => $newCash
+                ]);
+
+                return true;
+            }else{
+                return false;
+            }
     }
 
 
