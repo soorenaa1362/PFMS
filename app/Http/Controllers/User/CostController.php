@@ -10,20 +10,27 @@ use Illuminate\Http\Request;
 use Morilog\Jalali\Jalalian;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use App\Repositories\Costs\EloquentCostRepository;
+use App\Repositories\Costs\CostRepository;
 
 class CostController extends Controller
 {
+    public $costRepository;
+
+    public function __construct(CostRepository $costRepository)
+    {
+        $this->costRepository = $costRepository;
+    }
+
+
     public function index()
     {
         if(Auth::guest()){
             return redirect()->route('login');
         }else{
-            $costRepository = new EloquentCostRepository();
-            $userId = $costRepository->getUserId();
-            $costs = $costRepository->getCosts($userId);
-            $costCategories = $costRepository->getCategories($userId);
-            $totalCost = $costRepository->getTotalCost($costs);
+            $userId = $this->costRepository->getUserId();
+            $costs = $this->costRepository->getCosts($userId);
+            $costCategories = $this->costRepository->getCategories($userId);
+            $totalCost = $this->costRepository->getTotalCost($costs);
 
             return view('users.costs.index', compact([
                 'costs',
@@ -39,11 +46,10 @@ class CostController extends Controller
         if(Auth::guest()){
             return redirect()->route('login');
         }else{
-            $costRepository = new EloquentCostRepository();
-            $userId = $costRepository->getUserId();
-            $cards = $costRepository->getCards($userId);
-            $categories = $costRepository->getSubCategories($userId);
-            $parents = $costRepository->getParents($userId);
+            $userId = $this->costRepository->getUserId();
+            $cards = $this->costRepository->getCards($userId);
+            $categories = $this->costRepository->getSubCategories($userId);
+            $parents = $this->costRepository->getParents($userId);
 
             if($parents === false){
                 return redirect()->route('users.costs.index');
@@ -59,9 +65,8 @@ class CostController extends Controller
         if(Auth::guest()){
             return redirect()->route('login');
         }else{
-            $costRepository = new EloquentCostRepository();
-            $userId = $costRepository->getUserId();
-            $cost = $costRepository->storeCost($request, $userId);
+            $userId = $this->costRepository->getUserId();
+            $cost = $this->costRepository->storeCost($request, $userId);
 
             if($cost == true){
                 return redirect()->route('users.costs.index')
@@ -79,9 +84,8 @@ class CostController extends Controller
         if(Auth::guest()){
             return redirect()->route('login');
         }else{
-            $costRepository = new EloquentCostRepository();
-            $userId = $costRepository->getUserId();
-            $cost = $costRepository->getCost($cost_id);
+            $userId = $this->costRepository->getUserId();
+            $cost = $this->costRepository->getCost($cost_id);
 
             return view('users.costs.show', compact('cost'));
         }
@@ -93,11 +97,10 @@ class CostController extends Controller
         if(Auth::guest()){
             return redirect()->route('login');
         }else{
-            $costRepository = new EloquentCostRepository();
-            $userId = $costRepository->getUserId();
-            $cost = $costRepository->getCost($cost_id);
-            $cards = $costRepository->getCards($userId);
-            $categories = $costRepository->getSubCategories($userId);
+            $userId = $this->costRepository->getUserId();
+            $cost = $this->costRepository->getCost($cost_id);
+            $cards = $this->costRepository->getCards($userId);
+            $categories = $this->costRepository->getSubCategories($userId);
 
             return view('users.costs.edit', compact('cost', 'cards', 'categories'));
         }
@@ -109,8 +112,7 @@ class CostController extends Controller
         if(Auth::guest()){
             return redirect()->route('login');
         }else{
-            $costRepository = new EloquentCostRepository();
-            $costRepository->updateCost($request, $cost_id);
+            $this->costRepository->updateCost($request, $cost_id);
 
             return redirect()->route('users.costs.index')
                 ->withSuccess('عملیات بروزرسانی اطلاعات خرجکرد با موفقیت انجام شد.');
@@ -123,8 +125,7 @@ class CostController extends Controller
         if(Auth::guest()){
             return redirect()->route('login');
         }else{
-            $costRepository = new EloquentCostRepository();
-            $costRepository->deleteCost($cost_id);
+            $this->costRepository->deleteCost($cost_id);
 
             return redirect()->route('users.costs.index')
                 ->withSuccess('خرجکرد مورد نظر با موفقیت حذف شد.');
