@@ -7,7 +7,7 @@ use App\Models\CostCategory;
 use Illuminate\Support\Facades\Auth;
 use App\Repositories\CostCategories\CostCategoryRepositoryInterface;
 
-class EloquentCostCategoryRepository implements CostCategoryRepositoryInterface
+class CostCategoryRepository implements CostCategoryRepositoryInterface
 {
     public function getUserId()
     {

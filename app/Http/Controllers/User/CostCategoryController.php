@@ -6,18 +6,24 @@ use App\Models\CostCategory;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use App\Repositories\CostCategories\EloquentCostCategoryRepository;
+use App\Repositories\CostCategories\CostCategoryRepository;
 
 class CostCategoryController extends Controller
 {
+    public $costCategoryRepository;
+
+    public function __construct(CostCategoryRepository $costCategoryRepository)
+    {
+        $this->costCategoryRepository = $costCategoryRepository;
+    }
+
     public function index()
     {
         if(Auth::guest()){
             return redirect()->route('login');
         }else{
-            $costCategoryRepository = new EloquentCostCategoryRepository();
-            $userId = $costCategoryRepository->getUserId();
-            $categories = $costCategoryRepository->getCategories($userId);
+            $userId = $this->costCategoryRepository->getUserId();
+            $categories = $this->costCategoryRepository->getCategories($userId);
 
             return view('users.categories.costs.index', compact('categories'));
         }
@@ -30,9 +36,8 @@ class CostCategoryController extends Controller
         if(Auth::guest()){
             return redirect()->route('login');
         }else{
-            $costCategoryRepository = new EloquentCostCategoryRepository();
-            $userId = $costCategoryRepository->getUserId();
-            $categories = $costCategoryRepository->getParents($userId);
+            $userId = $this->costCategoryRepository->getUserId();
+            $categories = $this->costCategoryRepository->getParents($userId);
 
             return view('users.categories.costs.create', compact('categories'));
         }
@@ -44,8 +49,7 @@ class CostCategoryController extends Controller
         if(Auth::guest()){
             return redirect()->route('login');
         }else{
-            $costCategoryRepository = new EloquentCostCategoryRepository();
-            $costCategoryRepository->storeCostCategory($request);
+            $this->costCategoryRepository->storeCostCategory($request);
 
             return redirect()->route('users.categories.costs.index')
                 ->withSuccess('دسته بندی با موفقیت در سیستم ثبت شد.');
@@ -58,10 +62,9 @@ class CostCategoryController extends Controller
         if(Auth::guest()){
             return redirect()->route('login');
         }else{
-            $costCategoryRepository = new EloquentCostCategoryRepository();
-            $userId = $costCategoryRepository->getUserId();
-            $category = $costCategoryRepository->getCategory($category_id);
-            $parents = $costCategoryRepository->getParents($userId);
+            $userId = $this->costCategoryRepository->getUserId();
+            $category = $this->costCategoryRepository->getCategory($category_id);
+            $parents = $this->costCategoryRepository->getParents($userId);
 
             return view('users.categories.costs.edit', compact('category', 'parents'));
         }
@@ -73,8 +76,7 @@ class CostCategoryController extends Controller
         if(Auth::guest()){
             return redirect()->route('login');
         }else{
-            $costCategoryRepository = new EloquentCostCategoryRepository();
-            $costCategoryRepository->updateCostCategory($request, $category_id);
+            $this->costCategoryRepository->updateCostCategory($request, $category_id);
 
             return redirect()->route('users.categories.costs.index')
                 ->withSuccess('عملیات بروزرسانی دسته بندی با موفقیت انجام شد.');
@@ -87,8 +89,7 @@ class CostCategoryController extends Controller
         if(Auth::guest()){
             return redirect()->route('login');
         }else{
-            $costCategoryRepository = new EloquentCostCategoryRepository();
-            $costCategoryRepository->deleteCostCategory($category_id);
+            $this->costCategoryRepository->deleteCostCategory($category_id);
 
             return redirect()->route('users.categories.costs.index')
                 ->withSuccess('دسته بندی مورد نظر با موفقیت حذف شد.');
