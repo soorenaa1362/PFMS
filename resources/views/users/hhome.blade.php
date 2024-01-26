@@ -49,10 +49,10 @@
         <div class="container">
 
             <div class="row d-flex justify-content-center">
-                <div class="card col-11 shadow p-2 m-2 bg-body">
+                <div class="card col-11 shadow p-2 m-3 bg-body">
                     <a href="{{ route('users.guide') }}">
                         <div class="row d-flex justify-content-center">
-                            <i class="fas fa-map-signs text-primary text-center fa-4x mt-2"></i>
+                            {{-- <i class="fa fa-desktop text-primary text-center fa-3x mt-2"></i> --}}
                             <h5 class="text-center mt-2 text-primary" style="font-size: 18px;">
                                 راهنمای استفاده از سیستم
                             </h5>
@@ -62,68 +62,91 @@
             </div> <!-- row -->
 
             <div class="row d-flex justify-content-center">
-                <div class="card col-5 shadow p-2 m-3 bg-body">
+                <div class="card col-5 shadow p-2 m-2 bg-body">
+                    <a href="">
+                        <div class="row d-flex justify-content-center">
+                            <i class="fa fa-desktop text-primary text-center fa-3x mt-2"></i>
+                            <h5 class="text-center mt-2 text-primary" style="font-size: 18px;">
+                                داشبورد
+                            </h5>
+                        </div>
+                    </a>
+                </div> <!-- col-3 -->
+                <div class="card col-5 shadow p-2 m-2 bg-body">
                     <a href="{{ route('users.cards.index') }}">
                         <div class="row d-flex justify-content-center">
-                            <i class="fa fa-credit-card text-secondary text-center fa-4x mt-2"></i>
+                            <i class="fa fa-credit-card text-secondary text-center fa-3x mt-2"></i>
                             <h5 class="text-center mt-2 text-secondary" style="font-size: 18px;">
                                 کارت ها
                             </h5>
                         </div>
                     </a>
-                </div> <!-- col-5 -->
-                <div class="card col-5 shadow p-2 m-3 bg-body">
-                    <a href="{{ route('users.categories.select') }}">
-                        <div class="row d-flex justify-content-center">
-                            <i class="fas fa-sitemap text-info text-center fa-4x mt-2"></i>
-                            <h5 class="text-center mt-2 text-info" style="font-size: 18px;">
-                                دسته بندی ها
-                            </h5>
-                        </div>
-                    </a>
-                </div> <!-- col-5 -->
+                </div> <!-- col-3 -->
             </div> <!-- row -->
 
             <div class="row d-flex justify-content-center">
-                <div class="card col-5 shadow p-2 m-3 bg-body">
+                <div class="card col-5 shadow p-2 m-2 bg-body">
                     <a href="{{ route('users.incomes.index') }}">
                         <div class="row d-flex justify-content-center">
-                            <i class="fas fa-donate text-success text-center fa-4x mt-2"></i>
+                            <i class="fas fa-donate text-success text-center fa-3x mt-2"></i>
                             <h5 class="text-center mt-2 text-success" style="font-size: 18px;">
                                 درآمدها
                             </h5>
                         </div>
                     </a>
-                </div> <!-- col-5 -->
-                <div class="card col-5 shadow p-2 m-3 bg-body">
+                </div> <!-- col-3 -->
+                <div class="card col-5 shadow p-2 m-2 bg-body">
                     <a href="{{ route('users.costs.index') }}">
                         <div class="row d-flex justify-content-center">
-                            <i class="far fa-money-bill-alt	text-danger text-center fa-4x mt-2"></i>
+                            <i class="fas fa-hand-holding-usd text-danger text-center fa-3x mt-2"></i>
                             <h5 class="text-center mt-2 text-danger" style="font-size: 18px;">
                                 خرجکردها
                             </h5>
                         </div>
                     </a>
-                </div> <!-- col-5 -->
+                </div> <!-- col-3 -->
             </div> <!-- row -->
 
             <div class="row d-flex justify-content-center">
-                <div class="card col-5 shadow p-2 m-3 bg-body">
+                <div class="card col-5 shadow p-2 m-2 bg-body">
+                    <a href="{{ route('users.categories.select') }}">
+                        <div class="row d-flex justify-content-center">
+                            <i class="fas fa-sitemap text-info text-center fa-3x mt-2"></i>
+                            <h5 class="text-center mt-2 text-info" style="font-size: 18px;">
+                                دسته بندی ها
+                            </h5>
+                        </div>
+                    </a>
+                </div> <!-- col-3 -->
+                <div class="card col-5 shadow p-2 m-2 bg-body">
                     <a href="{{ route('users.reports.select') }}">
                         <div class="row d-flex justify-content-center">
-                            <i class="fa fa-newspaper-o text-warning text-center fa-4x mt-2"></i>
+                            <i class="fa fa-newspaper-o text-warning text-center fa-3x mt-2"></i>
                             <h5 class="text-center mt-2 text-warning" style="font-size: 18px;">
                                 گزارشات
                             </h5>
                         </div>
                     </a>
-                </div> <!-- col-5 -->
-                <div class="card col-5 shadow p-2 m-3 bg-body">
+                </div> <!-- col-3 -->
+            </div> <!-- row -->
+
+            <div class="row d-flex justify-content-center">
+                <div class="card col-5 shadow p-2 m-2 bg-body">
+                    <a href="">
+                        <div class="row d-flex justify-content-center">
+                            <i class="fas fa-wrench text-dark text-center fa-3x mt-2"></i>
+                            <h5 class="text-center mt-2 text-dark" style="font-size: 18px;">
+                                تنظیمات
+                            </h5>
+                        </div>
+                    </a>
+                </div> <!-- col-3 -->
+                <div class="card col-5 shadow p-2 m-2 bg-body">
                     <a href="{{ route('logout') }}" onclick="event.preventDefault();
                         document.getElementById('logout-form').submit();"
                     >
                         <div class="row d-flex justify-content-center">
-                            <i class="fas fa-door-open text-dark text-center fa-4x mt-2"></i>
+                            <i class="fas fa-door-open text-dark text-center fa-3x mt-2"></i>
                             <h5 class="text-center mt-2 text-dark" style="font-size: 18px;">
                                 خروج
                             </h5>
@@ -132,7 +155,7 @@
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                         @csrf
                     </form>
-                </div> <!-- col-5 -->
+                </div> <!-- col-3 -->
             </div> <!-- row -->
 
         </div> <!-- container -->
