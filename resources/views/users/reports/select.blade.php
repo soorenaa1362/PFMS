@@ -35,7 +35,8 @@
                             <div>
                                 <a href="{{ route('users.reports.costs.select') }}"
                                     class="text-center text-danger d-grid gap-2">
-                                    <i class="fas fa-hand-holding-usd text-danger fa-4x"></i>
+                                    {{-- <i class="fas fa-hand-holding-usd text-danger fa-4x"></i> --}}
+                                    <i class="far fa-money-bill-alt text-danger fa-4x"></i>
                                     <span style="font-size: 15px;">گزارش خرجکردها</span>
                                 </a>
                             </div>
