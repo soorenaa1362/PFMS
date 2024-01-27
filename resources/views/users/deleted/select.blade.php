@@ -1,7 +1,7 @@
 @extends('users.layouts.app')
 
 @section('title')
-    ثبت تراکنش
+    تراکنش های حذف شده
 @endsection
 
 @section('content')

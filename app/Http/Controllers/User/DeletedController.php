@@ -10,24 +10,32 @@ use Illuminate\Http\Request;
 use App\Models\IncomeCategory;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Repositories\Deleted\DeletedRepository;
 
 class DeletedController extends Controller
 {
+    public $deletedRepository;
+
+    public function __construct(DeletedRepository $deletedRepository)
+    {
+        $this->deletedRepository = $deletedRepository;
+    }
+
+
     public function select()
     {
         if(Auth::guest()){
             return redirect()->route('login');
         }else{
-            $userId = Auth::user()->id;
+            $userId = $this->deletedRepository->getUserId();
+            $incomes = $this->deletedRepository->getIncomes($userId);
+            $costs = $this->deletedRepository->getCosts($userId);
+
+            return view('users.deleted.select', compact([
+                'incomes',
+                'costs'
+            ]));
         }
-
-        $incomes = Income::where('user_id', $userId)->onlyTrashed()->get();
-        $costs = Cost::where('user_id', $userId)->onlyTrashed()->get();
-
-        return view('users.deleted.select', compact([
-            'incomes',
-            'costs'
-        ]));
     }
 
 
