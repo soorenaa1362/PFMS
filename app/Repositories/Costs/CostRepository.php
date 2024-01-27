@@ -178,11 +178,11 @@ class CostRepository implements CostRepositoryInterface
     {
         $cost = $this->getCost($cost_id);
         $cost->delete();
-
         $card = Card::where('id', $cost->card_id)->first();
         $oldCurrentCash = $card->current_cash;
+
         $costAmount = $cost->amount;
-        $newCurrentCash = $oldCurrentCash - $costAmount;
+        $newCurrentCash = $oldCurrentCash + $costAmount;
 
         $card->update([
             'current_cash' => $newCurrentCash,
