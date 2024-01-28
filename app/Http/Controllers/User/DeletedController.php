@@ -44,16 +44,15 @@ class DeletedController extends Controller
         if(Auth::guest()){
             return redirect()->route('login');
         }else{
-            $userId = Auth::user()->id;
+            $userId = $this->deletedRepository->getUserId();
+            $incomes = $this->deletedRepository->getIncomes($userId);
+            $incomeCategories = $this->deletedRepository->getIncomeCategories($userId);
+
+            return view('users.deleted.incomes', compact([
+                'incomes',
+                'incomeCategories',
+            ]));
         }
-
-        $incomes = Income::where('user_id', $userId)->onlyTrashed()->paginate(3);
-        $incomeCategories = IncomeCategory::where('user_id', $userId)->get();
-
-        return view('users.deleted.incomes', compact([
-            'incomes',
-            'incomeCategories',
-        ]));
     }
 
 
