@@ -87,43 +87,42 @@ class DeletedController extends Controller
         if(Auth::guest()){
             return redirect()->route('login');
         }else{
-            $userId = Auth::user()->id;
+            $userId = $this->deletedRepository->getUserId();
+            $costs = $this->deletedRepository->getCosts($userId);
+            $costCategories = $this->deletedRepository->getCostCategories($userId);
+
+            return view('users.deleted.costs', compact([
+                'costs',
+                'costCategories',
+            ]));
         }
-
-        $costs = Cost::where('user_id', $userId)->onlyTrashed()->paginate(3);
-        $costCategories = CostCategory::where('user_id', $userId)->get();
-
-        return view('users.deleted.costs', compact([
-            'costs',
-            'costCategories',
-        ]));
     }
 
 
 
     public function restoreCost($cost_id)
     {
-        $cost = Cost::withTrashed()->find($cost_id);
-        $cost->restore();
+        if(Auth::guest()){
+            return redirect()->route('login');
+        }else{
+            $cost = $this->deletedRepository->restoreCost($cost_id);
 
-        $card = Card::where('id', $cost->card_id)->first();
-
-        $cardNewCash = $card->current_cash - $cost->amount;
-        $card->update([
-            'current_cash' => $cardNewCash
-        ]);
-
-        return redirect()->route('users.deleted.costs')
-            ->withSuccess('خرجکرد مورد نظر با موفقیت بازیابی شد.');
+            return redirect()->route('users.deleted.costs')
+                ->withSuccess('خرجکرد مورد نظر با موفقیت بازیابی شد.');
+        }
     }
 
 
     public function forceDeleteCost($cost_id)
     {
-        $cost = Cost::onlyTrashed()->find($cost_id)->forceDelete();
+        if(Auth::guest()){
+            return redirect()->route('login');
+        }else{
+            $cost = $this->deletedRepository->forceDeleteCost($cost_id);
 
-        return redirect()->route('users.deleted.costs')
-            ->withSuccess('خرجکرد مورد نظر به طور کامل از سیستم حذف شد.');
+            return redirect()->route('users.deleted.costs')
+                ->withSuccess('خرجکرد مورد نظر به طور کامل از سیستم حذف شد.');
+        }
     }
 
 

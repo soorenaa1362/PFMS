@@ -58,5 +58,31 @@ class DeletedRepository implements DeletedRepositoryInterface
     {
         $income = Income::onlyTrashed()->find($income_id)->forceDelete();
     }
+
+
+    public function getCostCategories($userId)
+    {
+        $costCategories = CostCategory::where('user_id', $userId)->get();
+        return $costCategories;
+    }
+
+
+    public function restoreCost($cost_id)
+    {
+        $cost = cost::withTrashed()->find($cost_id);
+        $cost->restore();
+
+        $card = Card::where('id', $cost->card_id)->first();
+        $cardNewCash = $card->current_cash - $cost->amount;
+        $card->update([
+            'current_cash' => $cardNewCash
+        ]);
+    }
+
+
+    public function forceDeleteCost($cost_id)
+    {
+        $cost = cost::onlyTrashed()->find($cost_id)->forceDelete();
+    }
 }
 

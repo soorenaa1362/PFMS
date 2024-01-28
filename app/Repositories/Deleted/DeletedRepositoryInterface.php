@@ -15,6 +15,12 @@ interface DeletedRepositoryInterface
     public function restoreIncome($income_id);
 
     public function forceDeleteIncome($income_id);
+
+    public function getCostCategories($userId);
+
+    public function restoreCost($cost_id);
+
+    public function forceDeleteCost($cost_id);
 }
 
 
