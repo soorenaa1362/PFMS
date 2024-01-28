@@ -58,26 +58,27 @@ class DeletedController extends Controller
 
     public function restoreIncome($income_id)
     {
-        $income = Income::withTrashed()->find($income_id);
-        $income->restore();
+        if(Auth::guest()){
+            return redirect()->route('login');
+        }else{
+            $income = $this->deletedRepository->restoreIncome($income_id);
 
-        $card = Card::where('id', $income->card_id)->first();
-        $cardNewCash = $card->current_cash + $income->amount;
-        $card->update([
-            'current_cash' => $cardNewCash
-        ]);
-
-        return redirect()->route('users.deleted.incomes')
-            ->withSuccess('درآمد مورد نظر با موفقیت بازیابی شد.');
+            return redirect()->route('users.deleted.incomes')
+                ->withSuccess('درآمد مورد نظر با موفقیت بازیابی شد.');
+        }
     }
 
 
     public function forceDeleteIncome($income_id)
     {
-        $income = Income::onlyTrashed()->find($income_id)->forceDelete();
+        if(Auth::guest()){
+            return redirect()->route('login');
+        }else{
+            $income = $this->deletedRepository->forceDeleteIncome($income_id);
 
-        return redirect()->route('users.deleted.incomes')
-            ->withSuccess('درآمد مورد نظر به طور کامل از سیستم حذف شد.');
+            return redirect()->route('users.deleted.incomes')
+                ->withSuccess('درآمد مورد نظر به طور کامل از سیستم حذف شد.');
+        }
     }
 
 
