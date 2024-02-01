@@ -36,7 +36,7 @@ class IncomeCategoryController extends Controller
             return redirect()->route('login');
         }else{
             $userId = $this->incomeCategoryRepository->getUserId();
-            $categories = $this->incomeCategoryRepository->createForm($userId);
+            $categories = $this->incomeCategoryRepository->getParents($userId);
 
             return view('users.categories.incomes.create', compact('categories'));
         }
