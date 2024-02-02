@@ -138,7 +138,8 @@ class CardRepository implements CardRepositoryInterface
 
     public function updateCard($request, $card_id)
     {
-        $card = Card::find($card_id);
+        $card = $this->getCard($card_id);
+        $myDate = Carbon::createFromTimestamp($request->date)->format('Y/m/d');
 
         $request->validate([
             'name' => 'required|string',
@@ -148,13 +149,25 @@ class CardRepository implements CardRepositoryInterface
             'description' => 'nullable|string',
         ]);
 
-        $card->update([
-            'name' => $request->name,
-            'alias' => $request->alias,
-            'number' => $request->number,
-            'current_cash' => $request->current_cash,
-            'description' => $request->description,
-        ]);
+        if($request->date == null){
+            $card->update([
+                'name' => $request->name,
+                'alias' => $request->alias,
+                'number' => $request->number,
+                'current_cash' => $request->current_cash,
+                'description' => $request->description,
+            ]);
+        }else{
+            $card->update([
+                'name' => $request->name,
+                'alias' => $request->alias,
+                'date' => $myDate,
+                'number' => $request->number,
+                'current_cash' => $request->current_cash,
+                'description' => $request->description,
+            ]);
+        }
+
     }
 
 
