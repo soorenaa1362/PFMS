@@ -63,10 +63,15 @@ class IncomeController extends Controller
     public function store(Request $request)
     {
         $userId = $this->incomeRepository->getUserId();
-        $this->incomeRepository->storeIncome($request, $userId);
+        $income = $this->incomeRepository->storeIncome($request, $userId);
 
-        return redirect()->route('users.incomes.index')
-            ->withSuccess('عملیات ثبت درآمد با موفقیت انجام شد.');
+        if($income === true){
+            return redirect()->route('users.incomes.index')
+                ->withSuccess('عملیات ثبت درآمد با موفقیت انجام شد.');
+        }else{
+            return redirect()->back()
+                ->withSuccess('تاریخ ثبت درآمد نباید قبل از تاریخ ثبت کارت باشد!');
+        }
     }
 
 

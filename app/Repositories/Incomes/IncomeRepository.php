@@ -5,6 +5,7 @@ namespace App\Repositories\Incomes;
 use Carbon\Carbon;
 use App\Models\Card;
 use App\Models\Income;
+use Morilog\Jalali\Jalalian;
 use App\Models\IncomeCategory;
 use Illuminate\Support\Facades\Auth;
 use App\Repositories\Incomes\IncomeRepositoryInterface;
@@ -91,21 +92,29 @@ class IncomeRepository implements IncomeRepositoryInterface
             'description' => 'nullable|string',
         ]);
 
-        $income = Income::create([
-            'user_id' => $userId,
-            'title' => $request->title,
-            'amount' => $request->amount,
-            'card_id' => $request->card_id,
-            'category_id' => $request->category_id,
-            'date' => $myDate,
-            'description' => $request->description,
-        ]);
+        $income = new Income();
+        $income->user_id = $userId;
+        $income->title = $request->title;
+        $income->amount = $request->amount;
+        $income->card_id = $request->card_id;
+        $income->category_id = $request->category_id;
+        $income->date = $myDate;
+        $income->description = $request->description;
 
         $card = Card::where('id', $income->card_id)->first();
-        $newCash = $card->current_cash + $income->amount;
-        $card->update([
-            'current_cash' => $newCash
-        ]);
+        $cardDateJalali = Jalalian::fromDateTime($card->date)->format('Y/m/d');
+        $incomeDateJalali = Jalalian::fromDateTime($income->date)->format('Y/m/d');
+
+        if( $incomeDateJalali >= $cardDateJalali ){
+            $income->save();
+            $newCash = $card->current_cash + $income->amount;
+            $card->update([
+                'current_cash' => $newCash
+            ]);
+            return true;
+        }else{
+            return false;
+        }
     }
 
 
