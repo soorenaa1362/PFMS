@@ -35,16 +35,16 @@ class Card extends Model
 
     public function getDateJalali()
     {
-        if (!is_null($this->created_at))
-            return Jalalian::fromDateTime($this->created_at)->format('Y/m/d');
+        if (!is_null($this->date))
+            return Jalalian::fromDateTime($this->date)->format('Y/m/d');
         return null;
     }
 
 
     public function getDateTimestamp()
     {
-        if (!is_null($this->created_at))
-            return Jalalian::fromDateTime($this->created_at)->getTimestamp();
+        if (!is_null($this->date))
+            return Jalalian::fromDateTime($this->date)->getTimestamp();
         return null;
     }
 }
