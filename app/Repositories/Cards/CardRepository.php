@@ -45,10 +45,12 @@ class CardRepository implements CardRepositoryInterface
     public function storeCard($request)
     {
         $userId = $this->getUserId();
+        $myDate = Carbon::createFromTimestamp($request->date)->format('Y/m/d');
 
         $request->validate([
             'name' => 'required|string',
             'alias' => 'nullable|string',
+            'date' => 'required',
             'number' => 'required|numeric|unique:cards',
             'current_cash' => 'required|numeric',
             'description' => 'nullable|string',
@@ -58,6 +60,7 @@ class CardRepository implements CardRepositoryInterface
             'user_id' => $userId,
             'name' => $request->name,
             'alias' => $request->alias,
+            'date' => $myDate,
             'number' => $request->number,
             'current_cash' => $request->current_cash,
             'description' => $request->description,

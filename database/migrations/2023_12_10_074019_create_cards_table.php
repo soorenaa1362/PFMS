@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('name');
             $table->string('alias')->nullable();
+            $table->timestamp('date');
             $table->bigInteger('number');
             $table->bigInteger('current_cash');
             $table->text('description')->nullable();

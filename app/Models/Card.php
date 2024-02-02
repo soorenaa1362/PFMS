@@ -20,6 +20,7 @@ class Card extends Model
         'user_id',
         'name',
         'alias',
+        'date',
         'number',
         'current_cash',
         'description'

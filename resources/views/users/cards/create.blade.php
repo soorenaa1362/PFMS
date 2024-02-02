@@ -4,6 +4,10 @@
     ثبت کارت
 @endsection
 
+@section('style')
+    <link rel="stylesheet" href="{{ asset('css/persianDatePicker/persian-datepicker.css') }}">
+@endsection
+
 @section('content')
     <div class="container">
         <div class="row d-flex justify-content-center">
@@ -26,7 +30,7 @@
                             @csrf
 
                             <div class="row">
-                                <div class="form-group col-md-6 mt-2">
+                                <div class="form-group col-md-4 mt-2">
                                     <label for="name">نام بانک</label>
                                     <input class="form-control" name="name" value="{{ old('name') }}">
                                     @error('name')
@@ -34,7 +38,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="form-group col-md-6 mt-2">
+                                <div class="form-group col-md-4 mt-2">
                                     <label for="alias">
                                         نام مستعار
                                         <span style="font-size: 13px;">(نامی دلخواه که میتوانید برای کارت خود در نظر بگیرید)</span>
@@ -44,6 +48,20 @@
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
+
+                                <div class="form-group col-md-4 mt-2">
+                                    <label for="date">تاریخ ثبت کارت</label>
+                                    <input type="text" class="form-control round addpo"
+                                        id="dateFake" name="dateFake" readonly required value="">
+                                    <input id="date" name="date"
+                                        type="hidden" value="">
+                                    @error('date')
+                                        <span class="text-danger" style="font-size: 14px;">
+                                            {{ $message }}
+                                        </span>
+                                    @enderror
+                                </div>
+
 
                                 <div class="form-group col-md-6 mt-2">
                                     <label for="number">
@@ -94,4 +112,22 @@
 
     {{-- @include('users.sections.modal') --}}
 
+@endsection
+
+@section('script')
+    <script src="{{ asset('js/jquery.js') }}"></script>
+    <script src="{{ asset('js/persianDatePicker/persian-date.min.js') }}"></script>
+    <script src="{{ asset('js/persianDatePicker/persian-datepicker.js') }}"></script>
+    <script>
+        $(document).ready(function () {
+            $("#dateFake").pDatepicker({
+                initialValueType: 'persian',
+                initialValue: false,
+                format: 'YYYY/MM/DD',
+                autoClose: true,
+                altField: '#date',
+                altFormat: 'X', //timestarmp
+            });
+        });
+    </script>
 @endsection
