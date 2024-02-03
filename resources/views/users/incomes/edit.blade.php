@@ -25,6 +25,11 @@
 
                         </div>
                     </div>
+                    @if(Session::has('success'))
+                        <div class="alert alert-danger text-center" style="margin-bottom: 0 !important">
+                            {{ Session::get('success') }}
+                        </div>
+                    @endif
                     <div class="card-body">
                         <form action="{{ route('users.incomes.update', $income->id) }}" method="POST">
                             @csrf
