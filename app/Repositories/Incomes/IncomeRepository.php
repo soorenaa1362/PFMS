@@ -127,13 +127,12 @@ class IncomeRepository implements IncomeRepositoryInterface
 
     public function updateIncome($request, $income_id)
     {
-        $userId = $this->getUserId();
         $income = $this->getIncome($income_id);
         $oldIncomeAmount = $income->amount;
         $card = Card::where('id', $income->card_id)->first();
-        $myDate = Carbon::createFromTimestamp($request->date)->format('Y/m/d');
 
         if($request->date === null){
+
             $income->title = $request->title;
             $income->amount = $request->amount;
             $income->card_id = $request->card_id;
@@ -160,16 +159,49 @@ class IncomeRepository implements IncomeRepositoryInterface
                     'current_cash' => $newCash
                 ]);
             }
-        }else{
-            $incomeDateJalali = Jalalian::fromDateTime($myDate)->format('Y/m/d');
-            $card = Card::where('id', $request->card_id)->first();
-            $cardDateJalali = Jalalian::fromDateTime($card->date)->format('Y/m/d');
+            return true;
 
-            if( $incomeDateJalali >= $cardDateJalali ){
-                dd("تاریخ درآمد بدرستی وارد شده است.");
+        }else{
+
+            $myDate = Carbon::createFromTimestamp($request->date)->format('Y/m/d');
+            $incomeDateJalali = Jalalian::fromDateTime($myDate)->format('Y/m/d');
+            $cardIncome = Card::where('id', $request->card_id)->first();
+            $cardIncomeDateJalali = Jalalian::fromDateTime($cardIncome->date)->format('Y/m/d');
+
+            if( $incomeDateJalali >= $cardIncomeDateJalali ){
+                $income->title = $request->title;
+                $income->amount = $request->amount;
+                $income->card_id = $request->card_id;
+                $income->category_id = $request->category_id;
+                $income->date = $myDate;
+                $income->description = $request->description;
+
+                $newCard = Card::find($income->card_id);
+
+                if( $card == $newCard ){
+                    $income->update();
+                    $newCash = ($card->current_cash - $oldIncomeAmount) + $income->amount;
+                    $card->update([
+                        'current_cash' => $newCash
+                    ]);
+                }else{
+                    $income->update();
+                    $oldCash = ($card->current_cash - $oldIncomeAmount);
+                    $card->update([
+                        'current_cash' => $oldCash
+                    ]);
+
+                    $newCash = $newCard->current_cash + $income->amount;
+                    $newCard->update([
+                        'current_cash' => $newCash
+                    ]);
+                }
+                return true;
+
             }else{
-                dd("تاریخ درآمد نباید قبل از تاریخ ثبت کارت باشد.");
+                return false;
             }
+
         }
     }
 

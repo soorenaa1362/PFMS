@@ -108,10 +108,17 @@ class IncomeController extends Controller
         if(Auth::guest()){
             return redirect()->route('login');
         }else{
-            $this->incomeRepository->updateIncome($request, $income_id);
+            $income = $this->incomeRepository->updateIncome($request, $income_id);
 
-            return redirect()->route('users.incomes.index')
-                ->withSuccess('عملیات بروزرسانی اطلاعات درآمد با موفقیت انجام شد.');
+            if($income === true){
+                return redirect()->route('users.incomes.index')
+                    ->withSuccess('عملیات بروزرسانی اطلاعات درآمد با موفقیت انجام شد.');
+            }else{
+                return redirect()->back()
+                    ->withSuccess('تاریخ درآمد نباید قبل از تاریخ ثبت کارت باشد.');
+            }
+
+
         }
     }
 
