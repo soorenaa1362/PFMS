@@ -135,13 +135,21 @@ class IncomeRepository implements IncomeRepositoryInterface
 
         if( ($oldCard->id === $newCard->id) && ($request->date === null) ){
 
+            $incomeAmountBeforeUpdated = $income->amount;
+
             $income->title = $request->title;
             $income->amount = $request->amount;
             $income->card_id = $request->card_id;
             $income->category_id = $request->category_id;
             $income->description = $request->description;
             $income->update();
-            dd("کارت عوض نشده و مقدار تاریخ درآمد خالی است.");
+
+            $newCardCash = ($oldCard->current_cash - $incomeAmountBeforeUpdated) + $request->amount;
+            $oldCard->update([
+                'current_cash' => $newCardCash
+            ]);
+
+            return true;
 
         }elseif( ($oldCard->id === $newCard->id) && ($request->date != null) ){
 
