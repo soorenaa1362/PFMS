@@ -156,6 +156,7 @@ class IncomeRepository implements IncomeRepositoryInterface
             $incomeDate = Carbon::createFromTimestamp($request->date)->format('Y/m/d');
             $incomeDateJalali = Jalalian::fromDateTime($incomeDate)->format('Y/m/d');
             $oldCardDate = Jalalian::fromDateTime($oldCard->date)->format('Y/m/d');
+            $incomeAmountBeforeUpdated = $income->amount;
 
             $income->title = $request->title;
             $income->amount = $request->amount;
@@ -166,9 +167,15 @@ class IncomeRepository implements IncomeRepositoryInterface
 
             if( $incomeDateJalali >= $oldCardDate ){
                 $income->update();
-                dd("تاریخ بدرستی وارد شده است و کارت عوض نشده است.");
+
+                $newCardCash = ($oldCard->current_cash - $incomeAmountBeforeUpdated) + $request->amount;
+                $oldCard->update([
+                    'current_cash' => $newCardCash
+                ]);
+
+                return true;
             }else{
-                dd("تاریخ درآمد نباید قبل از تاریخ ثبت کارت باشد. ");
+                return false;
             }
 
         }elseif( ($oldCard->id != $newCard->id) && ($request->date != null) ){
