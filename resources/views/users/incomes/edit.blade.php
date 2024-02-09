@@ -104,7 +104,7 @@
                                 <div class="form-group col-md-12 mt-2">
                                     <label for="description">توضیحات</label>
                                     <textarea name="description" class="form-control">
-                                        {{ old('description') }}
+                                        {{ $income->description }}
                                     </textarea>
                                 </div>
                             </div>
