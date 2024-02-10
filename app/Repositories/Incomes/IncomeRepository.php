@@ -213,70 +213,60 @@ class IncomeRepository implements IncomeRepositoryInterface
     {
         $income = $this->getIncome($income_id);
         $incomeDate = Jalalian::fromDateTime($income->date)->format('Y/m/d'); // تاریخ فعلی درآمد
-        $oldCard = Card::where('id', $income->card_id)->first(); // درآمد برای این کارت ثبت شده است
+        $oldCard = Card::where('id', $income->card_id)->first(); // کارتی که درآمد برایش ثبت شده است
         $oldCardDate = Jalalian::fromDateTime($oldCard->date)->format('Y/m/d'); // تاریخ ثبت کارت
-        $newCard = Card::where('id', $request->card_id)->first(); // این کارت برای درآمد ثبت شد
-        $incomeAmountBeforeUpdated = $income->amount; // مبلغ درآمد قبل از بروزرسانی درآمد
+        $newCard = Card::where('id', $request->card_id)->first(); // کارت جدیدی که درآمد برایش ثبت شده است
+        $newCardDate = Jalalian::fromDateTime($newCard->date)->format('Y/m/d'); // تاریخ ثبت کارت جدید
+        $incomeAmountBeforeUpdated = $income->amount; // مبلغ درآمد قبل از بروزرسانی
 
         if( $request->date === null ){
-
             if( $oldCard->id === $newCard->id ){
-
-                // dd('حالت اول => تاریخ عوض نشده - کارت هم عوض نشده');
-
-                $income->title = $request->title;
-                $income->amount = $request->amount;
-                $income->category_id = $request->category_id;
-                $income->description = $request->description;
-                $income->update();
-
+                // dd("تاریخ عوض نشده و کارت هم تغییر نکرده است");
                 $newCardCash = ($oldCard->current_cash - $incomeAmountBeforeUpdated) + $request->amount;
                 $oldCard->update([
                     'current_cash' => $newCardCash
                 ]);
 
+                $income->title = $request->title;
+                $income->amount = $request->amount;
+                $income->card_id = $request->card_id;
+                $income->category_id = $request->category_id;
+                $income->description = $request->description;
+                $income->update();
+
                 return true;
-
             }else{
-                // dd('حالت دوم => تاریخ عوض نشده - کارت عوض شده');
-                $newCardDate = Jalalian::fromDateTime($newCard->date)->format('Y/m/d');
-
+                // dd("تاریخ عوض نشده ولی کارت تغییر کرده است");
                 if( $incomeDate >= $newCardDate ){
-
-                    // برگرداندن موجودی کارت به حالت قبل از ثبت درآمد
-                    $oldCardCash = $oldCard->current_cash - $income->amount;
+                    $oldCardCash = $oldCard->current_cash - $incomeAmountBeforeUpdated;
                     $oldCard->update([
-                        'current_cash' => $oldCardCash,
+                        'current_cash' => $oldCardCash
+                    ]);
+
+                    $newCardCash = $newCard->current_cash + $request->amount;
+                    $newCard->update([
+                        'current_cash' => $newCardCash
                     ]);
 
                     $income->title = $request->title;
                     $income->amount = $request->amount;
-                    $income->category_id = $request->category_id;
                     $income->card_id = $request->card_id;
+                    $income->category_id = $request->category_id;
                     $income->description = $request->description;
                     $income->update();
 
-                    $newCardCash = $newCard->current_cash + $request->amount;
-                    $newCard->update([
-                        'current_cash' => $newCardCash,
-                    ]);
-
                     return true;
-
                 }else{
                     return false;
                 }
 
             }
-
         }else{
-
             if( $oldCard->id === $newCard->id ){
-                dd('حالت سوم => تاریخ عوض شده - کارت عوض نشده');
+                dd('تاریخ عوض شده ولی کارت تغییری نکرده است');
             }else{
-                dd('حالت چهارم => تاریخ عوض شده - کارت هم عوض شده');
+                dd('هم تاریخ و هم کارت عوض شده است');
             }
-
         }
     }
 
