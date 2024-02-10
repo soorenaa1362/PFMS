@@ -117,8 +117,6 @@ class IncomeController extends Controller
                 return redirect()->back()
                     ->withSuccess('تاریخ درآمد نباید قبل از تاریخ ثبت کارت باشد.');
             }
-
-
         }
     }
 

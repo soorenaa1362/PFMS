@@ -29,6 +29,11 @@
 
                         </div>
                     </div>
+                    @if(Session::has('success'))
+                        <div class="alert alert-danger text-center" style="margin-bottom: 0 !important">
+                            {{ Session::get('success') }}
+                        </div>
+                    @endif
                     <div class="card-body">
                         @if ( count($categories) == 0 )
                             <div class="d-grid gap-2 mt-2">
@@ -85,7 +90,7 @@
                                         <input id="date" name="date"
                                             type="hidden" value="">
                                         @error('date')
-                                            <span class="text-danger" style="font-size: 14px;">{{ $message }}</span>
+                                            <span class="text-danger">{{ $message }}</span>
                                         @enderror
                                     </div>
 

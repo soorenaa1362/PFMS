@@ -181,10 +181,16 @@ class CardController extends Controller
         }else{
             $userId = $this->cardRepository->getUserId();
             $card = Card::find($card_id);
-            $income = $this->cardRepository->incomeStore($request, $card_id);
+            $income = $this->cardRepository->incomeStore($request, $card);
+            // dd($income);
 
-            return redirect()->route('users.cards.checkTransactions', $card->id)
-                ->withSuccess('اطلاعات درآمد با موفقیت در سیستم ثبت شد.');
+            if($income === true){
+                return redirect()->route('users.cards.checkTransactions', $card->id)
+                    ->withSuccess('اطلاعات درآمد با موفقیت در سیستم ثبت شد.');
+            }else{
+                return redirect()->back()
+                    ->withSuccess('تاریخ ثبت درآمد نباید قبل از تاریخ ثبت کارت باشد.');
+            }
         }
     }
 

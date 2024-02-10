@@ -89,7 +89,6 @@ class CardRepository implements CardRepositoryInterface
     }
 
 
-
     public function getCardIncomes($card_id)
     {
         $userId = $this->getUserId();
@@ -185,27 +184,42 @@ class CardRepository implements CardRepositoryInterface
     }
 
 
-    public function incomeStore($request, $card_id)
+    public function incomeStore($request, $card)
     {
         $userId = $this->getUserId();
-
+        $cardDateJalali = Jalalian::fromDateTime($card->date)->format('Y/m/d');
         $myDate = Carbon::createFromTimestamp($request->date)->format('Y/m/d');
         $myDateJalali = Jalalian::fromDateTime($myDate)->format('Y/m/d');
 
-        $income = Income::create([
-            'user_id' => $userId,
-            'card_id' => $card_id,
-            'category_id' => $request->category_id,
-            'title' => $request->title,
-            'amount' => $request->amount,
-            'date' => $myDate,
+        $request->validate([
+            'title' => 'required|string',
+            'amount' => 'required|numeric',
+            'category_id' => 'required',
+            'date' => 'required',
+            'description' => 'nullable|string',
         ]);
 
-        $card = Card::where('id', $income->card_id)->first();
-        $newCash = $card->current_cash + $income->amount;
-        $card->update([
-            'current_cash' => $newCash
-        ]);
+        $income = new Income();
+        $income->user_id = $userId;
+        $income->card_id = $card->id;
+        $income->title = $request->title;
+        $income->amount = $request->amount;
+        $income->category_id = $request->category_id;
+        $income->date = $myDate;
+        $income->description = $request->description;
+
+        if( $myDateJalali >= $cardDateJalali ){
+            $income->save();
+
+            $newCardCash = $card->current_cash + $request->amount;
+            $card->update([
+                'current_cash' => $newCardCash
+            ]);
+
+            return true;
+        }else{
+            return false;
+        }
     }
 
 
