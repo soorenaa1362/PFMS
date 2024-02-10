@@ -140,6 +140,13 @@ class IncomeRepository implements IncomeRepositoryInterface
 
         $incomeAmountBeforeUpdated = $income->amount; // مبلغ درآمد قبل از بروزرسانی
 
+        $request->validate([
+            'title' => 'required|string',
+            'amount' => 'required|numeric',
+            'category_id' => 'required',
+            'description' => 'nullable|string',
+        ]);
+
         if( $request->date === null ){
             if( $oldCard->id === $newCard->id ){
                 // dd("تاریخ عوض نشده و کارت هم تغییر نکرده است");
