@@ -125,98 +125,19 @@ class IncomeRepository implements IncomeRepositoryInterface
     }
 
 
-    // public function updateIncome($request, $income_id)
-    // {
-    //     $income = $this->getIncome($income_id);
-    //     $incomeDate = Jalalian::fromDateTime($income->date)->format('Y/m/d');
-    //     $oldCard = Card::where('id', $income->card_id)->first();
-    //     $oldCardDate = Jalalian::fromDateTime($oldCard->date)->format('Y/m/d');
-    //     $newCard = Card::where('id', $request->card_id)->first();
-
-    //     if( ($oldCard->id === $newCard->id) && ($request->date === null) ){
-
-    //         $incomeAmountBeforeUpdated = $income->amount;
-
-    //         $income->title = $request->title;
-    //         $income->amount = $request->amount;
-    //         $income->card_id = $request->card_id;
-    //         $income->category_id = $request->category_id;
-    //         $income->description = $request->description;
-    //         $income->update();
-
-    //         $newCardCash = ($oldCard->current_cash - $incomeAmountBeforeUpdated) + $request->amount;
-    //         $oldCard->update([
-    //             'current_cash' => $newCardCash
-    //         ]);
-
-    //         return true;
-
-    //     }elseif( ($oldCard->id === $newCard->id) && ($request->date != null) ){
-
-    //         $incomeDate = Carbon::createFromTimestamp($request->date)->format('Y/m/d');
-    //         $incomeDateJalali = Jalalian::fromDateTime($incomeDate)->format('Y/m/d');
-    //         $oldCardDate = Jalalian::fromDateTime($oldCard->date)->format('Y/m/d');
-    //         $incomeAmountBeforeUpdated = $income->amount;
-
-    //         $income->title = $request->title;
-    //         $income->amount = $request->amount;
-    //         $income->card_id = $request->card_id;
-    //         $income->category_id = $request->category_id;
-    //         $income->date = $incomeDate;
-    //         $income->description = $request->description;
-
-    //         if( $incomeDateJalali >= $oldCardDate ){
-    //             $income->update();
-
-    //             $newCardCash = ($oldCard->current_cash - $incomeAmountBeforeUpdated) + $request->amount;
-    //             $oldCard->update([
-    //                 'current_cash' => $newCardCash
-    //             ]);
-
-    //             return true;
-    //         }else{
-    //             return false;
-    //         }
-
-    //     }elseif( ($oldCard->id != $newCard->id) && ($request->date != null) ){
-    //         $incomeDate = Carbon::createFromTimestamp($request->date)->format('Y/m/d');
-    //         $incomeDateJalali = Jalalian::fromDateTime($incomeDate)->format('Y/m/d');
-    //         $newCardDate = Jalalian::fromDateTime($newCard->date)->format('Y/m/d');
-
-    //         $oldCardCash = $oldCard->current_cash;
-    //         $incomeAmount = $income->amount;
-
-    //         $income->title = $request->title;
-    //         $income->amount = $request->amount;
-    //         $income->card_id = $request->card_id;
-    //         $income->category_id = $request->category_id;
-    //         $income->date = $incomeDate;
-    //         $income->description = $request->description;
-
-    //         if( $incomeDateJalali >= $newCardDate ){
-    //             $income->update();
-
-    //             $oldCardCash = $oldCardCash - $incomeAmount;
-    //             dd($oldCardCash);
-
-    //             $newCardCash = Card::where('id', $request->card_id)->first()->current_cash;
-    //             dd($newCardCash);
-
-    //             dd("تاریخ بدرستی وارد شده است و کارت تغییر کرد.");
-    //         }else{
-    //             return false;
-    //         }
-    //     }
-    // }
-
     public function updateIncome($request, $income_id)
     {
         $income = $this->getIncome($income_id);
-        $incomeDate = Jalalian::fromDateTime($income->date)->format('Y/m/d'); // تاریخ فعلی درآمد
         $oldCard = Card::where('id', $income->card_id)->first(); // کارتی که درآمد برایش ثبت شده است
-        $oldCardDate = Jalalian::fromDateTime($oldCard->date)->format('Y/m/d'); // تاریخ ثبت کارت
         $newCard = Card::where('id', $request->card_id)->first(); // کارت جدیدی که درآمد برایش ثبت شده است
-        $newCardDate = Jalalian::fromDateTime($newCard->date)->format('Y/m/d'); // تاریخ ثبت کارت جدید
+
+        $incomeDateJalali = Jalalian::fromDateTime($income->date)->format('Y/m/d'); // تاریخ فعلی درآمد
+        $requestDateJalali = Jalalian::fromDateTime($request->date)->format('Y/m/d'); // تاریخ جدید برای بروزرسانی درآمد
+        $oldCardDateJalali = Jalalian::fromDateTime($oldCard->date)->format('Y/m/d'); // تاریخ ثبت کارت
+        $newCardDateJalali = Jalalian::fromDateTime($newCard->date)->format('Y/m/d'); // تاریخ ثبت کارت جدید
+
+        $incomeDateCarbon = Carbon::createFromTimestamp($request->date)->format('Y/m/d');
+
         $incomeAmountBeforeUpdated = $income->amount; // مبلغ درآمد قبل از بروزرسانی
 
         if( $request->date === null ){
@@ -237,7 +158,7 @@ class IncomeRepository implements IncomeRepositoryInterface
                 return true;
             }else{
                 // dd("تاریخ عوض نشده ولی کارت تغییر کرده است");
-                if( $incomeDate >= $newCardDate ){
+                if( $incomeDateJalali >= $newCardDateJalali ){
                     $oldCardCash = $oldCard->current_cash - $incomeAmountBeforeUpdated;
                     $oldCard->update([
                         'current_cash' => $oldCardCash
@@ -259,41 +180,56 @@ class IncomeRepository implements IncomeRepositoryInterface
                 }else{
                     return false;
                 }
-
             }
         }else{
             if( $oldCard->id === $newCard->id ){
-                dd('تاریخ عوض شده ولی کارت تغییری نکرده است');
+                // dd('تاریخ عوض شده ولی کارت تغییری نکرده است');
+                if( $requestDateJalali >= $oldCardDateJalali ){
+                    $newCardCash = ($oldCard->current_cash - $incomeAmountBeforeUpdated) + $request->amount;
+                    $oldCard->update([
+                        'current_cash' => $newCardCash
+                    ]);
+
+                    $income->title = $request->title;
+                    $income->amount = $request->amount;
+                    $income->card_id = $request->card_id;
+                    $income->category_id = $request->category_id;
+                    $income->date = $incomeDateCarbon;
+                    $income->description = $request->description;
+                    $income->update();
+
+                    return true;
+                }else{
+                    return false;
+                }
             }else{
-                dd('هم تاریخ و هم کارت عوض شده است');
+                // dd('هم تاریخ و هم کارت عوض شده است');
+                if( $requestDateJalali >= $newCardDateJalali ){
+                    $oldCardCash = $oldCard->current_cash - $incomeAmountBeforeUpdated;
+                    $oldCard->update([
+                        'current_cash' => $oldCardCash
+                    ]);
+
+                    $newCardCash = $newCard->current_cash + $request->amount;
+                    $newCard->update([
+                        'current_cash' => $newCardCash
+                    ]);
+
+                    $income->title = $request->title;
+                    $income->amount = $request->amount;
+                    $income->card_id = $request->card_id;
+                    $income->category_id = $request->category_id;
+                    $income->date = $incomeDateCarbon;
+                    $income->description = $request->description;
+                    $income->update();
+
+                    return true;
+                }else{
+                    return false;
+                }
             }
         }
     }
-
-
-    // public function getUpdateIncome($income, $card)
-    // {
-    //     $newCard = Card::find($income->card_id);
-
-    //     if( $card == $newCard ){
-    //         $income->update();
-    //         $newCash = ($card->current_cash - $oldIncomeAmount) + $income->amount;
-    //         $card->update([
-    //             'current_cash' => $newCash
-    //         ]);
-    //     }else{
-    //         $income->update();
-    //         $oldCash = ($card->current_cash - $oldIncomeAmount);
-    //         $card->update([
-    //             'current_cash' => $oldCash
-    //         ]);
-
-    //         $newCash = $newCard->current_cash + $income->amount;
-    //         $newCard->update([
-    //             'current_cash' => $newCash
-    //         ]);
-    //     }
-    // }
 
 
     public function deleteIncome($income_id)
